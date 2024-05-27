@@ -425,7 +425,7 @@ echo -e "\033[1;37m  •  SERVIDOR    \033[1;32m$ISP \033[1;31m. \033[1;33m"
 echo -e "\033[1;37m  •  RAM USADO   \033[1;32m$uram \033[1;31m. \033[1;33m"
 echo -e "\033[1;37m  •  VERSION  \033[1;32m   $stl"  
 echo -e "\033[38;5;239m═════════════════\e[48;5;2m\e[38;5;22m   SERVICIOS   \e[0m\e[38;5;239m════════════════════"
-echo -ne "  \033[1;97mSSH:$status_ssh \033[1;97mNGINX:$status_nginx\033[1;97m WS:$status_ws_epro \033[1;97mPROXY:$status_haproxy \033[1;97mXRAY:$status_xray\033[1;97m\n                    DROP:$status_dropbear \n" && echo -ne "\033[1;37m TRAFICO \033[1;32m.\033[1;33m.\033[1;31m.\033[1;33m" && echo -ne "\e[1;93m[\e[1;32m$today_val\e[1;93m]\033[1;31m\e[1;38;5;220m $today_tk \e[1;97m\e[0;97m" && echo -ne "\033[1;97m<•> \033[1;32m"  && echo -ne "\e[1;93m[\e[1;32m$month_val\e[1;93m]\033[1;31m\e[1;38;5;220m $month_tk\e[1;97m\e[0;97m\n" 
+echo -ne "  \033[1;97mSSHWS : ${status_ws} \033[1;97mXRAY : ${status_xray}\033[1;97m NGINX : ${status_nginx} \n                    DROP:$status_dropbear \n" && echo -ne "\033[1;37m TRAFICO \033[1;32m.\033[1;33m.\033[1;31m.\033[1;33m" && echo -ne "\e[1;93m[\e[1;32m$today_val\e[1;93m]\033[1;31m\e[1;38;5;220m $today_tk \e[1;97m\e[0;97m" && echo -ne "\033[1;97m<•> \033[1;32m"  && echo -ne "\e[1;93m[\e[1;32m$month_val\e[1;93m]\033[1;31m\e[1;38;5;220m $month_tk\e[1;97m\e[0;97m\n" 
 
 akun1="SSHWS"
 akun2="VMESS"
@@ -439,7 +439,7 @@ akun04="${trtls}"
 akun05="$ssa"
 garis="${grs}║"
 echo -e "\033[38;5;239m══════════════\e[100m\e[97m  CONTROL DE REGISTRO  \e[0m\e[38;5;239m═══════════════"
-echo -e "\033[1;97m  $akun1:\033[93m[\033[1;92m$akun01\033[93m]\033[1;97m $akun2:\033[93m[\033[1;92m$akun02\033[93m]\033[1;97m $akun3:\033[93m[\033[1;92m$akun03\033[93m]\033[1;97m $akun4:\033[93m[\033[1;92m$akun04\033[93m]\033[1;97m"
+echo -e "\033[1;97m  $akun1:\033[93m[\033[1;92m$akun01\033[93m]\033[1;97m  $akun2:\033[93m[\033[1;92m$akun02\033[93m]\033[1;97m  $akun3:\033[93m[\033[1;92m$akun03\033[93m]\033[1;97m  $akun4:\033[93m[\033[1;92m$akun04\033[93m]\033[1;97m"
 echo -e "\e[38;5;239m════════════════════════════════════════════════════"
 echo -ne "\e[1;93m  [\e[1;32m1\e[1;93m]\033[1;31m • \e[1;97mSSH OPENVPN" && echo -e "   \e[1;93m  [\e[1;32m7\e[1;93m]\033[1;31m • \e[1;97mNOTIBOT"
 echo -ne "\e[1;93m  [\e[1;32m2\e[1;93m]\033[1;31m • \e[1;97mXRAY/VMESS"  && echo -e "    \e[1;93m  [\e[1;32m8\e[1;93m]\033[1;31m • \e[1;97mTEMAS"
@@ -448,7 +448,7 @@ echo -ne "\e[1;93m  [\e[1;32m4\e[1;93m]\033[1;31m • \e[1;97mTROJAN"      && ec
 echo -ne "\e[1;93m  [\e[1;32m5\e[1;93m]\033[1;31m • \e[1;97mSERVICIOS" && echo -e "   \e[1;93m  [\e[1;32m11\e[1;93m]\033[1;31m • \e[1;97mBACKUP"
 echo -ne "\e[1;93m  [\e[1;32m6\e[1;93m]\033[1;31m • \e[1;97mTELEGRAM BOT"&& echo -e "  \e[1;93m  [\e[1;32m12\e[1;93m]\033[1;31m • \e[1;97mREINICIAR"
 echo -e ""
-read -p " Selecciona Una Opcion : " opt
+#read -p " Selecciona Una Opcion : " opt
 echo -e ""
 
 if [ "$Isadmin" = "ON" ]; then
