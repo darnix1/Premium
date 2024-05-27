@@ -13,7 +13,7 @@ WH='\033[1;37m'
 ipsaya=$(curl -sS ipinfo.io/ip)
 data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 date_list=$(date +"%Y-%m-%d" -d "$data_server")
-data_ip="https://raw.githubusercontent.com/SatanFusionOfficial/permission/main/ip"
+data_ip="https://raw.githubusercontent.com/darnix1/vip/main/izin"
 checking_sc() {
     useexp=$(curl -sS $data_ip | grep $ipsaya | awk '{print $3}')
     if [[ $date_list < $useexp ]]; then
@@ -31,7 +31,7 @@ checking_sc() {
         exit
     fi
 }
-#checking_sc
+checking_sc
 
 clear
 cd
@@ -64,11 +64,11 @@ echo -e ""
 		if [[ ${CLIENT_EXISTS} == '1' ]]; then
 clear
             echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-            echo -e "$COLOR1│ ${NC} ${COLBG1}            ${WH}• Add Vmess Account •              ${NC}$COLOR1│ $NC"
+            echo -e "$COLOR1│ ${NC} ${COLBG1}            ${WH}• Agregar cuenta Vmess •              ${NC}$COLOR1│ $NC"
             echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
             echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
             echo -e "$COLOR1│                                                 │"
-            echo -e "$COLOR1│${WH} Nama Duplikat Silahkan Buat Nama Lain.          $COLOR1│"
+            echo -e "$COLOR1│${WH} Nombre duplicado Por favor cree otro nombre.          $COLOR1│"
             echo -e "$COLOR1│                                                 │"
             echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
             read -n 1 -s -r -p "Press any key to back"
