@@ -28,7 +28,7 @@ echo -e "$COLOR1└────────────────────�
 exit
 fi
 }
-#checking_sc
+checking_sc
 rm -rf /tmp/ssh
 clear
 bash2=$( pgrep bash | wc -l )
