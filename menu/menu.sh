@@ -383,39 +383,7 @@ clear
 clear && clear && clear
 clear;clear;clear
 msg -tit
-echo -e "$COLOR1╔═════════════════════════════════════════════════╗${NC}"
 echo -e " $COLOR1╔══════════════════════════════════════════════════════════╗${NC}"
-echo -e " $COLOR1║${NC}${COLBG1}                 ${WH} • RMBL VPN TUNNELING •                  ${NC}$COLOR1║ $NC"
-echo -e " $COLOR1╚══════════════════════════════════════════════════════════╝${NC}"
-echo -e " $COLOR1╔══════════════════════════════════════════════════════════╗${NC}"
-echo -e " $COLOR1║$NC${WH}• OS            ${COLOR1}: ${WH}$MODEL2${NC}"
-echo -e " $COLOR1║$NC${WH}• RAM           ${COLOR1}: ${WH}$tram / $uram MB${NC}"
-echo -e " $COLOR1║$NC${WH}• DATE          ${COLOR1}: ${WH}$DATE2 WIB${NC}"
-echo -e " $COLOR1║$NC${WH}• UPTIME        ${COLOR1}: ${WH}$uphours $upminutes $uptimecek"
-#echo -e " $COLOR1║$NC${WH}• TIME          ${COLOR1}: ${WH}$TIMEZONE${NC}"
-echo -e " $COLOR1║$NC${WH}• ISP           ${COLOR1}: ${WH}$ISP${NC}"
-echo -e " $COLOR1║$NC${WH}• City          ${COLOR1}: ${WH}$CITY${NC}"
-echo -e " $COLOR1║$NC${WH}• IP VPS        ${COLOR1}: ${WH}$MYIP${NC}"
-echo -e " $COLOR1║$NC${WH}• DOMAIN        ${COLOR1}: ${WH}$(cat /etc/xray/domain)"
-echo -e " $COLOR1╚══════════════════════════════════════════════════════════╝${NC}"
-echo -e "    $COLOR1╔═════════════════════════════════════════════════╗${NC}"
-echo -e "    $COLOR1║ $NC ${WH}[ SSH WS : ${status_ws} ${WH}]  ${WH}[ XRAY : ${status_xray} ${WH}]  ${WH}[ NGINX : ${status_nginx} ${WH}]$COLOR1 ║$NC"
-echo -e "    $COLOR1╚═════════════════════════════════════════════════╝${NC}"
-echo -e "    $COLOR1╔═════════════════════════════════════════════════╗${NC}"
-echo -e "    $COLOR1║ ${WH} ${WH}SSH       VMESS         VLESS        TROJAN   $NC $COLOR1║ $NC"
-echo -e "    $COLOR1║ ${WH} ${WH} ${COLOR1}$total_ssh${WH}          ${COLOR1}$vmess${WH}             ${COLOR1}$vless${WH}            ${COLOR1}${trtls}${WH}      $NC $COLOR1║ $NC"
-echo -e "    $COLOR1╚═════════════════════════════════════════════════╝${NC}"
-echo -e " $COLOR1╔═════════════════════ • LIST MENU • ════════════════════╗${NC}"
-echo -e " $COLOR1║$NC ${WH}[${COLOR1}01${WH}]${NC} ${COLOR1}• ${WH}SSH-WS    ${WH}[${COLOR1}Menu${WH}]   ${NC} $COLOR1║${NC}  ${WH}[${COLOR1}07${WH}]${NC} ${COLOR1}• ${WH}NOTIF BOT  ${WH}[${COLOR1}Menu${WH}] $COLOR1║${NC}"
-echo -e " $COLOR1║$NC ${WH}[${COLOR1}02${WH}]${NC} ${COLOR1}• ${WH}VMESS     ${WH}[${COLOR1}Menu${WH}]   ${NC} $COLOR1║${NC}  ${WH}[${COLOR1}08${WH}]${NC} ${COLOR1}• ${WH}THEMES     ${WH}[${COLOR1}Menu${WH}] $COLOR1║${NC}"    
-echo -e " $COLOR1║$NC ${WH}[${COLOR1}03${WH}]${NC} ${COLOR1}• ${WH}VLESS     ${WH}[${COLOR1}Menu${WH}]   ${NC} $COLOR1║${NC}  ${WH}[${COLOR1}09${WH}]${NC} ${COLOR1}• ${WH}UPDATE     ${WH}[${COLOR1}Menu${WH}] $COLOR1║${NC}"   
-echo -e " $COLOR1║$NC ${WH}[${COLOR1}04${WH}]${NC} ${COLOR1}• ${WH}TROJAN    ${WH}[${COLOR1}Menu${WH}]   ${NC} $COLOR1║${NC}  ${WH}[${COLOR1}10${WH}]${NC} ${COLOR1}• ${WH}SYSTEM     ${WH}[${COLOR1}Menu${WH}] $COLOR1║${NC}" 
-echo -e " $COLOR1║$NC ${WH}[${COLOR1}05${WH}]${NC} ${COLOR1}• ${WH}RUNNING   ${WH}[${COLOR1}Menu${WH}]   ${NC} $COLOR1║${NC}  ${WH}[${COLOR1}11${WH}]${NC} ${COLOR1}• ${WH}BACKUP     ${WH}[${COLOR1}Menu${WH}] $COLOR1║${NC}" 
-echo -e " $COLOR1║$NC ${WH}[${COLOR1}06${WH}]${NC} ${COLOR1}• ${WH}BOT AKUN  ${WH}[${COLOR1}Menu${WH}]   ${NC} $COLOR1║${NC}  ${WH}[${COLOR1}12${WH}]${NC} ${COLOR1}• ${WH}REBOOT     ${WH}[${COLOR1}Menu${WH}] $COLOR1║${NC}" 
-echo -e " $COLOR1╚════════════════════════════════════════════════════════╝${NC}"
-
-echo -e "\e[38;5;239m════════════════════════════════════════════════════"
-echo -e "         \033[45m \033[103m \033[107m\033[30m SCRIPT DARNIX OPTIMIZADO \033[0m"
 echo -e ""
 echo -e "\033[38;5;239m═════════════════\e[48;5;1m\e[38;5;230m  MENU AUTO  \e[0m\e[38;5;239m════════════════════"
 echo -e ""
@@ -442,12 +410,14 @@ garis="${grs}║"
 echo -e "\033[38;5;239m══════════════\e[100m\e[97m  CONTROL DE REGISTRO  \e[0m\e[38;5;239m═══════════════"
 echo -e "\033[1;97m  $akun1:\033[93m[\033[1;92m$akun01\033[93m]\033[1;97m  $akun2:\033[93m[\033[1;92m$akun02\033[93m]\033[1;97m  $akun3:\033[93m[\033[1;92m$akun03\033[93m]\033[1;97m  $akun4:\033[93m[\033[1;92m$akun04\033[93m]\033[1;97m"
 echo -e "\e[38;5;239m════════════════════════════════════════════════════"
+echo -e " $COLOR1╔═════════════════════ • MENU • ════════════════════╗${NC}"
 echo -ne "\e[1;93m  [\e[1;32m1\e[1;93m]\033[1;31m • \e[1;97mSSH OPENVPN" && echo -e "   \e[1;93m  [\e[1;32m7\e[1;93m]\033[1;31m • \e[1;97mNOTIBOT"
 echo -ne "\e[1;93m  [\e[1;32m2\e[1;93m]\033[1;31m • \e[1;97mXRAY/VMESS"  && echo -e "    \e[1;93m  [\e[1;32m8\e[1;93m]\033[1;31m • \e[1;97mTEMAS"
 echo -ne "\e[1;93m  [\e[1;32m3\e[1;93m]\033[1;31m • \e[1;97mXRAY/VLESS"  && echo -e "    \e[1;93m  [\e[1;32m9\e[1;93m]\033[1;31m • \e[1;97mUPDATE"
 echo -ne "\e[1;93m  [\e[1;32m4\e[1;93m]\033[1;31m • \e[1;97mTROJAN"      && echo -e "        \e[1;93m  [\e[1;32m10\e[1;93m]\033[1;31m • \e[1;97mSISTEMA"
 echo -ne "\e[1;93m  [\e[1;32m5\e[1;93m]\033[1;31m • \e[1;97mSERVICIOS" && echo -e "   \e[1;93m  [\e[1;32m11\e[1;93m]\033[1;31m • \e[1;97mBACKUP"
 echo -ne "\e[1;93m  [\e[1;32m6\e[1;93m]\033[1;31m • \e[1;97mTELEGRAM BOT"&& echo -e "  \e[1;93m  [\e[1;32m12\e[1;93m]\033[1;31m • \e[1;97mREINICIAR"
+echo -e " $COLOR1╚════════════════════════════════════════════════════════╝${NC}"
 echo -e ""
 #read -p " Selecciona Una Opcion : " opt
 echo -e ""
@@ -462,10 +432,10 @@ else
 ressee="menu"
 bottt="menu"
 fi
-echo -e "    $COLOR1╔═════════════════════════════════════════════════╗${NC}"
-echo -e "    $COLOR1║$NC  ${WH}Total    $COLOR1║${NC}    ${WH}Today     ${WH}Yesterday     ${WH}Month         ${NC}"
+#echo -e "    $COLOR1╔═════════════════════════════════════════════════╗${NC}"
+echo -e "    $COLOR1║$NC  ${WH}Total    $COLOR1║${NC}    ${WH}Hoy     ${WH}Ayer     ${WH}Mes         ${NC}"
 echo -e "    $COLOR1║$NC ${WH}Bantwidth $COLOR1║${NC}  ${WH}$today_tx $today_txv   ${WH}$yesterday_tx $yesterday_txv   ${WH}$month_tx $month_txv$COLOR1${NC}"
-echo -e "    $COLOR1╚═════════════════════════════════════════════════╝${NC}"
+#echo -e "    $COLOR1╚═════════════════════════════════════════════════╝${NC}"
 DATE=$(date +'%Y-%m-%d')
 datediff() {
 d1=$(date -d "$1" +%s)
@@ -531,14 +501,10 @@ wget https://raw.githubusercontent.com/SatanTech/Premium/main/menu/install-up.sh
 chmod +x install_up.sh
 ./install_up.sh
 }
-echo -e "         $COLOR1╔═════════════════════════════════════════╗${NC}"
-echo -e "         $COLOR1║$NC      ${WH}Versi  ${NC}: ${WH}$(cat /opt/.ver) Version${NC}$COLOR1"
-echo -e "         $COLOR1║$NC      ${WH}Client${NC} : ${WH}$author${NC}"
-echo -e "         $COLOR1║$NC      ${WH}Durasi${NC} : ${WH}$certificate hari${NC}$COLOR1"
-echo -e "         $COLOR1║$NC      ${WH}Expiry${NC} : ${WH}$Exp2 $sts ${NC}$COLOR1"
-echo -e "         $COLOR1╚═════════════════════════════════════════╝${NC}"
+#echo -e "         $COLOR1╔═════════════════════════════════════════╗${NC}"
+#echo -e "         $COLOR1╚═════════════════════════════════════════╝${NC}"
 echo -e ""
-echo -ne " ${WH}Select menu ${COLOR1}: ${WH}"; read opt
+echo -ne " ${WH}Selecciona una opcion${COLOR1}: ${WH}"; read opt
 case $opt in
 01 | 1) clear ; m-sshovpn ;;
 02 | 2) clear ; m-vmess ;;
