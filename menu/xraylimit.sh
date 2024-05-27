@@ -9,7 +9,7 @@ WH='\033[1;37m'
 ipsaya=$(wget -qO- ipinfo.io/ip)
 data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 date_list=$(date +"%Y-%m-%d" -d "$data_server")
-data_ip="https://raw.githubusercontent.com/RMBL-VPN/permission/main/ipmini"
+data_ip="https://raw.githubusercontent.com/darnix1/vip/main/izin"
 checking_sc() {
 useexp=$(curl -sS $data_ip | grep $ipsaya | awk '{print $3}')
 if [[ $date_list < $useexp ]]; then
@@ -28,7 +28,7 @@ echo -e "$COLOR1└────────────────────�
 exit
 fi
 }
-#checking_sc
+checking_sc
 cd
 bash2=$( pgrep bash | wc -l )
 if [[ $bash2 -gt "20" ]]; then
