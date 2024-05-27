@@ -21,7 +21,7 @@ checking_sc() {
         exit
     fi
 }
-checking_sc
+#checking_sc
 
 domain=$(cat /etc/xray/domain)
 #color
