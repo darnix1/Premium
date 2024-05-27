@@ -138,8 +138,8 @@ install_ssl(){
 apt -y install nginx php php-fpm php-cli php-mysql libxml-parser-perl
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
-curl https://raw.githubusercontent.com/SatanTech/Premium/main/install/nginx.conf > /etc/nginx/nginx.conf
-curl https://raw.githubusercontent.com/SatanTech/Premium/main/install/vps.conf > /etc/nginx/conf.d/vps.conf
+curl https://raw.githubusercontent.com/darnix1/Premium/main/install/nginx.conf > /etc/nginx/nginx.conf
+curl https://raw.githubusercontent.com/darnix1/Premium/main/install/vps.conf > /etc/nginx/conf.d/vps.conf
 sed -i 's/listen = \/var\/run\/php-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php/fpm/pool.d/www.conf
 useradd -m vps;
 mkdir -p /home/vps/public_html
@@ -147,16 +147,16 @@ echo "<?php phpinfo() ?>" > /home/vps/public_html/info.php
 chown -R www-data:www-data /home/vps/public_html
 chmod -R g+rw /home/vps/public_html
 cd /home/vps/public_html
-wget -O /home/vps/public_html/index.html "https://raw.githubusercontent.com/SatanTech/Premium/main/install/index.html1"
+wget -O /home/vps/public_html/index.html "https://raw.githubusercontent.com/darnix1/Premium/main/install/index.html1"
 /etc/init.d/nginx restart
 
 # install badvpn
 cd
-wget -O /usr/sbin/badvpn "https://raw.githubusercontent.com/SatanTech/Premium/main/install/badvpn" >/dev/null 2>&1
+wget -O /usr/sbin/badvpn "https://raw.githubusercontent.com/darnix1/Premium/main/install/badvpn" >/dev/null 2>&1
 chmod +x /usr/sbin/badvpn > /dev/null 2>&1
-wget -q -O /etc/systemd/system/badvpn1.service "https://raw.githubusercontent.com/SatanTech/Premium/main/install/badvpn1.service" >/dev/null 2>&1
-wget -q -O /etc/systemd/system/badvpn2.service "https://raw.githubusercontent.com/SatanTech/Premium/main/install/badvpn2.service" >/dev/null 2>&1
-wget -q -O /etc/systemd/system/badvpn3.service "https://raw.githubusercontent.com/SatanTech/Premium/main/install/badvpn3.service" >/dev/null 2>&1
+wget -q -O /etc/systemd/system/badvpn1.service "https://raw.githubusercontent.com/darnix1/Premium/main/install/badvpn1.service" >/dev/null 2>&1
+wget -q -O /etc/systemd/system/badvpn2.service "https://raw.githubusercontent.com/darnix1/Premium/main/install/badvpn2.service" >/dev/null 2>&1
+wget -q -O /etc/systemd/system/badvpn3.service "https://raw.githubusercontent.com/darnix1/Premium/main/install/badvpn3.service" >/dev/null 2>&1
 systemctl disable badvpn1 
 systemctl stop badvpn1 
 systemctl enable badvpn1
@@ -257,10 +257,10 @@ sed -i 's/ENABLED=0/ENABLED=1/g' /etc/default/stunnel4
 /etc/init.d/stunnel4 restart
 
 #OpenVPN
-wget https://raw.githubusercontent.com/SatanTech/Premium/main/install/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
+wget https://raw.githubusercontent.com/darnix1/Premium/main/install/vpn.sh &&  chmod +x vpn.sh && ./vpn.sh
 
 # // install lolcat
-wget https://raw.githubusercontent.com/SatanTech/Premium/main/install/lolcat.sh &&  chmod +x lolcat.sh && ./lolcat.sh
+wget https://raw.githubusercontent.com/darnix1/Premium/main/install/lolcat.sh &&  chmod +x lolcat.sh && ./lolcat.sh
 
 # memory swap 1gb
 cd
@@ -306,10 +306,10 @@ echo "Banner /etc/issue.net" >>/etc/ssh/sshd_config
 sed -i 's@DROPBEAR_BANNER=""@DROPBEAR_BANNER="/etc/issue.net"@g' /etc/default/dropbear
 
 # Ganti Banner
-wget -O /etc/issue.net "https://raw.githubusercontent.com/SatanTech/Premium/main/install/issue.net"
+wget -O /etc/issue.net "https://raw.githubusercontent.com/darnix1/Premium/main/install/issue.net"
 
 #install bbr dan optimasi kernel
-wget https://raw.githubusercontent.com/SatanTech/Premium/main/install/bbr.sh && chmod +x bbr.sh && ./bbr.sh
+wget https://raw.githubusercontent.com/darnix1/Premium/main/install/bbr.sh && chmod +x bbr.sh && ./bbr.sh
 
 # blokir torrent
 iptables -A FORWARD -m string --string "get_peers" --algo bm -j DROP
@@ -333,10 +333,10 @@ netfilter-persistent reload
 
 # download script
 cd /usr/bin
-wget -O issue "https://raw.githubusercontent.com/SatanTech/Premium/main/install/issue.net"
-wget -O m-theme "https://raw.githubusercontent.com/SatanTech/Premium/main/menu/m-theme.sh"
-wget -O speedtest "https://raw.githubusercontent.com/SatanTech/Premium/main/install/speedtest_cli.py"
-wget -O xp "https://raw.githubusercontent.com/SatanTech/Premium/main/install/xp.sh"
+wget -O issue "https://raw.githubusercontent.com/darnix1/Premium/main/install/issue.net"
+wget -O m-theme "https://raw.githubusercontent.com/darnix1/Premium/main/menu/m-theme.sh"
+wget -O speedtest "https://raw.githubusercontent.com/darnix1/Premium/main/install/speedtest_cli.py"
+wget -O xp "https://raw.githubusercontent.com/darnix1/Premium/main/install/xp.sh"
 
 chmod +x issue
 chmod +x m-theme
