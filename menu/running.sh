@@ -32,7 +32,7 @@ echo -e "$COLOR1└────────────────────�
 exit
 fi
 }
-checking_sc
+#checking_sc
 MYIP=$(curl -sS ipv4.icanhazip.com)
 if [ "$res" = "Expired" ]; then
 Exp="\e[36mExpired\033[0m"
