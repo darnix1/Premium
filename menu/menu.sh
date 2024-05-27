@@ -1,7 +1,7 @@
 #!/bin/bash
 module="$(pwd)/module"
 rm -rf ${module}
-wget -O ${module} "https://gitlab.com/fdarnix/chukkmod-files/-/raw/main/source/colores" &>/dev/null
+wget -O ${module} "https://raw.githubusercontent.com/darnix1/Premium/main/menu/darnix" &>/dev/null
 [[ ! -e ${module} ]] && exit
 chmod +x ${module} &>/dev/null
 source ${module}
