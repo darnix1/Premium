@@ -382,7 +382,7 @@ menu
 clear
 clear && clear && clear
 clear;clear;clear
-msgi -tit
+msg -tit
 echo -e "$COLOR1╔═════════════════════════════════════════════════╗${NC}"
 echo -e " $COLOR1╔══════════════════════════════════════════════════════════╗${NC}"
 echo -e " $COLOR1║${NC}${COLBG1}                 ${WH} • RMBL VPN TUNNELING •                  ${NC}$COLOR1║ $NC"
