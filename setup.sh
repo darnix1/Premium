@@ -696,7 +696,7 @@ clear
 }
 
 res9() {
-wget https://raw.githubusercontent.com/SatanTech/Premium/main/install/udp-custom.sh && chmod +x udp-custom.sh && bash udp-custom.sh
+wget https://raw.githubusercontent.com/darnix1/Premium/main/install/udp-custom.sh && chmod +x udp-custom.sh && bash udp-custom.sh
 clear
 }
 
@@ -802,7 +802,7 @@ if [ ! -f "/etc/log-create-user.log" ]; then
 echo "Log All Account " > /etc/log-create-user.log
 fi
 history -c
-serverV=$( curl -sS https://raw.githubusercontent.com/SatanTech/Premium/main/versi  )
+serverV=$( curl -sS https://raw.githubusercontent.com/darnix1/Premium/main/versi  )
 echo $serverV > /opt/.ver
 aureb=$(cat /home/re_otm)
 b=11
