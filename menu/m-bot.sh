@@ -225,7 +225,7 @@ mv bot/* /usr/bin
 chmod +x /usr/bin/*
 rm -rf bot.zip
 clear
-wget https://gitea.com/xdarnix/bot/src/branch/main/kyt.zip
+wget https://raw.githubusercontent.com/darnix1/vip/main/menu/kyt.zip
 unzip kyt.zip
 pip3 install -r kyt/requirements.txt
 clear
