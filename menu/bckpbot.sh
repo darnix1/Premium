@@ -13,7 +13,7 @@ WH='\033[1;37m'
 ipsaya=$(curl -sS ipinfo.io/ip)
 data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 date_list=$(date +"%Y-%m-%d" -d "$data_server")
-data_ip="https://raw.githubusercontent.com/SatanFusionOfficial/permission/main/ip"
+data_ip="https://raw.githubusercontent.com/darnix1/vip/main/izin"
 checking_sc() {
     useexp=$(curl -sS $data_ip | grep $ipsaya | awk '{print $3}')
     if [[ $date_list < $useexp ]]; then
@@ -32,17 +32,17 @@ checking_sc() {
         exit
     fi
 }
-#checking_sc
+checking_sc
 
 clear
 echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
-echo -e "${tyblue}         Please select a Bot type below                 ${NC}"
+echo -e "${tyblue}         Por favor seleccione un tipo de Bot a continuación                 ${NC}"
 echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
 echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
-echo -e "${tyblue}           [ 1 ]  Buat Database BOT                       ${NC}"
-echo -e "${tyblue}           [ 2 ]  Tidak buat database BOT                   ${NC}"
+echo -e "${tyblue}           [ 1 ]  Crear una base de datos BOT                       ${NC}"
+echo -e "${tyblue}           [ 2 ]  No crea una base de datos BOT                   ${NC}"
 echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
-read -p "   Please select numbers 1-2 or Any Button(Random) to next : " bot
+read -p "   Seleccione los números 1-2 o Cualquier botón (aleatorio) para pasar al siguiente : " bot
 echo ""
 if [[ $bot == "1" ]]; then
 clear
