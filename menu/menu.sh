@@ -1,4 +1,11 @@
 #!/bin/bash
+module="$(pwd)/module"
+rm -rf ${module}
+wget -O ${module} "https://gitlab.com/fdarnix/chukkmod-files/-/raw/main/source/colores" &>/dev/null
+[[ ! -e ${module} ]] && exit
+chmod +x ${module} &>/dev/null
+source ${module}
+
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
 MYIP=$(wget -qO- ifconfig.me)
 colornow=$(cat /etc/rmbl/theme/color.conf)
@@ -375,6 +382,7 @@ menu
 clear
 clear && clear && clear
 clear;clear;clear
+msgi -tit
 echo -e "$COLOR1╔═════════════════════════════════════════════════╗${NC}"
 echo -e " $COLOR1╔══════════════════════════════════════════════════════════╗${NC}"
 echo -e " $COLOR1║${NC}${COLBG1}                 ${WH} • RMBL VPN TUNNELING •                  ${NC}$COLOR1║ $NC"
