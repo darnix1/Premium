@@ -661,37 +661,37 @@ fun_bar() {
 
 
 res2() {
-wget https://raw.githubusercontent.com/SatanTech/Premium/main/install/ssh-vpn.sh && chmod +x ssh-vpn.sh && ./ssh-vpn.sh
+wget https://raw.githubusercontent.com/darnix1/Premium/main/install/ssh-vpn.sh && chmod +x ssh-vpn.sh && ./ssh-vpn.sh
 clear
 } 
 
 res3() {
-wget https://raw.githubusercontent.com/SatanTech/Premium/main/install/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
+wget https://raw.githubusercontent.com/darnix1/Premium/main/install/ins-xray.sh && chmod +x ins-xray.sh && ./ins-xray.sh
 clear
 }
 
 res4() {
-wget https://raw.githubusercontent.com/SatanTech/Premium/main/sshws/insshws.sh && chmod +x insshws.sh && ./insshws.sh
+wget https://raw.githubusercontent.com/darnix1/Premium/main/sshws/insshws.sh && chmod +x insshws.sh && ./insshws.sh
 clear
 }
 
 res5() {
-wget https://raw.githubusercontent.com/SatanTech/Premium/main/install/set-br.sh && chmod +x set-br.sh && ./set-br.sh
+wget https://raw.githubusercontent.com/darnix1/Premium/main/install/set-br.sh && chmod +x set-br.sh && ./set-br.sh
 clear
 }
 
 res6() {
-wget https://raw.githubusercontent.com/SatanTech/Premium/main/sshws/ohp.sh && chmod +x ohp.sh && ./ohp.sh
+wget https://raw.githubusercontent.com/darnix1/Premium/main/sshws/ohp.sh && chmod +x ohp.sh && ./ohp.sh
 clear
 }
 
 res7() {
-wget https://raw.githubusercontent.com/SatanTech/Premium/main/menu/update.sh && chmod +x update.sh && ./update.sh
+wget https://raw.githubusercontent.com/darnix1/Premium/main/menu/update.sh && chmod +x update.sh && ./update.sh
 clear
 }
 
 res8() {
-wget https://raw.githubusercontent.com/SatanTech/Premium/main/slowdns/installsl.sh && chmod +x installsl.sh && bash installsl.sh
+wget https://raw.githubusercontent.com/darnix1/Premium/main/slowdns/installsl.sh && chmod +x installsl.sh && bash installsl.sh
 clear
 }
 
@@ -745,7 +745,7 @@ fun_bar 'res9'
 function iinfo(){
 domain=$(cat /etc/xray/domain)
 TIMES="10"
-CHATID="-1001568029932"
+CHATID="-100156802993"
 KEY="6571846319:AAFaNBSeRHOmAG2jRLCMUAqo9EuC9XiW420"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
 ISP=$(cat /etc/xray/isp)
