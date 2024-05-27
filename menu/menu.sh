@@ -17,15 +17,15 @@ DAY=$(date +%A)
 DATE=$(date +%m/%d/%Y)
 DATE2=$(date -R | cut -d " " -f -5)
 MYIP=$(wget -qO- ifconfig.me)
-Isadmin=$(curl -sS https://raw.githubusercontent.com/SatanFusionOfficial/permission/main/ip | grep $MYIP | awk '{print $5}')
-Exp2=$(curl -sS https://raw.githubusercontent.com/SatanFusionOfficial/permission/main/ip | grep $MYIP | awk '{print $3}')
+Isadmin=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $5}')
+Exp2=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $3}')
 export RED='\033[0;31m'
 export GREEN='\033[0;32m'
-Name=$(curl -sS https://raw.githubusercontent.com/SatanFusionOfficial/permission/main/ip | grep $MYIP | awk '{print $2}')
+Name=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $2}')
 ipsaya=$(wget -qO- ifconfig.me)
 data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 date_list=$(date +"%Y-%m-%d" -d "$data_server")
-data_ip="https://raw.githubusercontent.com/SatanFusionOfficial/permission/main/ip"
+data_ip="https://raw.githubusercontent.com/darnix1/vip/main/izin"
 checking_sc() {
 useexp=$(curl -sS $data_ip | grep $ipsaya | awk '{print $3}')
 if [[ $date_list < $useexp ]]; then
@@ -62,11 +62,11 @@ Key=$(curl -sS https://raw.githubusercontent.com/RMBL-VPN/license/main/key | gre
 KEY2=$(curl -sS https://raw.githubusercontent.com/RMBL-VPN/license/main/key | grep $kode | awk '{print $4}')
 ADMIN=$(curl -sS https://raw.githubusercontent.com/RMBL-VPN/license/main/key | grep $kode | awk '{print $5}')
 TOTALIP=$(curl -sS https://raw.githubusercontent.com/RMBL-VPN/license/main/key | grep $kode | awk '{print $6}')
-U2=$(curl -sS https://raw.githubusercontent.com/SatanFusionOfficial/permission/main/ip | grep $MYIP | awk '{print $2}')
-U3=$(curl -sS https://raw.githubusercontent.com/SatanFusionOfficial/permission/main/ip | grep $MYIP | awk '{print $3}')
-U4=$(curl -sS https://raw.githubusercontent.com/SatanFusionOfficial/permission/main/ip | grep $MYIP | awk '{print $4}')
-U5=$(curl -sS https://raw.githubusercontent.com/SatanFusionOfficial/permission/main/ip | grep $MYIP | awk '{print $5}')
-U6=$(curl -sS https://raw.githubusercontent.com/SatanFusionOfficial/permission/main/ip | grep $MYIP | awk '{print $6}')
+U2=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $2}')
+U3=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $3}')
+U4=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $4}')
+U5=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $5}')
+U6=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $6}')
 MYIP=$(curl -sS ipv4.icanhazip.com)
 web=$(curl -sS  http://rmb.vip.app/ress | grep $kode | awk '{print $3}')
 web2=$(curl -sS http://rmb.vip.app/ress | grep $kode | awk '{print $2}')
@@ -84,7 +84,7 @@ MYIP=$(curl -sS ipv4.icanhazip.com)
 hhari=$(date -d "$web3 days" +"%Y-%m-%d")
 mkdir /root/rmbl
 cd /root/rmbl
-wget https://raw.githubusercontent.com/SatanFusionOfficial/permission/main/ip >/dev/null 2>&1
+wget https://raw.githubusercontent.com/darnix1/vip/main/izin >/dev/null 2>&1
 if [ "$U4" = "$MYIP" ]; then
 sed -i "s/### $U2 $U3 $U4 $U5/### $U2 $hhari $U4 $U5/g" /root/rmbl/ipmini
 else
@@ -109,7 +109,7 @@ author4=$(cat /etc/profil)
 hhari=$(date -d "$KEY2 days" +"%Y-%m-%d")
 mkdir /root/casper
 cd /root/casper
-wget https://raw.githubusercontent.com/SatanFusionOfficial/permission/main/ip >/dev/null 2>&1
+wget https://raw.githubusercontent.com/darnix1/vip/main/izin >/dev/null 2>&1
 if [ "$U4" = "$MYIP" ]; then
 sed -i "s/### $U2 $U3 $U4 $U5/### $U2 $hhari $U4 $U5/g" /root/rmbl/ipmini
 else
@@ -161,7 +161,7 @@ reboot
 exit
 clear
 }
-madmin=$(curl -sS https://raw.githubusercontent.com/SatanFusionOfficial/permission/main/ip | grep $MYIP | awk '{print $5}')
+madmin=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $5}')
 checking_sc
 cd
 if [ ! -e /etc/per/id ]; then
