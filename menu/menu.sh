@@ -425,7 +425,7 @@ echo -e "\033[1;37m  •  SERVIDOR    \033[1;32m$MYIP \033[1;31m. \033[1;33m"
 echo -e "\033[1;37m  •  RAM USADO   \033[1;32m$tram / $uram MB \033[1;31m. \033[1;33m"
 echo -e "\033[1;37m  •  VERSION  \033[1;32m   $stl"  
 echo -e "\033[38;5;239m═════════════════\e[48;5;2m\e[38;5;22m   SERVICIOS   \e[0m\e[38;5;239m════════════════════"
-echo -ne "  \033[1;97m[ SSHWS : ${status_ws} ] \033[1;97m [ XRAY : ${status_xray} ]\033[1;97m [ NGINX : ${status_nginx} ]\n                    DROP:$status_dropbear \n" && echo -ne "\033[1;37m TRAFICO \033[1;32m.\033[1;33m.\033[1;31m.\033[1;33m" && echo -ne "\e[1;93m[\e[1;32m$today_val\e[1;93m]\033[1;31m\e[1;38;5;220m $today_tk \e[1;97m\e[0;97m" && echo -ne "\033[1;97m<•> \033[1;32m"  && echo -ne "\e[1;93m[\e[1;32m$month_val\e[1;93m]\033[1;31m\e[1;38;5;220m $month_tk\e[1;97m\e[0;97m\n" 
+echo -e "  \033[1;97m[ SSHWS : ${status_ws} ] \033[1;97m [ XRAY : ${status_xray} ]\033[1;97m [ NGINX : ${status_nginx} ]" 
 
 akun1="SSHWS"
 akun2="VMESS"
