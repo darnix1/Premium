@@ -414,6 +414,17 @@ echo -e " $COLOR1║$NC ${WH}[${COLOR1}05${WH}]${NC} ${COLOR1}• ${WH}RUNNING  
 echo -e " $COLOR1║$NC ${WH}[${COLOR1}06${WH}]${NC} ${COLOR1}• ${WH}BOT AKUN  ${WH}[${COLOR1}Menu${WH}]   ${NC} $COLOR1║${NC}  ${WH}[${COLOR1}12${WH}]${NC} ${COLOR1}• ${WH}REBOOT     ${WH}[${COLOR1}Menu${WH}] $COLOR1║${NC}" 
 echo -e " $COLOR1╚════════════════════════════════════════════════════════╝${NC}"
 
+echo -e "\e[38;5;239m════════════════════════════════════════════════════"
+echo -e "         \033[45m \033[103m \033[107m\033[30m SCRIPT DARNIX OPTIMIZADO \033[0m"
+echo -e ""
+echo -e "\033[38;5;239m═════════════════\e[48;5;1m\e[38;5;230m  MENU AUTO  \e[0m\e[38;5;239m════════════════════"
+echo -e ""
+echo -e "\033[1;37m  •  S.O         \033[1;32m$MODEL2 \033[1;31m. \033[1;33m"
+echo -e "\033[1;37m  •  DOMINIO     \033[1;32m$(cat /etc/xray/domain) \033[1;31m. \033[1;33m"
+echo -e "\033[1;37m  •  SERVIDOR    \033[1;32m$MYIP \033[1;31m. \033[1;33m"
+echo -e "\033[1;37m  •  RAM USADO   \033[1;32m$tram / $uram MB \033[1;31m. \033[1;33m"
+echo -e "\033[1;37m  •  VERSION     \033[1;32m$stl"
+echo -e "\033[38;5;239m═════════════════\e[48;5;2m\e[38;5;22m   SERVICIOS   \e[0m\e[38;5;239m════════════════════"
 
 echo -e "  \033[1;97m[ SSHWS : ${status_ws} ] \033[1;97m [ XRAY : ${status_xray} ]\033[1;97m [ NGINX : ${status_nginx} ]" 
 
@@ -438,7 +449,7 @@ echo -ne "\e[1;93m  [\e[1;32m4\e[1;93m]\033[1;31m • \e[1;97mTROJAN"      && ec
 echo -ne "\e[1;93m  [\e[1;32m5\e[1;93m]\033[1;31m • \e[1;97mSERVICIOS" && echo -e "   \e[1;93m  [\e[1;32m11\e[1;93m]\033[1;31m • \e[1;97mBACKUP"
 echo -ne "\e[1;93m  [\e[1;32m6\e[1;93m]\033[1;31m • \e[1;97mTELEGRAM BOT"&& echo -e "  \e[1;93m  [\e[1;32m12\e[1;93m]\033[1;31m • \e[1;97mREINICIAR"
 echo -e ""
-read -p " Selecciona Una Opcion : " opt
+#read -p " Selecciona Una Opcion : " opt
 echo -e ""
 
 if [ "$Isadmin" = "ON" ]; then
