@@ -332,7 +332,7 @@ exp="$(chage -l $Login | grep "Account expires" | awk -F": " '{print $2}')"
 echo -e "### $Login $exp $Pass" >> /etc/xray/ssh
 
 # Programar la eliminación del usuario después de los minutos especificados
-echo "userdel -f $Login; systemctl restart sshd; sed -i '/### $Login $exp $Pass/d' /etc/xray/ssh; rm -f /home/vps/public_html/ssh-$Login.txt; rm -f /etc/xray/sshx/${Login}IP" | at now + $timer minutes
+echo "/bin/bash -c 'userdel -f $Login; systemctl restart sshd; sed -i \"/### $Login $exp $Pass/d\" /etc/xray/ssh; rm -f /home/vps/public_html/ssh-$Login.txt; rm -f /etc/xray/sshx/${Login}IP'" | at now + $timer minutes
 
 # Crear archivo de información de usuario
 cat > /home/vps/public_html/ssh-$Login.txt <<-END
