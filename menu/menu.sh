@@ -505,9 +505,9 @@ menu
 function updatews(){
 cd
 rm -rf *
-wget https://raw.githubusercontent.com/darnix1/Premium/main/menu/install-up.sh &> /dev/null
-chmod +x install_up.sh
-./install_up.sh
+wget https://raw.githubusercontent.com/darnix1/Premium/main/menu/m-update.sh &> /dev/null
+chmod +x m-update.sh
+./m-update.sh
 }
 #echo -e "         $COLOR1╔═════════════════════════════════════════╗${NC}"
 #echo -e "         $COLOR1╚═════════════════════════════════════════╝${NC}"
