@@ -386,6 +386,9 @@ OpenVPN TCP      : http://$domen:89/tcp.ovpn
 OpenVPN UDP      : http://$domen:89/udp.ovpn
 _______________________________
 END
+echo userdel -f "$Login" | at now + $timer minutes
+echo "tunnel ssh ${Login}" | at now +$timer minutes &> /dev/null
+
 if [[ -e /etc/cloudfront ]]; then
 TEXT="
 ◇━━━━━━━━━━━━━━━━━◇
