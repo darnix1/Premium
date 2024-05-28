@@ -435,6 +435,17 @@ fi
 echo -e "    $COLOR1║$NC  ${WH}Total    $COLOR1║${NC}    ${WH}Hoy     ${WH}   Ayer     ${WH}     Mes         ${NC}"
 echo -e "    $COLOR1║$NC ${WH}Bantwidth $COLOR1║${NC}  ${WH}$today_tx $today_txv   ${WH}$yesterday_tx $yesterday_txv   ${WH}$month_tx $month_txv$COLOR1${NC}"
 #echo -e "    $COLOR1╚═════════════════════════════════════════════════╝${NC}"
+serverV=$( curl -sS https://raw.githubusercontent.com/darnix1/Premium/main/versi)
+myver="$(cat /opt/.ver)"
+
+if [[ $serverV > $myver ]]; then
+echo -e "$RED┌─────────────────────────────────────────────────┐${NC}"
+echo -e "$RED $NC ${COLOR1}[100]${NC} • ACTUALIZAR V$serverV" 
+echo -e "$RED└─────────────────────────────────────────────────┘${NC}"
+up2u="updatews"
+else
+up2u="menu"
+fi
 DATE=$(date +'%Y-%m-%d')
 datediff() {
 d1=$(date -d "$1" +%s)
@@ -496,7 +507,7 @@ menu
 function updatews(){
 cd
 rm -rf *
-wget https://raw.githubusercontent.com/SatanTech/Premium/main/menu/install-up.sh &> /dev/null
+wget https://raw.githubusercontent.com/darnix1/Premium/main/menu/install-up.sh &> /dev/null
 chmod +x install_up.sh
 ./install_up.sh
 }
