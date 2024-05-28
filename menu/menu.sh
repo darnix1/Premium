@@ -1,10 +1,71 @@
 #!/bin/bash
-module="$(pwd)/module"
-rm -rf ${module}
-wget -O ${module} "https://raw.githubusercontent.com/darnix1/Premium/main/menu/darnix" &>/dev/null
-[[ ! -e ${module} ]] && exit
-chmod +x ${module} &>/dev/null
-source ${module}
+msg() { ##-->> COLORES, TITULO, BARRAS
+  if [[ ! -e $colors ]]; then
+    COLOR[0]='\033[1;37m' #GRIS='\033[1;37m'
+    COLOR[1]='\e[31m'     #ROJO='\e[31m'
+    COLOR[2]='\e[32m'     #VERDE='\e[32m'
+    COLOR[3]='\e[33m'     #AMARILLO='\e[33m'
+    COLOR[4]='\e[34m'     #AZUL='\e[34m'
+    COLOR[5]='\e[91m'     #ROJO-NEON='\e[91m'
+    COLOR[6]='\033[1;97m' #BALNCO='\033[1;97m'
+
+  else
+    local COL=0
+    for number in $(cat $colors); do
+      case $number in
+      1) COLOR[$COL]='\033[1;37m' ;;
+      2) COLOR[$COL]='\e[31m' ;;
+      3) COLOR[$COL]='\e[32m' ;;
+      4) COLOR[$COL]='\e[33m' ;;
+      5) COLOR[$COL]='\e[34m' ;;
+      6) COLOR[$COL]='\e[35m' ;;
+      7) COLOR[$COL]='\033[1;36m' ;;
+      esac
+      let COL++
+    done
+  fi
+  NEGRITO='\e[1m'
+  SINCOLOR='\e[0m'
+  case $1 in
+  -ne) cor="${COLOR[1]}${NEGRITO}" && echo -ne "${cor}${2}${SINCOLOR}" ;;
+  -nazu) cor="${COLOR[6]}${NEGRITO}" && echo -ne "${cor}${2}${SEMCOR}";;
+  -ama) cor="${COLOR[3]}${NEGRITO}" && echo -e "${cor}${2}${SINCOLOR}" ;;
+  -verm) cor="${COLOR[3]}${NEGRITO}[!] ${COLOR[1]}" && echo -e "${cor}${2}${SINCOLOR}" ;;
+  -verm2) cor="${COLOR[1]}${NEGRITO}" && echo -e "${cor}${2}${SINCOLOR}" ;;
+  -azu) cor="${COLOR[6]}${NEGRITO}" && echo -e "${cor}${2}${SINCOLOR}" ;;
+  -verd) cor="${COLOR[2]}${NEGRITO}" && echo -e "${cor}${2}${SINCOLOR}" ;;
+  -bra) cor="${COLOR[0]}${SINCOLOR}" && echo -e "${cor}${2}${SINCOLOR}" ;;
+  "-bar2" | "-bar") cor="${COLOR[1]}════════════════════════════════════════════════════" && echo -e "${SINCOLOR}${cor}${SINCOLOR}" ;;
+  # Centrar texto
+  -tit) echo -e "\e[38;5;239m════════════════════════════════════════════════════"
+echo -e "\e[1;33m ❰❰❰ ░Ｄ░ ░Ａ░ ░Ｒ░ ░Ｎ░ ░Ｉ░ ░Ｘ░ ❱❱❱ 𝗩𝗲𝗿𝘀𝗶𝗼𝗻: $(cat /opt/.ver) \e[0m"
+echo -e "\e[38;5;239m════════════════════════════════════════════════════"
+  esac
+}
+
+enter(){
+  msg -bar
+  text="►► ${a_enter:-Presione enter para continuar} ◄◄"
+  if [[ -z $1 ]]; then
+    print_center -ama "$text"
+  else
+    print_center "$1" "$text"
+  fi
+  read
+ }
+ 
+selection_fun() {
+  local selection
+  local options="$(seq 0 $1 | paste -sd "," -)"
+  read -p $'\033[1;97m  └⊳ Seleccione una opción:\033[1;32m ' selection
+  if [[ $options =~ (^|[^\d])$selection($|[^\d]) ]]; then
+    echo $selection
+  else
+    echo "Selección no válida: $selection" >&2
+    exit 1
+  fi
+}
+
 
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
 MYIP=$(wget -qO- ifconfig.me)
@@ -495,26 +556,25 @@ chmod +x m-update.sh
 #echo -e "         $COLOR1╔═════════════════════════════════════════╗${NC}"
 #echo -e "         $COLOR1╚═════════════════════════════════════════╝${NC}"
 echo -e ""
-echo -ne " ${WH}Selecciona una opcion${COLOR1}: ${WH}"; read opt
-case $opt in
-01 | 1) clear ; m-sshovpn ;;
-02 | 2) clear ; m-vmess ;;
-03 | 3) clear ; m-vless ;;
-04 | 4) clear ; m-trojan ;;
-05 | 5) clear ; running ;;
-06 | 6) clear ; m-bot ;;
-07 | 7) clear ; m-bot2  ;;
-08 | 8) clear ; m-theme ;;
-09 | 9) clear ; m-update ;;
-10 | 10) clear ; m-system ;;
-11 | 11) clear ; m-backup;;
-12 | 12) clear ; reboot ;;
-13 | 13) clear ; $ressee ;;
-14 | 14) clear ; key ;;
-89 | 89) clear ; bannner ;;
-88 | 88) clear ; new ;;
-77 | 77) clear ; newx ;;
+selection=$(selection_fun 100)
+case ${selection} in
+1) m-sshovpn ;;
+2) m-vmess ;;
+3) m-vless ;;
+4) m-trojan ;;
+5) running ;;
+6) m-bot ;;
+7) m-bot2 ;;
+8) m-theme ;;
+9) m-update ;;
+10) m-system ;;
+11) m-backup ;;
+12) reboot ;;
 100) clear ; $up2u ;;
-00 | 0) clear ; menu ;;
-*) clear ; menu ;;
+#14) remove_script ;;
+0)
+  cd menu && clear
+  clear
+  exit 0
+  ;;
 esac
