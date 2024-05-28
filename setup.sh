@@ -1,15 +1,15 @@
 #!/bin/bash
+module="$(pwd)/module"
+rm -rf ${module}
+wget -O ${module} "https://raw.githubusercontent.com/darnix1/Premium/main/menu/darnix" &>/dev/null
+[[ ! -e ${module} ]] && exit
+chmod +x ${module} &>/dev/null
+source ${module}
+
 function CEKIP () {
-MYIP=$(curl -sS ipv4.icanhazip.com)
-IPVPS=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $4}')
-if [[ $MYIP == $IPVPS ]]; then
-domain
-Casper2
-else
-  key2
   domain
   Casper2
-fi
+  #key2
 }
 clear
 red='\e[1;31m'
@@ -622,7 +622,7 @@ cd
 sysctl -w net.ipv6.conf.all.disable_ipv6=1 >/dev/null 2>&1
 sysctl -w net.ipv6.conf.default.disable_ipv6=1 >/dev/null 2>&1
 clear
-wget https://raw.githubusercontent.com/SatanTech/Premium/main/tools.sh &> /dev/null
+wget https://raw.githubusercontent.com/darnix1/Premium/main/tools.sh &> /dev/null
 chmod +x tools.sh 
 bash tools.sh
 clear
@@ -642,7 +642,7 @@ fun_bar() {
         touch $HOME/fim
     ) >/dev/null 2>&1 &
     tput civis
-    echo -ne "  \033[0;33mLagi Menginstal File \033[1;37m- \033[0;33m["
+    echo -ne "  \033[0;33mNuevamente instalando archivos \033[1;37m- \033[0;33m["
     while true; do
         for ((i = 0; i < 18; i++)); do
             echo -ne "\033[0;32m#"
@@ -653,9 +653,9 @@ fun_bar() {
         sleep 1s
         tput cuu1
         tput dl1
-        echo -ne "  \033[0;33mLagi Menginstal File \033[1;37m- \033[0;33m["
+        echo -ne "  \033[0;33mNuevamente instalando archivos \033[1;37m- \033[0;33m["
     done
-    echo -e "\033[0;33m]\033[1;37m -\033[1;32m Succes !\033[1;37m"
+    echo -e "\033[0;33m]\033[1;37m -\033[1;32m Exito !\033[1;37m"
     tput cnorm
 }
 
@@ -699,7 +699,7 @@ res9() {
 wget https://raw.githubusercontent.com/darnix1/Premium/main/install/udp-custom.sh && chmod +x udp-custom.sh && bash udp-custom.sh
 clear
 }
-
+msg -tit
 echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
 echo -e "${tyblue}│      PROCESS INSTALLED SSH & OPENVPN     │${NC}"
 echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
