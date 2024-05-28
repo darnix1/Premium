@@ -1,4 +1,54 @@
 #!/bin/bash
+msg() { ##-->> COLORES, TITULO, BARRAS
+  if [[ ! -e $colors ]]; then
+    COLOR[0]='\033[1;37m' #GRIS='\033[1;37m'
+    COLOR[1]='\e[31m'     #ROJO='\e[31m'
+    COLOR[2]='\e[32m'     #VERDE='\e[32m'
+    COLOR[3]='\e[33m'     #AMARILLO='\e[33m'
+    COLOR[4]='\e[34m'     #AZUL='\e[34m'
+    COLOR[5]='\e[91m'     #ROJO-NEON='\e[91m'
+    COLOR[6]='\033[1;97m' #BALNCO='\033[1;97m'
+
+  else
+    local COL=0
+    for number in $(cat $colors); do
+      case $number in
+      1) COLOR[$COL]='\033[1;37m' ;;
+      2) COLOR[$COL]='\e[31m' ;;
+      3) COLOR[$COL]='\e[32m' ;;
+      4) COLOR[$COL]='\e[33m' ;;
+      5) COLOR[$COL]='\e[34m' ;;
+      6) COLOR[$COL]='\e[35m' ;;
+      7) COLOR[$COL]='\033[1;36m' ;;
+      esac
+      let COL++
+    done
+  fi
+  NEGRITO='\e[1m'
+  SINCOLOR='\e[0m'
+  case $1 in
+  -ne) cor="${COLOR[1]}${NEGRITO}" && echo -ne "${cor}${2}${SINCOLOR}" ;;
+  -nazu) cor="${COLOR[6]}${NEGRITO}" && echo -ne "${cor}${2}${SEMCOR}";;
+  -ama) cor="${COLOR[3]}${NEGRITO}" && echo -e "${cor}${2}${SINCOLOR}" ;;
+  -verm) cor="${COLOR[3]}${NEGRITO}[!] ${COLOR[1]}" && echo -e "${cor}${2}${SINCOLOR}" ;;
+  -verm2) cor="${COLOR[1]}${NEGRITO}" && echo -e "${cor}${2}${SINCOLOR}" ;;
+  -azu) cor="${COLOR[6]}${NEGRITO}" && echo -e "${cor}${2}${SINCOLOR}" ;;
+  -verd) cor="${COLOR[2]}${NEGRITO}" && echo -e "${cor}${2}${SINCOLOR}" ;;
+  -bra) cor="${COLOR[0]}${SINCOLOR}" && echo -e "${cor}${2}${SINCOLOR}" ;;
+  "-bar2" | "-bar") cor="${COLOR[1]}════════════════════════════════════════════════════" && echo -e "${SINCOLOR}${cor}${SINCOLOR}" ;;
+  # Centrar texto
+  -tit) echo -e "\e[38;5;239m════════════════════════════════════════════════════"
+echo -e "\e[1;33m ❰❰❰ ░Ｄ░ ░Ａ░ ░Ｒ░ ░Ｎ░ ░Ｉ░ ░Ｘ░ ❱❱❱ 𝗩𝗲𝗿𝘀𝗶𝗼𝗻: $(cat /opt/.ver) \e[0m"
+echo -e "\e[38;5;239m════════════════════════════════════════════════════"
+  esac
+}
+
+
+
+function sres {
+    echo -e "    \e[97m\033[1;41m ENTER SIN RESPUESTA REGRESA A MENU ANTERIOR \033[0;97m"
+}
+
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
 colornow=$(cat /etc/rmbl/theme/color.conf)
 NC="\e[0m"
@@ -1175,7 +1225,7 @@ m-sshovpn
 clear
 author=$(cat /etc/profil)
 echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
-echo -e " $COLOR1║${NC}${COLBG1}             ${WH}• SSH PANEL MENU •                     ${NC}$COLOR1║ $NC"
+msg -tit
 echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
 echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
 echo -e " $COLOR1║ $NC  ${WH}[${COLOR1}01${WH}]${NC} ${COLOR1}• ${WH}ADD AKUN${NC}        ${WH}[${COLOR1}05${WH}]${NC} ${COLOR1}• ${WH}CEK USER ONLINE${NC}    $COLOR1║ $NC"
@@ -1189,10 +1239,12 @@ echo -e " $COLOR1║ $NC                                                  ${NC} 
 echo -e " $COLOR1║ $NC  ${WH}[${COLOR1}00${WH}]${NC} ${COLOR1}• ${WH}GO BACK${NC}         ${WH}[${COLOR1}09${WH}]${NC} ${COLOR1}• ${WH}UNLOCK LOGIN${NC}      $COLOR1 ║$NC"
 echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
 echo -e " $COLOR1╔═════════════════════════ ${WH}BY${NC} ${COLOR1}═══════════════════════╗ ${NC}"
-echo -e "  $COLOR1${NC}              ${WH}   • $author •                 $COLOR1 $NC"
+echo -e "  $COLOR1${NC}                  ${WH}   • $author •                 $COLOR1 $NC"
 echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
 echo -e ""
-echo -ne " ${WH}Select menu ${COLOR1}: ${WH}"; read opt
+sres
+echo -e ""
+echo -ne "\033[1;97m   └⊳ Seleccione una opcion [0-10]: \033[1;32m"; read opt
 case $opt in
 01 | 1) clear ; usernew ; exit ;;
 02 | 2) clear ; trial ; exit ;;
@@ -1207,5 +1259,5 @@ case $opt in
 00 | 0) clear ; menu ; exit ;;
 X  | 0) clear ; m-sshovpn ;;
 x) exit ;;
-*) echo "Anda salah tekan " ; sleep 1 ; m-sshovpn ;;
+*) menu ;;
 esac
