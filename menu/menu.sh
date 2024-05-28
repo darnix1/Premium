@@ -573,7 +573,7 @@ case ${selection} in
 100) clear ; $up2u ;;
 #14) remove_script ;;
 0)
-  cd menu && clear
+  cd $HOME && clear
   clear
   exit 0
   ;;
