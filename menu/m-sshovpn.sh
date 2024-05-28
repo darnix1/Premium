@@ -346,7 +346,7 @@ useradd -e `date -d "$hari days" +"%Y-%m-%d"` -s /bin/false -M $Login
 exp="$(chage -l $Login | grep "Account expires" | awk -F": " '{print $2}')"
 echo -e "$Pass\n$Pass\n"|passwd $Login &> /dev/null
 echo -e "### $Login $expi $Pass" >> /etc/xray/ssh
-tmux new-session -d -s $Login "trial ssh $Login $expi $Pass ${timer}"
+tmux new-session -d -s $Login "trialssh $Login $expi $Pass ${timer}"
 cat > /home/vps/public_html/ssh-$Login.txt <<-END
 _______________________________
 Format SSH OVPN Account
@@ -485,11 +485,12 @@ else
 echo "$TEXT" > /etc/notiftele
 bash /etc/tele
 fi
-cat> /etc/cron.d/trialssh${Login} << EOF
+cat > /etc/cron.d/trialssh${Login} <<- EOF
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-*/$timer * * * * root /usr/bin/trial ssh $Login $Pass $expi
+*/$timer * * * * root /usr/bin/trialssh $Login ${timer}
 EOF
+chmod 644 /etc/cron.d/trialssh${Login}
 clear
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 ${NC} ${WH}• Trial SSH Premium Account • " | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
