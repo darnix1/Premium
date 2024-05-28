@@ -415,9 +415,9 @@ echo -ne "\e[1;93m  [\e[1;32m4\e[1;93m]\033[1;31m • \e[1;97mTROJAN"      && ec
 echo -ne "\e[1;93m  [\e[1;32m5\e[1;93m]\033[1;31m • \e[1;97mSERVICIOS" && echo -e "     \e[1;93m  [\e[1;32m11\e[1;93m]\033[1;31m • \e[1;97mBACKUP"
 echo -ne "\e[1;93m  [\e[1;32m6\e[1;93m]\033[1;31m • \e[1;97mTELEGRAM BOT"&& echo -e "  \e[1;93m  [\e[1;32m12\e[1;93m]\033[1;31m • \e[1;97mREINICIAR"
 echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
-echo -e ""
+
 #read -p " Selecciona Una Opcion : " opt
-echo -e ""
+
 
 if [ "$Isadmin" = "ON" ]; then
 #echo -e "$COLOR1┌──────────────── • PANEL ADMIN VIP • ────────────┐${NC}"
@@ -438,7 +438,7 @@ myver="$(cat /opt/.ver)"
 
 if [[ $serverV > $myver ]]; then
 echo -e "$RED┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$RED $NC ${COLOR1}[100]${NC} • ACTUALIZAR V$serverV" 
+echo -e "$RED $NC ${COLOR1}[100]${NC} • ACTUALIZA A LA VERSION $serverV" 
 echo -e "$RED└─────────────────────────────────────────────────┘${NC}"
 up2u="updatews"
 else
