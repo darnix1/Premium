@@ -2,20 +2,17 @@
 user="$3"
 timer="$4"
 function trialssh() {
-    while true; do
-        sleep ${timer}m
-        getent passwd $user  >/dev/null
-        userdel -f $user  >/dev/null 2>&1
-        systemctl restart sshd >/dev/null 2>&1
-        exp=$(grep -wE "^### $user" "/etc/xray/ssh" | cut -d ' ' -f 3 | sort | uniq)
-        pass=$(grep -wE "^### $user" "/etc/xray/ssh" | cut -d ' ' -f 4 | sort | uniq)
-        sed -i "s/### $user $exp $pass//g" /etc/xray/ssh >/dev/null 2>&1 
-        rm /home/vps/public_html/ssh-$user.txt >/dev/null 2>&1
-        rm /etc/xray/sshx/${user}IP >/dev/null 2>&1
-        rm /etc/xray/sshx/${user}login >/dev/null 2>&1
-        break
-    done
+    sleep ${timer}m
+    getent passwd $user >/dev/null && userdel -f $user
+    systemctl restart sshd >/dev/null 2>&1
+    exp=$(grep -wE "^### $user" "/etc/xray/ssh" | cut -d ' ' -f 3 | sort | uniq)
+    pass=$(grep -wE "^### $user" "/etc/xray/ssh" | cut -d ' ' -f 4 | sort | uniq)
+    sed -i "s/### $user $exp $pass//g" /etc/xray/ssh >/dev/null 2>&1 
+    rm -f /home/vps/public_html/ssh-$user.txt >/dev/null 2>&1
+    rm -f /etc/xray/sshx/${user}IP >/dev/null 2>&1
+    rm -f /etc/xray/sshx/${user}login >/dev/null 2>&1
 }
+
 function trialws() {
     while true; do
         sleep ${timer}m
