@@ -302,31 +302,39 @@ echo -e "$COLOR1┌────────────────────�
 echo -e "$COLOR1│${NC}${COLBG1}            ${WH}• TRIAL SSH Account •                ${NC}$COLOR1│ $NC"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
 echo -e ""
+# Pedir al usuario que introduzca el tiempo de expiración en minutos
 until [[ $timer =~ ^[0-9]+$ ]]; do
-read -p "Expired (Minutes): " timer
+    read -p "Ingresa los (Minutos): " timer
 done
+
+# Generar credenciales de usuario aleatorias
 Login=Trial-`</dev/urandom tr -dc X-Z0-9 | head -c4`
-hari=0
 Pass=1
 iplim=1
+
+# Crear directorio si no existe
 if [ ! -e /etc/xray/sshx ]; then
-mkdir -p /etc/xray/sshx
+    mkdir -p /etc/xray/sshx
 fi
+
+# Definir el límite de IP si no está definido
 if [ -z ${iplim} ]; then
-iplim="0"
+    iplim="0"
 fi
-if [[ -e /etc/cloudfront ]]; then
-cloudfront=$(cat /etc/cloudfront)
-else
-cloudfront="Kosong"
-fi
+
+# Crear el archivo de límite de IP
 echo "$iplim" > /etc/xray/sshx/${Login}IP
-expi=`date -d "$hari days" +"%Y-%m-%d"`
-useradd -e `date -d "$hari days" +"%Y-%m-%d"` -s /bin/false -M $Login
+
+# Configurar la cuenta de usuario SSH
+useradd -e `date -d "0 days" +"%Y-%m-%d"` -s /bin/false -M $Login
+echo -e "$Pass\n$Pass\n" | passwd $Login &> /dev/null
 exp="$(chage -l $Login | grep "Account expires" | awk -F": " '{print $2}')"
-echo -e "$Pass\n$Pass\n"|passwd $Login &> /dev/null
-echo -e "### $Login $expi $Pass" >> /etc/xray/ssh
-tmux new-session -d -s $Login "trialssh $Login $expi $Pass ${timer}"
+echo -e "### $Login $exp $Pass" >> /etc/xray/ssh
+
+# Programar la eliminación del usuario después de los minutos especificados
+echo "userdel -f $Login; systemctl restart sshd; sed -i '/### $Login $exp $Pass/d' /etc/xray/ssh; rm -f /home/vps/public_html/ssh-$Login.txt; rm -f /etc/xray/sshx/${Login}IP" | at now + $timer minutes
+
+# Crear archivo de información de usuario
 cat > /home/vps/public_html/ssh-$Login.txt <<-END
 _______________________________
 Format SSH OVPN Account
