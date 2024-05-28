@@ -172,7 +172,10 @@ clear
 echo -e ""
 echo -e "  \033[1;91m Actualizar script...\033[1;37m"
 fun_bar 'res1'
-
+rm /root/install_up.sh
+rm /opt/.ver
+version_up=$( curl -sS https://raw.githubusercontent.com/darnix1/Premium/main/versi)
+echo "$version_up" > /opt/.ver
 echo -e ""
 
 cd
