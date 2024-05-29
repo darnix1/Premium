@@ -205,19 +205,19 @@ TEXT2="
 <code>◇━━━━━━━━━━━━━━◇</code>
 <b> ⚠️ VMESS MULTI LOGIN</b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>DOMAIN : ${domen} </b>
-<b>ISP : ${ISP}</b>
-<b>CITY : ${CITY}</b>
-<b>DATE LOGIN : $DATE</b>
-<b>USERNAME : $vmuser </b>
+<b>DOMINIO : ${domen} </b>
+<b>IP : ${ISP}</b>
+<b>PAIS : ${CITY}</b>
+<b>FECHA LOGIN : $DATE</b>
+<b>USUARIO : $vmuser </b>
 <b>TOTAL LOGIN IP : ${vmhas} </b>
-<b>USAGE : ${gb} </b>
+<b>USADO : ${gb} </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>⚠️ TIME LOGIN : IP LOGIN </b>
+<b>⚠️ TIEMPO LOGIN : IP LOGIN </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
 <code>$vmhas2</code>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<i>${ssvmess}x Multi Login Lock Account $waktulock Minutes...</i>
+<i>${ssvmess}x Multiple login bloqueo cuenta $waktulock Minutos...</i>
 "
 echo "" > /tmp/vm
 sed -i "/${vmuser}/d" /var/log/xray/access.log
@@ -241,19 +241,19 @@ TEXT2="
 <code>◇━━━━━━━━━━━━━━◇</code>
 <b> ⚠️ VMESS MULTI LOGIN</b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>DOMAIN : ${domen} </b>
-<b>ISP : ${ISP}</b>
-<b>CITY : ${CITY}</b>
-<b>DATE LOGIN : $DATE</b>
-<b>USERNAME : $vmuser </b>
+<b>DOMINIO : ${domen} </b>
+<b>IP : ${ISP}</b>
+<b>PAIS : ${CITY}</b>
+<b>FECHA LOGIN : $DATE</b>
+<b>USUARIO : $vmuser </b>
 <b>TOTAL LOGIN IP : ${vmhas} </b>
-<b>USAGE : ${gb} </b>
+<b>USADO : ${gb} </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>⚠️ TIME LOGIN : IP LOGIN </b>
+<b>⚠️ TIEMPO LOGIN : IP LOGIN </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
 <code>$vmhas2</code>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<i>${ssvmess}x Multi Login Auto Lock Account...</i>
+<i>${ssvmess}x Multi Login Auto Bloqueo Activado ✅...</i>
 "
 echo "" > /tmp/vm
 sed -i "/${vmuser}/d" /var/log/xray/access.log
@@ -271,19 +271,19 @@ TEXT="
 <code>◇━━━━━━━━━━━━━━◇</code>
 <b> ⚠️ VMESS MULTI LOGIN</b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>DOMAIN : ${domen} </b>
-<b>ISP : ${ISP}</b>
+<b>DOMINIO : ${domen} </b>
+<b>IP : ${ISP}</b>
 <b>CITY : ${CITY}</b>
-<b>DATE LOGIN : $DATE</b>
-<b>USERNAME : $vmuser </b>
+<b>FECHA LOGIN : $DATE</b>
+<b>USUARIO : $vmuser </b>
 <b>TOTAL LOGIN IP : ${vmhas} </b>
-<b>USAGE : ${gb} </b>
+<b>USADO : ${gb} </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>⚠️ TIME LOGIN : IP LOGIN </b>
+<b>⚠️ TIEMPO LOGIN : IP LOGIN </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
 <code>$vmhas2</code>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<i>${vmessip}x Multi Login : ${ssvmess}x Multi Login Auto Lock Account...</i>
+<i>${vmessip}x Multi Login ❌ : ${ssvmess}x Multi Login Advertencia ⚠️...</i>
 "
 echo "" > /tmp/vm
 sed -i "/${vmuser}/d" /var/log/xray/access.log
@@ -392,19 +392,19 @@ TEXT2="
 <code>◇━━━━━━━━━━━━━━◇</code>
 <b> ⚠️ VLESS MULTI LOGIN</b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>DOMAIN : ${domen} </b>
-<b>ISP : ${ISP}</b>
-<b>CITY : ${CITY}</b>
-<b>DATE LOGIN : $DATE</b>
-<b>USERNAME : $vlus </b>
+<b>DOMINIO : ${domen} </b>
+<b>IP : ${ISP}</b>
+<b>PAIS : ${CITY}</b>
+<b>FECHA LOGIN : $DATE</b>
+<b>USUARIO : $vlus </b>
 <b>TOTAL LOGIN IP : ${vlsss} </b>
-<b>USAGE : ${gb} </b>
+<b>USADO : ${gb} </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>⚠️ TIME LOGIN : IP LOGIN </b>
+<b>⚠️ TIEMPO LOGIN : IP LOGIN </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
 <code>$vlsss2</code>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<i>${ssvless}x Multi Login Auto Lock Account...</i>
+<i>${ssvless}x Multi Login Auto Bloqueo Activado ✅...</i>
 "
 echo "" > /tmp/vl
 sed -i "/${vlus}/d" /var/log/xray/access.log
@@ -422,19 +422,19 @@ TEXT2="
 <code>◇━━━━━━━━━━━━━━◇</code>
 <b> ⚠️ VLESS MULTI LOGIN</b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>DOMAIN : ${domen} </b>
-<b>ISP : ${ISP}</b>
-<b>CITY : ${CITY}</b>
-<b>DATE LOGIN : $DATE</b>
-<b>USERNAME : $vlus </b>
+<b>DOMINIO : ${domen} </b>
+<b>IP : ${ISP}</b>
+<b>PAIS : ${CITY}</b>
+<b>FECHA LOGIN : $DATE</b>
+<b>USUARIO : $vlus </b>
 <b>TOTAL LOGIN IP : ${vlsss} </b>
-<b>USAGE : ${gb} </b>
+<b>USADO : ${gb} </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>⚠️ TIME LOGIN : IP LOGIN </b>
+<b>⚠️ TIEMPO LOGIN : IP LOGIN </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
 <code>$vlsss2</code>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<i>${ssvless}x Multi Login Lock Account $waktulock Minutes...</i>
+<i>${ssvless}x Multi Login Bloqueo cuenta $waktulock Minutos...</i>
 "
 echo "" > /tmp/vl
 sed -i "/${vlus}/d" /var/log/xray/access.log
@@ -458,19 +458,19 @@ TEXT="
 <code>◇━━━━━━━━━━━━━━◇</code>
 <b> ⚠️ VLESS MULTI LOGIN </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>DOMAIN : ${domen} </b>
-<b>ISP : ${ISP}</b>
-<b>CITY : ${CITY}</b>
-<b>DATE LOGIN : $DATE</b>
-<b>USERNAME : $vlus </b>
+<b>DOMINIO : ${domen} </b>
+<b>IP : ${ISP}</b>
+<b>PAIS : ${CITY}</b>
+<b>FECHA LOGIN : $DATE</b>
+<b>USUARIO : $vlus </b>
 <b>TOTAL LOGIN IP : ${vlsss} </b>
-<b>USAGE : ${gb} </b>
+<b>USADO : ${gb} </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>⚠️ TIME LOGIN : IP LOGIN </b>
+<b>⚠️ TIEMPO LOGIN : IP LOGIN </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
 <code>$vlsss2</code>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<i>${vlessip}x Multi Login : ${ssvless}x Multi Login Auto Lock Account..</i>
+<i>${vlessip}x Multi Login ❌: ${ssvless}x Multi Login Advertencia ⚠️..</i>
 "
 echo "" > /tmp/vl
 sed -i "/${vlus}/d" /var/log/xray/access.log
@@ -577,19 +577,19 @@ TEXT2="
 <code>◇━━━━━━━━━━━━━━◇</code>
 <b> ⚠️ TROJAN MULTI LOGIN </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>DOMAIN : ${domen} </b>
-<b>ISP : ${ISP}</b>
-<b>CITY : ${CITY}</b>
-<b>DATE LOGIN : $DATE</b>
-<b>USERNAME : $usrtr </b>
+<b>DOMINIO : ${domen} </b>
+<b>IP : ${ISP}</b>
+<b>PAIS : ${CITY}</b>
+<b>FECHA LOGIN : $DATE</b>
+<b>USUARIO : $usrtr </b>
 <b>TOTAL LOGIN IP : ${trip} </b>
-<b>USAGE : ${gb} </b>
+<b>USADO : ${gb} </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>⚠️ TIME LOGIN : IP LOGIN </b>
+<b>⚠️ TIEMPO LOGIN : IP LOGIN </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
 <code>$trip2</code>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<i>${sstrojan}x Multi Login Auto Lock Account...</i>
+<i>${sstrojan}x Multi Login Auto Bloqueo Activado ✅...</i>
 "
 echo "" > /tmp/tr
 sed -i "/${usrtr}/d" /var/log/xray/access.log
@@ -607,19 +607,19 @@ TEXT2="
 <code>◇━━━━━━━━━━━━━━◇</code>
 <b> ⚠️ TROJAN MULTI LOGIN </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>DOMAIN : ${domen} </b>
-<b>ISP : ${ISP}</b>
-<b>CITY : ${CITY}</b>
-<b>DATE LOGIN : $DATE</b>
-<b>USERNAME : $usrtr </b>
+<b>DOMINIO : ${domen} </b>
+<b>IP : ${ISP}</b>
+<b>PAIS : ${CITY}</b>
+<b>FECHA LOGIN : $DATE</b>
+<b>USUARIO : $usrtr </b>
 <b>TOTAL LOGIN IP : ${trip} </b>
-<b>USAGE : ${gb} </b>
+<b>USADO : ${gb} </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>⚠️ TIME LOGIN : IP LOGIN </b>
+<b>⚠️ TOTAL LOGIN : IP LOGIN </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
 <code>$trip2</code>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<i>${sstrojan}x Multi Login Lock Account $waktulock Minutes...</i>
+<i>${sstrojan}x Multi Login Bloqueo en $waktulock Minutos...</i>
 "
 echo "" > /tmp/tr
 sed -i "/${usrtr}/d" /var/log/xray/access.log
@@ -643,19 +643,19 @@ TEXT="
 <code>◇━━━━━━━━━━━━━━◇</code>
 <b> ⚠️ TROJAN MULTI LOGIN </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>DOMAIN : ${domen} </b>
-<b>ISP : ${ISP}</b>
-<b>CITY : ${CITY}</b>
-<b>DATE LOGIN : $DATE</b>
-<b>USERNAME : $usrtr </b>
+<b>DOMINIO : ${domen} </b>
+<b>IP : ${ISP}</b>
+<b>PAIS : ${CITY}</b>
+<b>FECHA LOGIN : $DATE</b>
+<b>USUARIO : $usrtr </b>
 <b>TOTAL LOGIN IP : ${trip} </b>
-<b>USAGE : ${gb} </b>
+<b>USADO : ${gb} </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>⚠️ TIME LOGIN : IP LOGIN </b>
+<b>⚠️ TIEMPO LOGIN : IP LOGIN </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
 <code>$trip2</code>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<i>${trojanip}x Multi Login : ${sstrojan}x Multi Login Auto Lock Account...</i>
+<i>${trojanip}x Multi Login ❌: ${sstrojan}x Multi Login Advertencia ⚠️...</i>
 "
 echo "" > /tmp/tr
 sed -i "/${usrtr}/d" /var/log/xray/access.log
