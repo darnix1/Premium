@@ -53,6 +53,24 @@ arg="$prev"
 done
 echo "$inu"
 }
+
+function send-log(){
+CHATID=$(cat /etc/perlogin/id)
+KEY=$(cat /etc/perlogin/token)
+TIME="10"
+URL="https://api.telegram.org/bot$KEY/sendMessage"
+TEXT="
+<code>────────────────────</code>
+<b>⚠️NOTIFICACION CUOTA VMESS⚠️</b>
+<code>────────────────────</code>
+<code>Usuario     : </code><code>$vmuser</code>
+<code>limite Cuota: </code><code>$limit</code>
+<code>Usadi       : </code><code>$usage</code>
+<code>────────────────────</code>
+"
+curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
+}
+
 function convert() {
 local -i bytes=$1
 if [[ $bytes -lt 1024 ]]; then
@@ -130,6 +148,7 @@ uuid=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort
 echo "### $vmuser $exp $uuid" >> /etc/vmess/userQuota
 sed -i "/^#vmg $vmuser $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
+send-log
 rm /etc/limit/vmess/${vmuser} >/dev/null 2>&1
 systemctl restart xray
 fi
