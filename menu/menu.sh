@@ -1,4 +1,10 @@
 #!/bin/bash
+dnxroj() { echo -e "\e[1;37;41m${*}\e[0m";}
+dnxver() { echo -e "\e[1;37;42m${*}\e[0m";}
+green() { echo -e "\\033[32;1m${*}\\033[0m"; }
+red() { echo -e "\\033[31;1m${*}\\033[0m"; }
+amacen() { echo -e "\e[1;93m              ${*}"; } 
+
 msg() { ##-->> COLORES, TITULO, BARRAS
   if [[ ! -e $colors ]]; then
     COLOR[0]='\033[1;37m' #GRIS='\033[1;37m'
@@ -35,8 +41,8 @@ msg() { ##-->> COLORES, TITULO, BARRAS
   -azu) cor="${COLOR[6]}${NEGRITO}" && echo -e "${cor}${2}${SINCOLOR}" ;;
   -verd) cor="${COLOR[2]}${NEGRITO}" && echo -e "${cor}${2}${SINCOLOR}" ;;
   -bra) cor="${COLOR[0]}${SINCOLOR}" && echo -e "${cor}${2}${SINCOLOR}" ;;
-  "-bar2" | "-bar") cor="${COLOR[1]}════════════════════════════════════════════════════" && echo -e "${SINCOLOR}${cor}${SINCOLOR}" ;;
-  # Centrar texto
+  -bar2)cor="\e[38;5;239m════════════════════════════════════════════════════" && echo -e "${cor}${SEMCOR}";;
+  -bar)cor="\e[38;5;239m════════════════════════════════════════════════════" && echo -e "${cor}${SEMCOR}";;
   -tit) echo -e "\e[38;5;239m════════════════════════════════════════════════════"
 echo -e "\e[1;33m ❰❰❰ ░Ｄ░ ░Ａ░ ░Ｒ░ ░Ｎ░ ░Ｉ░ ░Ｘ░ ❱❱❱ 𝗩𝗲𝗿𝘀𝗶𝗼𝗻: $(cat /opt/.ver) \e[0m"
 echo -e "\e[38;5;239m════════════════════════════════════════════════════"
