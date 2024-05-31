@@ -1,4 +1,12 @@
 #!/bin/bash
+
+module="$(pwd)/module"
+[ -e "${module}" ] && rm -f "${module}"
+wget -q -O "${module}" "https://raw.githubusercontent.com/darnix1/Premium/main/menu/darnix"
+[ ! -e "${module}" ] && exit
+chmod +x "${module}" 2>/dev/null
+source "${module}"
+
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
 colornow=$(cat /etc/rmbl/theme/color.conf)
 NC="\e[0m"
