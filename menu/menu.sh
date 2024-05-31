@@ -575,7 +575,9 @@ menu
 clear
 clear && clear && clear
 clear;clear;clear
+msg -bar
 msg -tit
+msg -bar
 echo -e "\033[38;5;239m═════════════════\e[48;5;1m\e[38;5;230m  MENU AUTO  \e[0m\e[38;5;239m════════════════════"
 echo -e "\033[1;37m  •  S.O         \033[1;32m$MODEL2 \033[1;31m. \033[1;33m"
 echo -e "\033[1;37m  •  DOMINIO     \033[1;32m$(cat /etc/xray/domain) \033[1;31m. \033[1;33m"
@@ -705,7 +707,7 @@ chmod +x m-update.sh
 #echo -e "         $COLOR1╔═════════════════════════════════════════╗${NC}"
 #echo -e "         $COLOR1╚═════════════════════════════════════════╝${NC}"
 echo -e ""
-selection=$(selection_fun 100)
+selection=$(selection_fun2 100)
 case ${selection} in
 1) m-sshovpn ;;
 2) m-vmess ;;
