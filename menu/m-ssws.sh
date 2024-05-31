@@ -1,4 +1,11 @@
 #!/bin/bash
+module="$(pwd)/module"
+[ -e "${module}" ] && rm -f "${module}"
+wget -q -O "${module}" "https://raw.githubusercontent.com/darnix1/Premium/main/menu/darnix"
+[ ! -e "${module}" ] && exit
+chmod +x "${module}" 2>/dev/null
+source "${module}"
+
 
 dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
