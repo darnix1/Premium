@@ -1400,23 +1400,21 @@ m-sshovpn
 }
 clear
 author=$(cat /etc/profil)
-echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
+msg -bar
 msg -tit
-echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
-echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
-echo -e " $COLOR1║ $NC  ${WH}[${COLOR1}01${WH}]${NC} ${COLOR1}• ${WH}ADD AKUN${NC}        ${WH}[${COLOR1}05${WH}]${NC} ${COLOR1}• ${WH}CEK USER ONLINE${NC}    $COLOR1║ $NC"
-echo -e " $COLOR1║ $NC                                                  ${NC} $COLOR1║ $NC"
-echo -e " $COLOR1║ $NC  ${WH}[${COLOR1}02${WH}]${NC} ${COLOR1}• ${WH}TRIAL AKUN${NC}      ${WH}[${COLOR1}06${WH}]${NC} ${COLOR1}• ${WH}CEK USER CONFIG${NC}    $COLOR1║ $NC"
-echo -e " $COLOR1║ $NC                                                  ${NC} $COLOR1║ $NC"
-echo -e " $COLOR1║ $NC  ${WH}[${COLOR1}03${WH}]${NC} ${COLOR1}• ${WH}RENEW AKUN${NC}      ${WH}[${COLOR1}07${WH}]${NC} ${COLOR1}• ${WH}CHANGE IP LIMIT${NC}    $COLOR1║ $NC"
-echo -e " $COLOR1║ $NC                                                  ${NC} $COLOR1║ $NC"
-echo -e " $COLOR1║ $NC  ${WH}[${COLOR1}04${WH}]${NC} ${COLOR1}• ${WH}DELETE AKUN${NC}     ${WH}[${COLOR1}08${WH}]${NC} ${COLOR1}• ${WH}SETTING LOCK LOGIN${NC} $COLOR1║ $NC"
-echo -e " $COLOR1║ $NC                                                  ${NC} $COLOR1║ $NC"
-echo -e " $COLOR1║ $NC  ${WH}[${COLOR1}00${WH}]${NC} ${COLOR1}• ${WH}GO BACK${NC}         ${WH}[${COLOR1}09${WH}]${NC} ${COLOR1}• ${WH}UNLOCK LOGIN${NC}      $COLOR1 ║$NC"
-echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
-echo -e " $COLOR1╔═════════════════════════ ${WH}BY${NC} ${COLOR1}═══════════════════════╗ ${NC}"
-echo -e "  $COLOR1${NC}                  ${WH}   • $author •                 $COLOR1 $NC"
-echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+msg -bar
+menu_func "NUEVO CLIENTE SSH 👤 " \
+"USUARIO TEMPORAL SSH " \
+"$(msg -verd "EDITAR RENOVAR CLIENTE") " \
+"⚠️ ELIMINAR CLIENTE ⚠️\n$(msg -bar2)" \
+"$(dnxver "VER CLIENTES CONECTADOS ") " \
+"CONFIGURACION SE USUARIOS" \
+" $(msg -ama "CAMBIAR LIMITE DE IP USER")\n$(msg -bar2)" \
+"CONFIGURAR BLOQUEO LOGIN" \
+" $(msg -verm2 "DESBLOQUEAR LOGIN SSH") \n$(msg -bar2)" \
+"CAMBIAR BANNER" \
+#"-bar DESACTIVAR PASS ALFANUMERICO $(msg -blu "(VULTR)")" \
+#"CAMBIAR A MODO SSH/TOKEN"
 echo -e ""
 sres
 echo -e ""
