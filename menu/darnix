@@ -18,6 +18,7 @@ export txt_num='^[A-Za-z0-9]+$'
 #Letras con contorno 
 dnxroj() { echo -e "\e[1;37;41m${*}\e[0m";}
 dnxver() { echo -e "\e[1;37;42m${*}\e[0m";}
+dnxazu () { echo -e "   \e[97m\033[1;44m${*}\033[0m";}
 
 #Letras de colores sin contorno 
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
