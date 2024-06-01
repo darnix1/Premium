@@ -65,6 +65,7 @@ msg -tit
 msg -bar
 amacen " ESCRIBE UN NOMBRE DE USUARIO CORTO "
 msg -bar
+echo -e ""
 until [[ $name =~ ^[a-zA-Z0-9_.-]+$ ]]; do
 read -rp "User 👤 : " -e name
 done
