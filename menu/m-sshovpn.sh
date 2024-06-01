@@ -223,6 +223,23 @@ export -f del
 #Termina Metodo
 ###############################################$$$
 
+err_fun(){
+  case $1 in
+    1)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Usuario Nulo")"; sleep 2s; tput cuu1; tput dl1;;
+    2)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Usuario con nombre muy corto")"; sleep 2s; tput cuu1; tput dl1;;
+    3)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Usuario con nombre muy grande")"; sleep 2s; tput cuu1; tput dl1;;
+    4)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Contraseña Nula")"; sleep 2s; tput cuu1; tput dl1;;
+    5)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Contraseña muy corta")"; sleep 2s; tput cuu1; tput dl1;;
+    6)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Contraseña muy grande")"; sleep 2s; tput cuu1; tput dl1;;
+    7)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Duracion Nula")"; sleep 2s; tput cuu1; tput dl1;;
+    8)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Duracion invalida utilize numeros")"; sleep 2s; tput cuu1; tput dl1;;
+    9)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Duracion maxima y de un año")"; sleep 2s; tput cuu1; tput dl1;;
+    11)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Limite Nulo")"; sleep 2s; tput cuu1; tput dl1;;
+    12)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Limite invalido utilize numeros")"; sleep 2s; tput cuu1; tput dl1;;
+    13)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Limite maximo de 999")"; sleep 2s; tput cuu1; tput dl1;;
+    14)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Usuario Ya Existe")"; sleep 2s; tput cuu1; tput dl1;;
+  esac
+}
 
 
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
@@ -251,6 +268,9 @@ mkdir -p /etc/xray/sshx/akun
 fi
 function usernew(){
 clear
+msg -bar
+msg -tit
+msg -bar
 domen=`cat /etc/xray/domain`
 sldomain=`cat /etc/xray/dns`
 slkey=`cat /etc/slowdns/server.pub`
@@ -278,11 +298,27 @@ echo -e "$COLOR1│                                                 │"
 echo -e "$COLOR1│${WH} Nama Duplikat Silahkan Buat Nama Lain.          $COLOR1│"
 echo -e "$COLOR1│                                                 │"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+elif [[ "${#Login}" -lt "2" ]]; then
+          err_fun 2 && continue
+        elif [[ "${#Login}" -gt "10" ]]; then
+          err_fun 3 && continue
 read -n 1 -s -r -p "Press any key to back"
 usernew
 fi
 done
-read -p "Password : " Pass
+#read -p "Password : " Pass
+while true; do
+        echo -ne "\033[1;37m INGRESE LA CONTRASENA \033[1;33m" && read Pass
+        if [[ -z $Pass ]]; then
+           err_fun 4 && continue
+           elif [[ "${#Pass}" -lt "4" ]]; then
+           err_fun 5 && continue
+           elif [[ "${#Pass}" -gt "12" ]]; then
+           err_fun 6 && continue
+        fi
+        break
+      done
+      
 until [[ $masaaktif =~ ^[0-9]+$ ]]; do
 read -p "Expired (hari): " masaaktif
 done
@@ -511,6 +547,9 @@ menu
 }
 function trial(){
 clear
+msg -bar
+msg -tit
+msg -bar
 domen=`cat /etc/xray/domain`
 sldomain=`cat /etc/xray/dns`
 slkey=`cat /etc/slowdns/server.pub`
@@ -756,6 +795,9 @@ menu
 }
 function renew(){
 clear
+msg -bar
+msg -tit
+msg -bar
 TIMES="10"
 CHATID=$(cat /etc/per/id)
 KEY=$(cat /etc/per/token)
@@ -864,6 +906,10 @@ read -n 1 -s -r -p "Press any key to back on menu"
 m-sshovpn
 }
 function hapus(){
+clear
+msg -bar
+msg -tit
+msg -bar
 NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/etc/xray/ssh")
 if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 clear
@@ -933,6 +979,10 @@ read -n 1 -s -r -p "Press any key to back on menu"
 m-sshovpn
 }
 function cekconfig(){
+clear
+msg -bar
+msg -tit
+msg -bar
 ISP=$(cat /etc/xray/isp)
 CITY=$(cat /etc/xray/city)
 author=$(cat /etc/profil)
@@ -993,6 +1043,9 @@ menu
 }
 function hapuslama(){
 clear
+msg -bar
+msg -tit
+msg -bar
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 echo -e "$COLOR1 ${NC} ${COLBG1}                 ${WH}• MEMBER SSH •                 ${NC}$COLOR1$NC"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
@@ -1034,7 +1087,10 @@ read -n 1 -s -r -p "Press any key to back on menu"
 m-sshovpn
 }
 function cek(){
-clear
+clear&clear
+msg -bar
+msg -tit
+msg -bar
 TIMES="10"
 CHATID=$(cat /etc/per/id)
 KEY=$(cat /etc/per/token)
@@ -1134,6 +1190,10 @@ read -n 1 -s -r -p "Press any key to back on menu"
 m-sshovpn
 }
 function limitssh(){
+clear
+msg -bar
+msg -tit
+msg -bar
 cd
 NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/etc/xray/ssh")
 if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
@@ -1214,7 +1274,9 @@ m-sshovpn
 
 function liser () {
 clear
-
+msg -bar
+msg -tit
+msg -bar
 
 echo -e "$siani╒════════════════════════════════════════════╕\033[0m"
 echo -e " \033[0;41;36m\033[1mUSERNAME          EXP DATE        STATUS   \033[0m"
@@ -1239,11 +1301,14 @@ done < /etc/passwd
 
 echo -e "$siani╒═════════════════════════════════════════════╕\033[0m"
 echo "           TOTAL: $unlocked_count  User(s)"
-enter
+
 m-sshovpn
 }
 function listssh(){
 clear
+msg -bar
+msg -tit
+msg -bar
 echo -e "$COLOR1┌──────────────────────────────────────────┐${NC}"
 echo -e "$COLOR1│ \033[1;37mPlease select a your Choice              $COLOR1│${NC}"
 echo -e "$COLOR1└──────────────────────────────────────────┘${NC}"
@@ -1444,7 +1509,7 @@ menu_func "NUEVO CLIENTE SSH 👤 " \
 "CONFIGURAR BLOQUEO LOGIN" \
 " $(msg -verm2 "DESBLOQUEAR LOGIN SSH") \n$(msg -bar2)" \
 "CAMBIAR BANNER" \
-"-bar LISTA DE USUARIOS CREADOS $(msg -blu "(SSH)")" \
+"LISTA DE USUARIOS CREADOS" \
 #"CAMBIAR A MODO SSH/TOKEN"
 back
 echo -e ""
