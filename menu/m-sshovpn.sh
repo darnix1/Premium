@@ -1034,6 +1034,7 @@ read -n 1 -s -r -p "Press any key to back on menu"
 m-sshovpn
 }
 function cek(){
+clear
 TIMES="10"
 CHATID=$(cat /etc/per/id)
 KEY=$(cat /etc/per/token)
