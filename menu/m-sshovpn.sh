@@ -225,19 +225,19 @@ export -f del
 
 err_fun(){
   case $1 in
-    1)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Usuario Nulo")"; sleep 2s; tput cuu1; tput dl1;;
-    2)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Usuario con nombre muy corto")"; sleep 2s; tput cuu1; tput dl1;;
-    3)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Usuario con nombre muy grande")"; sleep 2s; tput cuu1; tput dl1;;
-    4)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Contraseña Nula")"; sleep 2s; tput cuu1; tput dl1;;
-    5)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Contraseña muy corta")"; sleep 2s; tput cuu1; tput dl1;;
-    6)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Contraseña muy grande")"; sleep 2s; tput cuu1; tput dl1;;
-    7)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Duracion Nula")"; sleep 2s; tput cuu1; tput dl1;;
-    8)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Duracion invalida utilize numeros")"; sleep 2s; tput cuu1; tput dl1;;
-    9)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Duracion maxima y de un año")"; sleep 2s; tput cuu1; tput dl1;;
-    11)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Limite Nulo")"; sleep 2s; tput cuu1; tput dl1;;
-    12)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Limite invalido utilize numeros")"; sleep 2s; tput cuu1; tput dl1;;
-    13)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Limite maximo de 999")"; sleep 2s; tput cuu1; tput dl1;;
-    14)tput cuu1; tput dl1 && msg -verm "$(fun_trans "Usuario Ya Existe")"; sleep 2s; tput cuu1; tput dl1;;
+    1)tput cuu1; tput dl1 && msg -verm "Usuario Nulo"; sleep 2s; tput cuu1; tput dl1;;
+    2)tput cuu1; tput dl1 && msg -verm "Usuario con nombre muy corto"; sleep 2s; tput cuu1; tput dl1;;
+    3)tput cuu1; tput dl1 && msg -verm "Usuario con nombre muy grande"; sleep 2s; tput cuu1; tput dl1;;
+    4)tput cuu1; tput dl1 && msg -verm "Contraseña Nula"; sleep 2s; tput cuu1; tput dl1;;
+    5)tput cuu1; tput dl1 && msg -verm "Contraseña muy corta"; sleep 2s; tput cuu1; tput dl1;;
+    6)tput cuu1; tput dl1 && msg -verm "Contraseña muy grande"; sleep 2s; tput cuu1; tput dl1;;
+    7)tput cuu1; tput dl1 && msg -verm "Duracion Nula"; sleep 2s; tput cuu1; tput dl1;;
+    8)tput cuu1; tput dl1 && msg -verm "Duracion invalida utilize numeros"; sleep 2s; tput cuu1; tput dl1;;
+    9)tput cuu1; tput dl1 && msg -verm "Duracion maxima y de un año"; sleep 2s; tput cuu1; tput dl1;;
+    11)tput cuu1; tput dl1 && msg -verm "Limite Nulo"; sleep 2s; tput cuu1; tput dl1;;
+    12)tput cuu1; tput dl1 && msg -verm "Limite invalido utilize numeros"; sleep 2s; tput cuu1; tput dl1;;
+    13)tput cuu1; tput dl1 && msg -verm "Limite maximo de 999"; sleep 2s; tput cuu1; tput dl1;;
+    14)tput cuu1; tput dl1 && msg -verm "Usuario Ya Existe"; sleep 2s; tput cuu1; tput dl1;;
   esac
 }
 
