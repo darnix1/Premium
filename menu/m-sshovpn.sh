@@ -123,7 +123,7 @@ enter(){
 # opcion, regresar volver/atras
 back(){
     msg -bar
-    echo -ne " \e[1;93m [\e[1;32m0\e[1;93m]\033[1;31m > " && msg -bra "\e[97m\033[1;41m${a_back:-VOLVER} \033[0;37m"
+    echo -ne "\e[1;93m [\e[1;32m0\e[1;93m]\033[1;31m > " && msg -bra "\e[97m\033[1;41m${a_back:-VOLVER} \033[0;37m"
     msg -bar
  }
  
@@ -1415,23 +1415,25 @@ menu_func "NUEVO CLIENTE SSH 👤 " \
 "CAMBIAR BANNER" \
 #"-bar DESACTIVAR PASS ALFANUMERICO $(msg -blu "(VULTR)")" \
 #"CAMBIAR A MODO SSH/TOKEN"
+back
 echo -e ""
 sres
 echo -e ""
-echo -ne "\033[1;97m   └⊳ Seleccione una opcion [0-10]: \033[1;32m"; read opt
-case $opt in
-01 | 1) clear ; usernew ; exit ;;
-02 | 2) clear ; trial ; exit ;;
-03 | 3) clear ; renew ; exit ;;
-04 | 4) clear ; hapus ; exit ;;
-05 | 5) clear ; cek ; exit ;;
-06 | 6) clear ; cekconfig ; exit ;;
-07 | 7) clear ; limitssh; exit ;;
-08 | 8) clear ; listssh ; exit ;;
-09 | 9) clear ; lockssh ; exit ;;
-10 | 10) clear ; hapuslama ; exit ;;
-00 | 0) clear ; menu ; exit ;;
-X  | 0) clear ; m-sshovpn ;;
-x) exit ;;
-*) menu ;;
-esac
+
+	selection=$(selection_fun 12)
+	case ${selection} in
+		0)break;;
+		1)usernew;;
+		2)trial;;
+		3)renew;;
+		4)hapus;;
+		5)cek;;
+		6)cekconfig;;
+		7)limitssh;;
+		8)listssh;;
+		9)lockssh;;
+		10)hapuslama;;
+		11)banner;;
+    12)USER_MODE && break;;
+    *) menu ;;
+	esac
