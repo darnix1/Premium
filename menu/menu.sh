@@ -3,7 +3,7 @@
 
 
 case $newlang in
-  en_US)  a_enter='Press enter to continue'
+  en_US)  a_enter='Presiona enter to continue'
           a_back='RETURN'
           a_selection_fun='Select an Option:';;
 esac
