@@ -291,7 +291,9 @@ echo -e "$COLOR1└────────────────────�
 until [[ $Login =~ ^[a-zA-Z0-9_.-]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 read -p "Username : " Login
 CLIENT_EXISTS=$(grep -w $Login /etc/xray/ssh | wc -l)
-if [[ ${CLIENT_EXISTS} == '1' ]]; then
+if [[ -z "$Login" ]]; then
+err_fun 1 && continue
+elif [[ ${CLIENT_EXISTS} == '1' ]]; then
 clear
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 echo -e "$COLOR1│${NC}${COLBG1}               ${WH}• SSH PANEL MENU •                ${NC}$COLOR1│ $NC"
@@ -301,14 +303,16 @@ echo -e "$COLOR1│                                                 │"
 echo -e "$COLOR1│${WH} Nama Duplikat Silahkan Buat Nama Lain.          $COLOR1│"
 echo -e "$COLOR1│                                                 │"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
-elif [[ "${Login}" = "0" ]]; then
-      return
-elif [[ "${#Login}" -lt "3" ]]; then
-err_fun 2 && continue
-elif [[ "${#Login}" -gt "10" ]]; then
-err_fun 3 && continue
+err_fun 14
 read -n 1 -s -r -p "Press any key to back"
-usernew
+  usernew
+  continue
+elif [[ "${nomeuser}" = "0" ]]; then
+      return
+    elif [[ "${#nomeuser}" -lt "3" ]]; then
+      err_fun 2 && continue
+    elif [[ "${#nomeuser}" -gt "10" ]]; then
+      err_fun 3 && continue
 fi
 done
 #read -p "Password : " Pass
