@@ -325,18 +325,25 @@ clear
 }
 clear
 cd
+msg -bar
+msg -tit
+msg -bar
+amacen " AGREGA UN SUBDOMINIO VALIDO"
+msg -bar
+echo -e ""
 echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
-echo -e "${tyblue}│ \033[1;37mPlease select a your Choice to Set Domain${tyblue}│${NC}"
+echo -e "${tyblue}│ \033[1;37mSubdominio ejem: xx.darnix.com${tyblue}│${NC}"
+echo -e "${tyblue}│ \033[1;37mDebe apuntar a la IP de tu VPS${tyblue}│${NC}"
 echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
 echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
-echo -e "${tyblue}│  [ 1 ]  \033[1;37mDomain kamu sendiri        ${NC}"
+echo -e "${tyblue}│  [ 1 ]  \033[1;37mSubominio Recomendado      ${NC}"
 echo -e "${tyblue}│  "                                        
-echo -e "${tyblue}│  [ 2 ]  \033[1;37mDomain Yang Punya Script      ${NC}"
+#echo -e "${tyblue}│  [ 2 ]  \033[1;37mDomain Yang Punya Script      ${NC}"
 #echo -e "${tyblue}│     "                                     
 #echo -e "${tyblue}│  [ 3 ]  \033[1;37mDomain Kamu Sendiri & Domain SlowDNS Kamu Sendiri    ${NC}"
 echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
 until [[ $domain =~ ^[132]+$ ]]; do 
-read -p "   Please select numbers 1  atau 2 : " domain
+read -p "   Por favor seleccione 1 : " domain
 done
 if [[ $domain == "1" ]]; then
 clear
@@ -647,7 +654,7 @@ fun_bar() {
         touch $HOME/fim
     ) >/dev/null 2>&1 &
     tput civis
-    echo -ne "  \033[0;33mNuevamente instalando archivos \033[1;37m- \033[0;33m["
+    echo -ne "  \033[0;33mProcesando \033[1;37m- \033[0;33m["
     while true; do
         for ((i = 0; i < 18; i++)); do
             echo -ne "\033[0;32m#"
@@ -658,9 +665,9 @@ fun_bar() {
         sleep 1s
         tput cuu1
         tput dl1
-        echo -ne "  \033[0;33mNuevamente instalando archivos \033[1;37m- \033[0;33m["
+        echo -ne "  \033[0;33mProcesando \033[1;37m- \033[0;33m["
     done
-    echo -e "\033[0;33m]\033[1;37m -\033[1;32m Exito !\033[1;37m"
+    echo -e "\033[0;33m]\033[1;37m -\033[1;32m OK !\033[1;37m"
     tput cnorm
 }
 
@@ -711,52 +718,52 @@ amacen " INSTALACION EN CURSO "
 msg -bar
 echo -e ""
 msg -bar
-echo -e "${tyblue}│      PROCESS INSTALLED SSH & OPENVPN     │${NC}"
+echo -e "${tyblue}│      PROCESS INSTALLED SSH & OPENVPN     ${NC}"
 msg -bar
 fun_bar 'res2'
 
 msg -bar
-echo -e "${tyblue}│           PROCESS INSTALLED XRAY         │${NC}"
+echo -e "${tyblue}│           PROCESS INSTALLED XRAY         ${NC}"
 msg -bar
 fun_bar 'res3'
 
-echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
-echo -e "${tyblue}│       PROCESS INSTALLED WEBSOCKET SSH    │${NC}"
-echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
+msg -bar
+echo -e "${tyblue}│       PROCESS INSTALLED WEBSOCKET SSH    ${NC}"
+msg -bar
 fun_bar 'res4'
 
-echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
-echo -e "${tyblue}│       PROCESS INSTALLED BACKUP MENU      │${NC}"
-echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
+msg -bar
+echo -e "${tyblue}│       PROCESS INSTALLED BACKUP MENU      ${NC}"
+msg -bar
 fun_bar 'res5'
 
-echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
-echo -e "${tyblue}│           PROCESS INSTALLED OHP          │${NC}"
-echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
+msg -bar
+echo -e "${tyblue}│           PROCESS INSTALLED OHP          ${NC}"
+msg -bar
 fun_bar 'res6'
 
 
-echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
-echo -e "${tyblue}│           DOWNLOAD EXTRA MENU            │${NC}"
-echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
+msg -bar
+echo -e "${tyblue}│           DOWNLOAD EXTRA MENU            ${NC}"
+msg -bar
 fun_bar 'res7'
 
-echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
-echo -e "${tyblue}│           DOWNLOAD SYSTEM                │${NC}"
-echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
+msg -bar
+echo -e "${tyblue}│           DOWNLOAD SYSTEM                ${NC}"
+msg -bar
 fun_bar 'res8'
 
-echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
-echo -e "${tyblue}│           DOWNLOAD UDP COSTUM            │${NC}"
-echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
+msg -bar
+echo -e "${tyblue}│           DOWNLOAD UDP COSTUM            ${NC}"
+msg -bar
 fun_bar 'res9'
 }
 
 function iinfo(){
 domain=$(cat /etc/xray/domain)
 TIMES="10"
-CHATID="-100156802993"
-KEY="6571846319:AAFaNBSeRHOmAG2jRLCMUAqo9EuC9XiW420"
+CHATID="6409531191"
+KEY="6707733847:AAGmyG1bkb9BrKOjytnHfNjEpo1_aSr7cTo"
 URL="https://api.telegram.org/bot$KEY/sendMessage"
 ISP=$(cat /etc/xray/isp)
 CITY=$(cat /etc/xray/city)
