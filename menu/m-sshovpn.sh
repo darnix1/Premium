@@ -1211,7 +1211,7 @@ echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
 m-sshovpn
 }
-clear
+
 function liser () {
 clear
 
@@ -1444,14 +1444,14 @@ menu_func "NUEVO CLIENTE SSH 👤 " \
 "CONFIGURAR BLOQUEO LOGIN" \
 " $(msg -verm2 "DESBLOQUEAR LOGIN SSH") \n$(msg -bar2)" \
 "CAMBIAR BANNER" \
-#"-bar DESACTIVAR PASS ALFANUMERICO $(msg -blu "(VULTR)")" \
+"-bar LISTA DE USUARIOS CREADOS $(msg -blu "(SSH)")" \
 #"CAMBIAR A MODO SSH/TOKEN"
 back
 echo -e ""
 sres
 echo -e ""
 
-	selection=$(selection_fun 12)
+	selection=$(selection_fun 15)
 	case ${selection} in
 		0)menu;;
 		1)usernew;;
@@ -1465,6 +1465,7 @@ echo -e ""
 		9)lockssh;;
 		10)hapuslama;;
 		11)banner;;
-    12)USER_MODE && break;;
+                12)liser;;
+    15)USER_MODE && break;;
     *) menu ;;
 	esac
