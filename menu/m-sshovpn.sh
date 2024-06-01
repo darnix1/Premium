@@ -1422,7 +1422,7 @@ echo -e ""
 
 	selection=$(selection_fun 12)
 	case ${selection} in
-		0)break;;
+		0)menu;;
 		1)usernew;;
 		2)trial;;
 		3)renew;;
