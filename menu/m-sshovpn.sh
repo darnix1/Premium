@@ -285,6 +285,9 @@ ISP=$(cat /etc/xray/isp)
 CITY=$(cat /etc/xray/city)
 author=$(cat /etc/profil)
 clear
+msg -bar
+msg -tit
+msg -bar
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 echo -e "$COLOR1│${NC}${COLBG1}               ${WH}• SSH PANEL MENU •                ${NC}$COLOR1│ $NC"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
@@ -295,19 +298,15 @@ if [[ -z "$Login" ]]; then
 err_fun 1 && continue
 elif [[ ${CLIENT_EXISTS} == '1' ]]; then
 clear
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}${COLBG1}               ${WH}• SSH PANEL MENU •                ${NC}$COLOR1│ $NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│                                                 │"
-echo -e "$COLOR1│${WH} Nama Duplikat Silahkan Buat Nama Lain.          $COLOR1│"
-echo -e "$COLOR1│                                                 │"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+msg -bar
+msg -tit
+msg -bar
+echo -e "$COLOR1│${WH} Nombre duplicado Por favor cree otro nombre.          $COLOR1│"
 err_fun 14
 read -n 1 -s -r -p "Press any key to back"
   usernew
   continue
-elif [[ "${Login}" = "0" ]]; then
+elif [[ "${Login}" = "1" ]]; then
       return
     elif [[ "${#Login}" -lt "3" ]]; then
       err_fun 2 && continue
