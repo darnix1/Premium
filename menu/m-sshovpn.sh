@@ -298,10 +298,12 @@ echo -e "$COLOR1│                                                 │"
 echo -e "$COLOR1│${WH} Nama Duplikat Silahkan Buat Nama Lain.          $COLOR1│"
 echo -e "$COLOR1│                                                 │"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
-elif [[ "${#Login}" -lt "2" ]]; then
-          err_fun 2 && continue
-        elif [[ "${#Login}" -gt "10" ]]; then
-          err_fun 3 && continue
+elif [[ "${Login}" = "0" ]]; then
+      return
+elif [[ "${#Login}" -lt "3" ]]; then
+err_fun 2 && continue
+elif [[ "${#Login}" -gt "10" ]]; then
+err_fun 3 && continue
 read -n 1 -s -r -p "Press any key to back"
 usernew
 fi
