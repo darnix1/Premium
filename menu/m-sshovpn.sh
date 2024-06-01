@@ -240,7 +240,10 @@ err_fun(){
     14)tput cuu1; tput dl1 && msg -verm "Usuario Ya Existe"; sleep 2s; tput cuu1; tput dl1;;
   esac
 }
-
+darnixprom() {
+  tput cuu1
+  tput dl1
+}
 
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
 colornow=$(cat /etc/rmbl/theme/color.conf)
@@ -318,15 +321,37 @@ while true; do
            elif [[ "${#Pass}" -gt "12" ]]; then
            err_fun 6 && continue
         fi
+	darnixprom
         break
       done
-      
-until [[ $masaaktif =~ ^[0-9]+$ ]]; do
-read -p "Expired (hari): " masaaktif
-done
-until [[ $iplim =~ ^[0-9]+$ ]]; do
-read -p "Limit User (IP): " iplim
-done
+while true; do
+    echo -ne "\033[1;37m TIEMPO DE DURACION DEL USUARIO  \033[1;33m" && read masaaktif
+    #read -p ": " diasuser
+    if [[ -z "$masaaktif" ]]; then
+      err_fun 7 && continue
+    elif [[ "$masaaktif" != +([0-9]) ]]; then
+      err_fun 8 && continue
+    elif [[ "$masaaktif" -gt "360" ]]; then
+      err_fun 9 && continue
+    fi 
+    darnixprom
+    break
+  done
+
+while true; do
+    echo -ne "\033[1;37m LIMITE DE CONEXION \033[1;33m" && read iplim
+    #read -p ": " iplim
+    if [[ -z "$iplim" ]]; then
+      err_fun 11 && continue
+    elif [[ "$iplim" != +([0-9]) ]]; then
+      err_fun 12 && continue
+    elif [[ "$iplim" -gt "999" ]]; then
+      err_fun 13 && continue
+    fi
+    darnixprom
+    break
+  done
+
 if [ ! -e /etc/xray/sshx ]; then
 mkdir -p /etc/xray/sshx
 fi
