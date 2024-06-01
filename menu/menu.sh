@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#!/bin/bash
+
 
 case $newlang in
   en_US)  a_enter='Press enter to continue'
