@@ -1,12 +1,11 @@
 #!/bin/bash
 
-
 module="$(pwd)/module"
-[ -e "${module}" ] && rm -f "${module}"
-wget -q -O "${module}" "https://raw.githubusercontent.com/darnix1/Premium/main/menu/darnix"
-[ ! -e "${module}" ] && exit
-chmod +x "${module}" 2>/dev/null
-source "${module}"
+rm -rf ${module}
+wget -O ${module} "https://raw.githubusercontent.com/darnix1/Premium/main/menu/darnix" &>/dev/null
+[[ ! -e ${module} ]] && exit
+chmod +x ${module} &>/dev/null
+source ${module}
 
 
 #Termina Metodo
