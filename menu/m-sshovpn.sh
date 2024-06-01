@@ -289,7 +289,7 @@ echo -e "$COLOR1┌────────────────────�
 echo -e "$COLOR1│${NC}${COLBG1}               ${WH}• SSH PANEL MENU •                ${NC}$COLOR1│ $NC"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
 until [[ $Login =~ ^[a-zA-Z0-9_.-]+$ && ${CLIENT_EXISTS} == '0' ]]; do
-read -p "Username : " Login
+echo -ne "\033[1;37m INGRESE EL USUARIO \033[1;33m" && read Login
 CLIENT_EXISTS=$(grep -w $Login /etc/xray/ssh | wc -l)
 if [[ -z "$Login" ]]; then
 err_fun 1 && continue
@@ -307,13 +307,15 @@ err_fun 14
 read -n 1 -s -r -p "Press any key to back"
   usernew
   continue
-elif [[ "${nomeuser}" = "0" ]]; then
+elif [[ "${Login}" = "0" ]]; then
       return
-    elif [[ "${#nomeuser}" -lt "3" ]]; then
+    elif [[ "${#Login}" -lt "3" ]]; then
       err_fun 2 && continue
-    elif [[ "${#nomeuser}" -gt "10" ]]; then
+    elif [[ "${#Login}" -gt "10" ]]; then
       err_fun 3 && continue
 fi
+darnixprom
+break
 done
 #read -p "Password : " Pass
 while true; do
