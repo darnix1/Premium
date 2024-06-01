@@ -209,9 +209,7 @@ del(){
   done
 }
 
-export -f msgi
 export -f msg
-export -f banner
 export -f selection_fun
 export -f menu_func
 export -f print_center
@@ -221,7 +219,6 @@ export -f enter
 export -f in_opcion
 export -f in_opcion_down
 export -f del
-
 
 #Termina Metodo
 ###############################################$$$
