@@ -50,12 +50,13 @@ mkdir -p /etc/rmbl/theme
 mkdir -p /var/lib/ >/dev/null 2>&1
 echo "IP=" >> /var/lib/ipvps.conf
 clear
-echo -e  "${tyblue}┌──────────────────────────────────────────┐${NC}"
-echo -e  "${tyblue}│              MASUKKAN NAMA KAMU          │${NC}"
-echo -e  "${tyblue}└──────────────────────────────────────────┘${NC}"
-echo " "
+msg -bar
+msg -tit
+msg -bar
+amacen " ESCRIBE UN NOMBRE DE USUARIO CORTO "
+msg -bar
 until [[ $name =~ ^[a-zA-Z0-9_.-]+$ ]]; do
-read -rp "Masukan Nama Kamu Disini tanpa spasi : " -e name
+read -rp "User 👤 : " -e name
 done
 rm -rf /etc/profil
 echo "$name" > /etc/profil
