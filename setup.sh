@@ -704,15 +704,20 @@ res9() {
 wget https://raw.githubusercontent.com/darnix1/Premium/main/install/udp-custom.sh && chmod +x udp-custom.sh && bash udp-custom.sh
 clear
 }
+msg -bar
 msg -tit
-echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
+msg -bar
+amacen " INSTALACION EN CURSO "
+msg -bar
+echo -e ""
+msg -bar
 echo -e "${tyblue}│      PROCESS INSTALLED SSH & OPENVPN     │${NC}"
-echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
+msg -bar
 fun_bar 'res2'
 
-echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
+msg -bar
 echo -e "${tyblue}│           PROCESS INSTALLED XRAY         │${NC}"
-echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
+msg -bar
 fun_bar 'res3'
 
 echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
@@ -836,15 +841,13 @@ echo  ""
 cd
 iinfo
 rm -rf *
-echo -e "${tyblue}┌────────────────────────────────────────────┐${NC}"
-echo -e "${tyblue}│  Install SCRIPT SELESAI..                  │${NC}"
-echo -e "${tyblue}└────────────────────────────────────────────┘${NC}"
+msg -bar
+msg -tit
+msg -bar
+amacen " INSTALACION TERMINADA "
+msg -bar
 echo  ""
 sleep 4
-echo -e "[ ${yell}WARNING${NC} ] Do you want to reboot now ? (y/n)? "
-read answer
-if [ "$answer" == "${answer#[Yy]}" ] ;then
-exit 0
-else
+red " Reinicio en proceso en 10 segundos"
+sleep 10
 reboot
-fi
