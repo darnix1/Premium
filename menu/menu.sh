@@ -264,7 +264,7 @@ data_ip="https://raw.githubusercontent.com/darnix1/vip/main/izin"
 function key(){
 rm -rf /root/rmbl
 echo -e  "${COLOR1}┌──────────────────────────────────────────┐${NC}"
-echo -e  "${COLOR1}│              PASWORD SCRIPT RMBL VPN     │${NC}"
+echo -e  "${COLOR1}│              PASWORDD SCRIPT RMBL VPN     │${NC}"
 echo -e  "${COLOR1}└──────────────────────────────────────────┘${NC}"
 echo " "
 read -rp "Masukan Key Kamu Disini ctrl + c Exit : " -e kode
