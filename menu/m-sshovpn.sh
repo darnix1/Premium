@@ -304,6 +304,7 @@ msg -bar
 echo -e "$COLOR1│${WH} Nombre duplicado Por favor cree otro nombre.          $COLOR1│"
 err_fun 14
 read -n 1 -s -r -p "Press any key to back"
+read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
   usernew
   continue
 elif [[ "${Login}" = "1" ]]; then
@@ -519,17 +520,17 @@ user2=$(echo "$Login" | cut -c 1-3)
 TIME2=$(date +'%Y-%m-%d %H:%M:%S')
 TEXT2="
 <code>◇━━━━━━━━━━━━━━━━━◇</code>
-<b>   PEMBELIAN SSH SUCCES </b>
+<b>   CUENTA SSH EXITOSA </b>
 <code>◇━━━━━━━━━━━━━━━━━◇</code>
-<b>DOMAIN  :</b> <code>${domain} </code>
-<b>CITY    :</b> <code>$CITY </code>
-<b>DATE    :</b> <code>${TIME2} WIB </code>
-<b>DETAIL  :</b> <code>Trx SSH </code>
-<b>USER    :</b> <code>${user2}xxx </code>
-<b>IP      :</b> <code>${iplim} IP </code>
-<b>DURASI  :</b> <code>$masaaktif Hari </code>
+<b>DOMINIO  :</b> <code>${domain} </code>
+<b>PAIS     :</b> <code>$CITY </code>
+<b>FECHA    :</b> <code>${TIME2} WIB </code>
+<b>DETALLE  :</b> <code>Trx SSH </code>
+<b>USUARIO  :</b> <code>${user2}xxx </code>
+<b>IP       :</b> <code>${iplim} IP </code>
+<b>DURACION :</b> <code>$masaaktif Hari </code>
 <code>◇━━━━━━━━━━━━━━━━━◇</code>
-<i>Notif Pembelian Akun Ssh..</i>"
+<i>Notificación de cuenta SSH creado..</i>"
 curl -s --max-time $TIMES -d "chat_id=$CHATID2&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL2 >/dev/null
 clear
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
@@ -574,14 +575,11 @@ echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}
 echo -e "$COLOR1 ${NC}    ${WH}• $author •${NC}                 $COLOR1 $NC" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo "" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
-read -n 1 -s -r -p "Press any key to back on menu"
+read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
 menu
 }
 function trial(){
 clear
-msg -bar
-msg -tit
-msg -bar
 domen=`cat /etc/xray/domain`
 sldomain=`cat /etc/xray/dns`
 slkey=`cat /etc/slowdns/server.pub`
@@ -595,10 +593,13 @@ author=$(cat /etc/profil)
 clear
 IP=$(curl -sS ifconfig.me)
 cd
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}${COLBG1}            ${WH}• TRIAL SSH Account •                ${NC}$COLOR1│ $NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+msg -bar
+msg -tit
+msg -bar
 echo -e ""
+amacen " USUARIO SSH TEMPORAL"
+echo ""
+
 # Pedir al usuario que introduzca el tiempo de expiración en minutos
 until [[ $timer =~ ^[0-9]+$ ]]; do
     read -p "Ingresa los (Minutos): " timer
@@ -822,14 +823,12 @@ echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}
 echo -e "$COLOR1 ${NC}    ${WH}• $author •${NC}                 $COLOR1 $NC" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo "" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
-read -n 1 -s -r -p "Press any key to back on menu"
+read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
 menu
 }
 function renew(){
 clear
-msg -bar
-msg -tit
-msg -bar
+
 TIMES="10"
 CHATID=$(cat /etc/per/id)
 KEY=$(cat /etc/per/token)
@@ -840,31 +839,37 @@ domain=$(cat /etc/xray/domain)
 NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/etc/xray/ssh")
 if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 clear
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}${COLBG1}              ${WH}• RENEW USERS •                    │${NC}$COLOR1$NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+msg -bar
+msg -tit
+msg -bar
+echo -e ""
+amacen " RENOVAR USUARIOS SSH PREMIUM"
+echo ""
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 echo -e "$COLOR1│                                                 │"
 echo -e "$COLOR1│${WH} User Tidak Ada!                              $COLOR1   │"
 echo -e "$COLOR1│                                                 │"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
 echo ""
-read -n 1 -s -r -p "Press any key to back on menu"
+read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
 m-sshovpn
 fi
+msg -bar
+msg -tit
+msg -bar
+echo -e ""
+amacen " RENOVAR USUARIOS SSH PREMIUM"
+echo ""
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}${COLBG1}              ${WH}• RENEW USERS •                    │${NC}$COLOR1$NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│ ${WH}Silahkan Pilih User Yang Mau di Renew$COLOR1           │"
-echo -e "$COLOR1│ ${WH}ketik [0] kembali kemenu$COLOR1                        │"
+echo -e "$COLOR1│ ${WH}Escoge el usuario a renovar  $COLOR1           │"
+echo -e "$COLOR1│ ${WH}Presiona [0] para volver$COLOR1                        │"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
 grep -E "^### " "/etc/xray/ssh" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
-read -rp "Select one client [1]: " CLIENT_NUMBER
+read -rp "Seleccione un cliente [1]: " CLIENT_NUMBER
 else
-read -rp "Select one client [1-${NUMBER_OF_CLIENTS}]: " CLIENT_NUMBER
+read -rp "Seleccione un cliente [1-${NUMBER_OF_CLIENTS}]: " CLIENT_NUMBER
 if [[ ${CLIENT_NUMBER} == '0' ]]; then
 m-sshovpn
 fi
@@ -875,7 +880,7 @@ exp=$(grep -E "^### " "/etc/xray/ssh" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBE
 Pass=$(grep -E "^### " "/etc/xray/ssh" | cut -d ' ' -f 4 | sed -n "${CLIENT_NUMBER}"p)
 egrep "^$User" /etc/passwd >/dev/null
 if [ $? -eq 0 ]; then
-read -p "Day Extend : " Days
+read -p "Dias a Agregar : " Days
 now=$(date +%Y-%m-%d)
 d1=$(date -d "$exp" +%s)
 d2=$(date -d "$now" +%s)
@@ -890,12 +895,12 @@ sed -i "s/### $User $exp/### $User $exp4/g" /etc/xray/ssh >/dev/null
 clear
 TEXT="
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>  SSH RENEW</b>
+<b>  USUARIO SSH RENOVADO</b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>DOMAIN   :</b> <code>${domain} </code>
-<b>ISP      :</b> <code>$ISP $CITY </code>
-<b>USERNAME :</b> <code>$User </code>
-<b>EXPIRED  :</b> <code>$exp4 </code>
+<b>DOMINIO :</b> <code>${domain} </code>
+<b>IP      :</b> <code>$ISP $CITY </code>
+<b>USUARIO :</b> <code>$User </code>
+<b>EXPIRA  :</b> <code>$exp4 </code>
 <code>◇━━━━━━━━━━━━━━◇</code>
 "
 curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
@@ -910,66 +915,73 @@ user2=$(echo "$User" | cut -c 1-3)
 TIME2=$(date +'%Y-%m-%d %H:%M:%S')
 TEXT2="
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>   TRANSAKSI SUCCES </b>
+<b>   RENOVACION EXITOSA </b>
 <code>◇━━━━━━━━━━━━━━◇</code>
 <b>DOMAIN   :</b> <code>${domain} </code>
 <b>ISP      :</b> <code>$CITY </code>
-<b>DATE   :</b> <code>${TIME2} WIB</code>
-<b>DETAIL   :</b> <code>Trx SSH </code>
-<b>USER :</b> <code>${user2}xxx </code>
-<b>DURASI  :</b> <code>$Days Hari </code>
+<b>FECHA   :</b> <code>${TIME2} WIB</code>
+<b>DETALLE   :</b> <code>Trx SSH </code>
+<b>USUARIO :</b> <code>${user2}xxx </code>
+<b>DURACIÓN  :</b> <code>$Days Hari </code>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<i>Renew Account From Server..</i>
+<i>Cuenta Renovado desde el servidor..</i>
 "
 curl -s --max-time $TIMES -d "chat_id=$CHATID2&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL2 >/dev/null
-clear
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}${COLBG1}              ${WH}• RENEW USERS •                    │${NC}$COLOR1$NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│"
-echo -e "$COLOR1│ ${WH}Username   : $User"
-echo -e "$COLOR1│ ${WH}Days Added : $Days Days"
-echo -e "$COLOR1│ ${WH}Expired on : $exp4"
-echo -e "$COLOR1│"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
-fi
-read -n 1 -s -r -p "Press any key to back on menu"
-m-sshovpn
-}
-function hapus(){
 clear
 msg -bar
 msg -tit
 msg -bar
+echo -e ""
+amacen " RENOVACION DE USUARIO EXITOSAMENTE "
+echo ""
+echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
+echo -e "$COLOR1│"
+echo -e "$COLOR1│ ${WH}Nombre de usuario  : $User"
+echo -e "$COLOR1│ ${WH}Dias agregados     : $Days Dias"
+echo -e "$COLOR1│ ${WH}Expira el          : $exp4"
+echo -e "$COLOR1│"
+echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+fi
+read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
+m-sshovpn
+}
+function hapus(){
+clear
+
 NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/etc/xray/ssh")
 if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 clear
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}${COLBG1}              ${WH}• DELETE USERS •                   │${NC}$COLOR1$NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+msg -bar
+msg -tit
+msg -bar
+echo -e ""
+amacen " ELIMINACION DE USUARIOS SSH"
+echo ""
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 echo -e "$COLOR1│                                                 │"
-echo -e "$COLOR1│${WH} User Tidak Ada!                              $COLOR1   │"
+echo -e "$COLOR1│${WH} No tienes Usuarios Registrados!                              $COLOR1   │"
 echo -e "$COLOR1│                                                 │"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
 echo ""
-read -n 1 -s -r -p "Press any key to back on menu"
+read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
 m-sshovpn
 fi
+msg -bar
+msg -tit
+msg -bar
+echo -e ""
+amacen " ELIMINACION DE USUARIOS SSH"
+echo ""
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}${COLBG1}              ${WH}• DELETE USERS •                   │${NC}$COLOR1$NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│ ${WH}Silahkan Pilih User Yang Mau Didelete     $COLOR1      │"
-echo -e "$COLOR1│ ${WH}ketik [0] kembali kemenu                     $COLOR1   │"
+echo -e "$COLOR1│ ${WH}Por favor seleccione el usuario a eliminar     $COLOR1      │"
+echo -e "$COLOR1│ ${WH}Presiona [0] para volver al menu                     $COLOR1   │"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
 grep -E "^### " "/etc/xray/ssh" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
-read -rp "Select one client [1]: " CLIENT_NUMBER
+read -rp "Seleccione un cliente [1]: " CLIENT_NUMBER
 else
-read -rp "Select one client [1-${NUMBER_OF_CLIENTS}]: " CLIENT_NUMBER
+read -rp "Seleccione un cliente [1-${NUMBER_OF_CLIENTS}]: " CLIENT_NUMBER
 if [[ ${CLIENT_NUMBER} == '0' ]]; then
 m-sshovpn
 fi
@@ -984,20 +996,20 @@ rm /etc/xray/sshx/${Pengguna}IP >/dev/null 2>&1
 rm /etc/xray/sshx/${Pengguna}login >/dev/null 2>&1
 if getent passwd $Pengguna > /dev/null 2>&1; then
 userdel $Pengguna > /dev/null 2>&1
-echo -e "User $Pengguna was removed."
+echo -e "Usuario $Pengguna fue removido."
 else
-echo -e "Failure: User $Pengguna Not Exist."
+echo -e "Fallo: Usuario $Pengguna No existe."
 fi
 TEXT="
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>  DELETE SSH OVPN</b>
+<b>  ELIMINACION SSH OVPN</b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>DOMAIN   :</b> <code>${domain} </code>
-<b>ISP      :</b> <code>$ISP $CITY </code>
-<b>USERNAME :</b> <code>$Pengguna </code>
-<b>EXPIRED  :</b> <code>$Days </code>
+<b>DOMINIO   :</b> <code>${domain} </code>
+<b>IP      :</b> <code>$ISP $CITY </code>
+<b>USUARIO :</b> <code>$Pengguna </code>
+<b>EXPIRADO  :</b> <code>$Days </code>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<i>Succes Delete This User...</i>
+<i>Eliminacion de usuario exitoso...</i>
 "
 curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 cd
@@ -1007,14 +1019,12 @@ else
 echo "$TEXT" > /etc/notiftele
 bash /etc/tele
 fi
-read -n 1 -s -r -p "Press any key to back on menu"
+read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
 m-sshovpn
 }
 function cekconfig(){
 clear
-msg -bar
-msg -tit
-msg -bar
+
 ISP=$(cat /etc/xray/isp)
 CITY=$(cat /etc/xray/city)
 author=$(cat /etc/profil)
@@ -1025,9 +1035,12 @@ slkey=`cat /etc/slowdns/server.pub`
 NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/etc/xray/ssh")
 if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 clear
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}${COLBG1}              ${WH}• USER CONFIG •                    │${NC}$COLOR1$NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+msg -bar
+msg -tit
+msg -bar
+echo -e ""
+amacen " CONFIGURACION DE USUARIOS SSH"
+echo ""
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 echo -e "$COLOR1│                                                 │"
 echo -e "$COLOR1│${WH} User Tidak Ada!                              $COLOR1   │"
@@ -1531,6 +1544,9 @@ author=$(cat /etc/profil)
 msg -bar
 msg -tit
 msg -bar
+echo -e ""
+amacen " CONFIGURACION SSH CLIENTES "
+echo ""
 menu_func "NUEVO CLIENTE SSH 👤 " \
 "USUARIO TEMPORAL SSH " \
 "$(msg -verd "EDITAR RENOVAR CLIENTE") " \
