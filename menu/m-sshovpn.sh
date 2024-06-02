@@ -1038,7 +1038,6 @@ clear
 msg -bar
 msg -tit
 msg -bar
-echo -e ""
 amacen " CONFIGURACION DE USUARIOS SSH"
 echo ""
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
@@ -1133,9 +1132,6 @@ m-sshovpn
 }
 function cek(){
 clear&clear
-msg -bar
-msg -tit
-msg -bar
 TIMES="10"
 CHATID=$(cat /etc/per/id)
 KEY=$(cat /etc/per/token)
@@ -1144,6 +1140,11 @@ ISP=$(cat /etc/xray/isp)
 CITY=$(cat /etc/xray/city)
 domain=$(cat /etc/xray/domain)
 author=$(cat /etc/profil)
+msg -bar
+msg -tit
+msg -bar
+amacen " • SSH USUARIOS ACTIVOS •"
+echo ""
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 echo -e "$COLOR1│${NC}${COLBG1}              ${WH}• SSH ACTIVE USERS •               ${NC}$COLOR1│ $NC"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
@@ -1346,7 +1347,7 @@ done < /etc/passwd
 
 echo -e "$siani╒═════════════════════════════════════════════╕\033[0m"
 echo "           TOTAL: $unlocked_count  User(s)"
-
+read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
 m-sshovpn
 }
 function listssh(){
@@ -1468,23 +1469,27 @@ echo "" > /etc/xray/sshx/listlock
 fi
 NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/etc/xray/sshx/listlock")
 if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e "$COLOR1 ${NC}${COLBG1}    ${WH}⇱ Unlock SSH Account ⇲       ${NC} $COLOR1 $NC"
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+msg -bar
+msg -tit
+msg -bar
+amacen " • DESBLOQUEAR CUENTA SSH •"
 echo ""
-echo "You have no existing user Lock!"
-echo ""
+echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+echo "No tienes ningún usuario existente Bloqueado!"
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 read -n 1 -s -r -p "Press any key to back on menu"
 m-sshovpn
 fi
 clear
+msg -bar
+msg -tit
+msg -bar
+amacen " • DESBLOQUEAR CUENTA SSH •"
+echo ""
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e "$COLOR1 ${NC}${COLBG1}    ${WH}⇱ Unlock SSH Account ⇲       ${NC} $COLOR1 $NC"
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo " Select the existing client you want to Unlock"
-echo " ketik [0] kembali kemenu"
-echo " tulis clear untuk delete semua Akun"
+echo " Seleccione el cliente que desea desbloquear"
+echo " Presiona [0] para ir al menu"
+#echo " escribe claro para eliminar todas las cuentas"
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo "     No  User      Expired"
 grep -E "^### " "/etc/xray/sshx/listlock" | cut -d ' ' -f 2-3 | nl -s ') '
@@ -1510,15 +1515,15 @@ echo -e "### $Login $exp $Pass" >> /etc/xray/ssh
 sed -i "/^### $user $exp $pass/d" /etc/xray/sshx/listlock &> /dev/null
 TEXT="
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>  SSH UNLOK </b>
+<b>  SSH DESBLOQUEADO </b>
 <code>◇━━━━━━━━━━━━━━◇
-<b>DOMAIN   :</b> <code>${domain} </code>
-<b>ISP      :</b> <code>$ISP $CITY </code>
-<b>USERNAME :</b> <code>$user </code>
+<b>DOMINIO   :</b> <code>${domain} </code>
+<b>IP        :</b> <code>$ISP $CITY </code>
+<b>USUARIO   :</b> <code>$user </code>
 <b>IP LIMIT  :</b> <code>$iplim IP </code>
-<b>EXPIRED  :</b> <code>$exp </code>
+<b>EXPIRA    :</b> <code>$exp </code>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<i>Succes Unlock Akun...</i>
+<i>Desbloqueo exitoso de cuenta...</i>
 "
 curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 cd
@@ -1529,11 +1534,14 @@ echo "$TEXT" > /etc/notiftele
 bash /etc/tele
 fi
 clear
+msg -bar
+msg -tit
+msg -bar
+amacen " • CUENTA SSH DESBLOQUEADO •"
+echo ""
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo " SSH Account Unlock Successfully"
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo " Client Name : $user"
-echo " Status  : Unlocked"
+echo " Nombre del cliente : $user"
+echo " Estado  : Desbloqueado"
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
@@ -1554,9 +1562,9 @@ menu_func "NUEVO CLIENTE SSH 👤 " \
 "$(dnxver "VER CLIENTES CONECTADOS ") " \
 "CONFIGURACION SE USUARIOS" \
 " $(msg -ama "CAMBIAR LIMITE DE IP USER")\n$(msg -bar2)" \
-"CONFIGURAR BLOQUEO LOGIN" \
+"AUTO ELIMINAR O BLOQUEAR" \
 " $(msg -verm2 "DESBLOQUEAR LOGIN SSH") \n$(msg -bar2)" \
-"CAMBIAR BANNER" \
+"LISTA DE USUARIOS SSH" \
 "LISTA DE USUARIOS CREADOS" \
 #"CAMBIAR A MODO SSH/TOKEN"
 back
@@ -1577,8 +1585,8 @@ echo -e ""
 		8)listssh;;
 		9)lockssh;;
 		10)hapuslama;;
-		11)banner;;
-                12)liser;;
+		11)liser;;
+                #12)liser;;
     15)USER_MODE && break;;
     *) menu ;;
 	esac
