@@ -596,7 +596,6 @@ cd
 msg -bar
 msg -tit
 msg -bar
-echo -e ""
 amacen " USUARIO SSH TEMPORAL"
 echo ""
 
@@ -782,7 +781,7 @@ EOF
 chmod 644 /etc/cron.d/trialssh${Login}
 clear
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
-echo -e "$COLOR1 ${NC} ${WH}• Trial SSH Premium Account • " | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
+echo -e "$COLOR1 ${NC} ${WH}• Demo SSH Premium  • " | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 $NC  ${WH}Username   ${COLOR1}: ${WH}$Login"  | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 $NC  ${WH}Password   ${COLOR1}: ${WH}$Pass" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
@@ -842,7 +841,6 @@ clear
 msg -bar
 msg -tit
 msg -bar
-echo -e ""
 amacen " RENOVAR USUARIOS SSH PREMIUM"
 echo ""
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
@@ -857,7 +855,6 @@ fi
 msg -bar
 msg -tit
 msg -bar
-echo -e ""
 amacen " RENOVAR USUARIOS SSH PREMIUM"
 echo ""
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
@@ -931,7 +928,6 @@ clear
 msg -bar
 msg -tit
 msg -bar
-echo -e ""
 amacen " RENOVACION DE USUARIO EXITOSAMENTE "
 echo ""
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
@@ -954,7 +950,6 @@ clear
 msg -bar
 msg -tit
 msg -bar
-echo -e ""
 amacen " ELIMINACION DE USUARIOS SSH"
 echo ""
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
@@ -1090,6 +1085,8 @@ clear
 msg -bar
 msg -tit
 msg -bar
+amacen " • LISTA DE USUARIOS SSH CREADOS •"
+echo ""
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 echo -e "$COLOR1 ${NC} ${COLBG1}                 ${WH}• MEMBER SSH •                 ${NC}$COLOR1$NC"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
@@ -1114,19 +1111,6 @@ JUMLAH="$(awk -F: '$3 >= 1000 && $1 != "nobody" {print $1}' /etc/passwd | wc -l)
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 echo "Account number: $JUMLAH user"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1 ${NC}${COLBG1}              ${WH}• DELETE USERS •                   ${NC}$COLOR1$NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo ""
-read -p "Username SSH to Delete : " Pengguna
-if getent passwd $Pengguna > /dev/null 2>&1; then
-userdel $Pengguna > /dev/null 2>&1
-echo -e "User $Pengguna was removed."
-else
-echo -e "Failure: User $Pengguna Not Exist."
-fi
-sed -i "/^### $Pengguna/d" /etc/xray/ssh
 read -n 1 -s -r -p "Press any key to back on menu"
 m-sshovpn
 }
@@ -1143,13 +1127,8 @@ author=$(cat /etc/profil)
 msg -bar
 msg -tit
 msg -bar
-amacen " • SSH USUARIOS ACTIVOS •"
+amacen " • SSH USUARIOS EN LINEA •"
 echo ""
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}${COLBG1}              ${WH}• SSH ACTIVE USERS •               ${NC}$COLOR1│ $NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e ""
 rm -rf /tmp/ssh2
 systemctl restart ws-stunnel > /dev/null 2>&1
 sleep 3
@@ -1215,7 +1194,7 @@ do
 limitip="0"
 if [[ ${jumlah[$i]} -gt $limitip ]]; then
 sship=$(cat /tmp/ssh2  | grep -w "${username[$i]}" | wc -l)
-echo -e "$COLOR1${NC} USERNAME : \033[0;33m${username[$i]}";
+echo -e "$COLOR1${NC} USUARIO : \033[0;33m${username[$i]}";
 echo -e "$COLOR1${NC} IP LOGIN : \033[0;33m$sship";
 echo -e ""
 fi
@@ -1237,43 +1216,46 @@ m-sshovpn
 }
 function limitssh(){
 clear
-msg -bar
-msg -tit
-msg -bar
 cd
 NUMBER_OF_CLIENTS=$(grep -c -E "^### " "/etc/xray/ssh")
 if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 clear
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e "$COLOR1 ${NC}${COLBG1}    ${WH}⇱ Limit SSH Account ⇲        ${NC} $COLOR1 $NC"
+msg -bar
+msg -tit
+msg -bar
+amacen " • CAMBIAR LIMITE IP CUENTAS SSH •"
+echo "" 
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
-echo "You have no existing clients!"
+echo "No tienes clientes existentes!"
 echo ""
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
 m-sshovpn
 fi
+msg -bar
+msg -tit
+msg -bar
+amacen " • CAMBIAR LIMITE IP CUENTAS SSH •"
+echo ""
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e "$COLOR1 ${NC}${COLBG1}    ${WH}⇱ Limit SSH Account ⇲        ${NC} $COLOR1 $NC"
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo "Select the existing client you want to change ip"
-echo " ketik [0] kembali kemenu"
+echo "Seleccione el cliente al que desea cambiar la IP Login"
+echo " Presiona [0] para volver"
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 grep -E "^### " "/etc/xray/ssh" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
-read -rp "Select one client [1]: " CLIENT_NUMBER
+read -rp "Seleccione un cliente [1]: " CLIENT_NUMBER
 else
-read -rp "Select one client [1-${NUMBER_OF_CLIENTS}]: " CLIENT_NUMBER
+read -rp "Seleccione un cliente [1-${NUMBER_OF_CLIENTS}]: " CLIENT_NUMBER
 if [[ ${CLIENT_NUMBER} == '0' ]]; then
 m-sshovpn
 fi
 fi
 done
 until [[ $iplim =~ ^[0-9]+$ ]]; do
-read -p "Limit User (IP) New: " iplim
+read -p "Limite Usuario (IP) Nuevo: " iplim
 done
 if [ ! -e /etc/xray/sshx ]; then
 mkdir -p /etc/xray/sshx
@@ -1286,15 +1268,15 @@ exp=$(grep -E "^### " "/etc/xray/ssh" | cut -d ' ' -f 3 | sed -n "${CLIENT_NUMBE
 echo "${iplim}" >/etc/xray/sshx/${user}IP
 TEXT="
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>  SSH IP LIMIT</b>
+<b>  SSH IP LIMITE</b>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<b>DOMAIN   :</b> <code>${domain} </code>
-<b>ISP      :</b> <code>$ISP $CITY </code>
-<b>USERNAME :</b> <code>$user </code>
-<b>EXPIRED  :</b> <code>$exp </code>
-<b>IP LIMIT NEW :</b> <code>$iplim IP </code>
+<b>DOMINIO   :</b> <code>${domain} </code>
+<b>IP      :</b> <code>$ISP $CITY </code>
+<b>USUARIO :</b> <code>$user </code>
+<b>EXPIRA  :</b> <code>$exp </code>
+<b>IP LIMITE NUEVO :</b> <code>$iplim IP </code>
 <code>◇━━━━━━━━━━━━━━◇</code>
-<i>Succes Change IP LIMIT...</i>
+<i>LIMITE de IP nuevo exitoso...</i>
 "
 curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 cd
@@ -1305,12 +1287,17 @@ echo "$TEXT" > /etc/notiftele
 bash /etc/tele
 fi
 clear
+msg -bar
+msg -tit
+msg -bar
+amacen " • CAMBIAR LIMITE IP CUENTAS SSH  •"
+echo ""
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo " SSH Account Was Successfully Change Limit IP"
+echo " La cuenta SSH cambió correctamente el límite de IP"
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
-echo " Client Name : $user"
-echo " Limit IP    : $iplim IP"
+echo " Nombre del cliente : $user"
+echo " Limite IP    : $iplim IP"
 echo ""
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
@@ -1355,85 +1342,99 @@ clear
 msg -bar
 msg -tit
 msg -bar
+amacen " • AUTO BLOQUEO Y ELIMINAR SSH MULTILOGIN•"
+echo ""
 echo -e "$COLOR1┌──────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│ \033[1;37mPlease select a your Choice              $COLOR1│${NC}"
-echo -e "$COLOR1└──────────────────────────────────────────┘${NC}"
-echo -e "$COLOR1┌──────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│  [ 1 ]  \033[1;37mAUTO LOCKED USER SSH      ${NC}"
+echo -e "$COLOR1│  [ 1 ]  \033[1;37mAUTO BLOQUEO USER SSH      ${NC}"
 echo -e "$COLOR1│  "
-echo -e "$COLOR1│  [ 2 ]  \033[1;37mAUTO DELETE USER SSH    ${NC}"
+echo -e "$COLOR1│  [ 2 ]  \033[1;37mAUTO ELIMINAR USER SSH    ${NC}"
 echo -e "$COLOR1│  "
 echo -e "$COLOR1│  "
-echo -e "$COLOR1│  [ 0 ]  \033[1;37mBACK TO MENU    ${NC}"
+echo -e "$COLOR1│  [ 0 ]  \033[1;37mPresiona 0 para volver    ${NC}"
 echo -e "$COLOR1└──────────────────────────────────────────┘${NC}"
 until [[ $lock =~ ^[0-2]+$ ]]; do
-read -p "   Please select numbers 1 sampai 2 : " lock
+read -p "   Por favor seleccione los números 1 o 2 : " lock
 done
 if [[ $lock == "0" ]]; then
 menu
 elif [[ $lock == "1" ]]; then
 clear
+msg -bar
+msg -tit
+msg -bar
+amacen " • CONFIGURACION MULTILOGIN•"
+echo ""
 echo "lock" > /etc/typessh
 echo -e "$COLOR1┌───────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}${COLBG1}           ${WH}• SETTING MULTI LOGIN •             ${NC}$COLOR1│ $NC"
-echo -e "$COLOR1└───────────────────────────────────────────────┘${NC}"
-echo -e "$COLOR1┌───────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│$NC Succes Ganti Auto Lock  ${NC}"
-echo -e "$COLOR1│$NC Jika User Melanggar auto lock Account. ${NC}"
+echo -e "$COLOR1│$NC Si el limite del usuario otorgado es 1 ${NC}"
+echo -e "$COLOR1│$NC y se conecta en dos dispositivos este lo eliminara automático. ${NC}"
 echo -e "$COLOR1└───────────────────────────────────────────────┘${NC}"
 sleep 1
 elif [[ $lock == "2" ]]; then
 clear
+msg -bar
+msg -tit
+msg -bar
+amacen " • CONFIGURACION MULTILOGIN  •"
+echo ""
 echo "delete" > /etc/typessh
 echo -e "$COLOR1┌───────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}${COLBG1}           ${WH}• SETTING MULTI LOGIN •             ${NC}$COLOR1│ $NC"
-echo -e "$COLOR1└───────────────────────────────────────────────┘${NC}"
-echo -e "$COLOR1┌───────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│$NC Succes Ganti Auto Delete Accounr ${NC}"
-echo -e "$COLOR1│$NC Jika User Melanggar auto Delete Account. ${NC}"
+echo -e "$COLOR1│$NC Si el limite del usuario otorgado es 1${NC}"
+echo -e "$COLOR1│$NC y se conecta en dos dispositivos este lo elimira en automático. ${NC}"
 echo -e "$COLOR1└───────────────────────────────────────────────┘${NC}"
 sleep 1
 fi
 type=$(cat /etc/typessh)
 if [ $type = "lock" ]; then
 clear
+msg -bar
+msg -tit
+msg -bar
+amacen " • CONFIGURACION MULTILOGIN•"
+echo ""
 echo -e "$COLOR1┌───────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}${COLBG1}           ${WH}• SETTING MULTI LOGIN •             ${NC}$COLOR1│ $NC"
+echo -e "$COLOR1│$NC POR FAVOR ESCRIBA LA CANTIDAD DE TIEMPO PARA EL BLOQUEO  ${NC}"
+echo -e "$COLOR1│$NC PUEDE ESCRIBIR EN 15 MINUTOS ETC.. ${NC}"
 echo -e "$COLOR1└───────────────────────────────────────────────┘${NC}"
-echo -e "$COLOR1┌───────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│$NC SILAHKAN TULIS JUMLAH WAKTU UNTUK LOCKED  ${NC}"
-echo -e "$COLOR1│$NC BISA TULIS 15 MENIT DLL. ${NC}"
-echo -e "$COLOR1└───────────────────────────────────────────────┘${NC}"
-read -rp "   Jumlah Waktu Lock: " -e notif2
+read -rp "   Tiempo total de bloqueo: " -e notif2
 echo "${notif2}" > /etc/waktulockssh
 clear
+msg -bar
+msg -tit
+msg -bar
+amacen " • CONFIGURACION MULTILOGIN•"
+echo ""
 echo -e "$COLOR1┌───────────────────────────────────────────────┐${NC}"
 echo -e "$COLOR1│${NC}${COLBG1}           ${WH}• SETTING MULTI LOGIN •             ${NC}$COLOR1│ $NC"
 echo -e "$COLOR1└───────────────────────────────────────────────┘${NC}"
 echo -e "$COLOR1┌───────────────────────────────────────────────┐${NC}"
-echo -e "${COLOR1}│ $NC SILAHKAN TULIS JUMLAH NOTIFIKASI UNTUK AUTO LOCK    ${NC}"
-echo -e "${COLOR1}│ $NC AKUN USER YANG MULTI LOGIN     ${NC}"
+echo -e "${COLOR1}│ $NC POR FAVOR ESCRIBA EL NÚMERO DE NOTIFICACIONES PARA AUTO BLOQUEO    ${NC}"
+echo -e "${COLOR1}│ $NC CUENTAS DE USUARIOS DE INICIO DE SESIÓN MÚLTIPLE     ${NC}"
 echo -e "$COLOR1└───────────────────────────────────────────────┘${NC}"
-read -rp "   Jika Mau 3x Notif baru kelock tulis 3, dst: " -e notif
+read -rp "   Si desea notificaciones 3x, escriba 3: " -e notif
 cd /etc/xray/sshx
 echo "$notif" > notif
 clear
+msg -bar
+msg -tit
+msg -bar
+amacen " • CONFIGURACION MULTILOGIN•"
+echo ""
 echo -e "$COLOR1┌───────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}${COLBG1}           ${WH}• SETTING MULTI LOGIN •             ${NC}$COLOR1│ $NC"
-echo -e "$COLOR1└───────────────────────────────────────────────┘${NC}"
-echo -e "$COLOR1┌───────────────────────────────────────────────┐${NC}"
-echo -e "${COLOR1}│ $NC SUCCES GANTI NOTIF LOCK JADI $notif $NC "
-echo -e "${COLOR1}│ $NC SUCCES GANTI TIME NOTIF LOCK JADI $notif2 MENIT $NC "
+echo -e "${COLOR1}│ $NC CAMBIANDO CON ÉXITO LA NOTIFICACIÓN DE BLOQUEO PARA QUE $notif $NC "
+echo -e "${COLOR1}│ $NC CAMBIANDO CON ÉXITO EL TIEMPO DE NOTIFICACIÓN DE BLOQUEO PARA QUE $notif2 MINUTO $NC "
 echo -e "$COLOR1└───────────────────────────────────────────────┘${NC}"
 else
+msg -bar
+msg -tit
+msg -bar
+amacen " • CONFIGURACION MULTILOGIN•"
+echo ""
 echo -e "$COLOR1┌───────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}${COLBG1}           ${WH}• SETTING MULTI LOGIN •             ${NC}$COLOR1│ $NC"
+echo -e "$COLOR1│$NC POR FAVOR ESCRIBA LA CANTIDAD DE TIEMPO PARA ESCANEAR ${NC}"
+echo -e "$COLOR1│$NC USUARIOS QUE SON MULTI LOGIN . ${NC}"
 echo -e "$COLOR1└───────────────────────────────────────────────┘${NC}"
-echo -e "$COLOR1┌───────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│$NC SILAHKAN TULIS JUMLAH WAKTU UNTUK UNTUK SCAN ${NC}"
-echo -e "$COLOR1│$NC USER YANG SEDANG MULTI LOGIN . ${NC}"
-echo -e "$COLOR1└───────────────────────────────────────────────┘${NC}"
-read -rp "   Tulis Waktu Scan (Menit) : " -e notif2
+read -rp "   Escribir tiempo de escaneo (Minuto) : " -e notif2
 echo "# Autokill" >/etc/cron.d/tendang
 echo "SHELL=/bin/sh" >>/etc/cron.d/tendang
 echo "PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin" >>/etc/cron.d/tendang
@@ -1443,10 +1444,10 @@ echo -e "$COLOR1┌────────────────────�
 echo -e "$COLOR1│${NC}${COLBG1}           ${WH}• SETTING MULTI LOGIN •             ${NC}$COLOR1│ $NC"
 echo -e "$COLOR1└───────────────────────────────────────────────┘${NC}"
 echo -e "$COLOR1┌───────────────────────────────────────────────┐${NC}"
-echo -e "${COLOR1}│ $NC SILAHKAN TULIS JUMLAH NOTIFIKASI UNTUK AUTO LOCK    ${NC}"
-echo -e "${COLOR1}│ $NC AKUN USER YANG MULTI LOGIN     ${NC}"
+echo -e "${COLOR1}│ $NC POR FAVOR ESCRIBA EL NÚMERO DE NOTIFICACIONES PARA AUTO BLOQUEO    ${NC}"
+echo -e "${COLOR1}│ $NC CUENTAS DE USUARIOS DE INICIO DE SESIÓN MÚLTIPLE     ${NC}"
 echo -e "$COLOR1└───────────────────────────────────────────────┘${NC}"
-read -rp "   Jika Mau 3x Notif baru kelock tulis 3, dst: " -e notif
+read -rp "   Si desea notificaciones 3x, escriba 3, : " -e notif
 cd /etc/xray/sshx
 echo "$notif" > notif
 clear
@@ -1454,8 +1455,8 @@ echo -e "$COLOR1┌────────────────────�
 echo -e "$COLOR1│${NC}${COLBG1}           ${WH}• SETTING MULTI LOGIN •             ${NC}$COLOR1│ $NC"
 echo -e "$COLOR1└───────────────────────────────────────────────┘${NC}"
 echo -e "$COLOR1┌───────────────────────────────────────────────┐${NC}"
-echo -e "${COLOR1}│ $NC SUCCES GANTI NOTIF LOCK JADI $notif $NC "
-echo -e "${COLOR1}│ $NC SUCCES GANTI TIME NOTIF LOCK JADI $notif2 MENIT $NC "
+echo -e "${COLOR1}│ $NC CAMBIANDO CON ÉXITO LA NOTIFICACIÓN DE BLOQUEO PARA QUE $notif $NC "
+echo -e "${COLOR1}│ $NC NOTIFIQUE EN  $notif2 MINUTO $NC "
 echo -e "$COLOR1└───────────────────────────────────────────────┘${NC}"
 fi
 read -n 1 -s -r -p "Press any key to back on menu"
