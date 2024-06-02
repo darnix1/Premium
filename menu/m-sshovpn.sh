@@ -858,11 +858,11 @@ msg -bar
 msg -tit
 msg -bar
 amacen " RENOVAR USUARIOS SSH PREMIUM"
-echo ""
 msg -bar
 blan " Escoge un usuario para renovar "
 blan " Presiona 0 para volver"
 msg -bar
+echo ""
 grep -E "^### " "/etc/xray/ssh" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
@@ -899,7 +899,7 @@ TEXT="
 <b>DOMINIO :</b> <code>${domain} </code>
 <b>IP      :</b> <code>$ISP $CITY </code>
 <b>USUARIO :</b> <code>$User </code>
-<b>EXPIRA  :</b> <code>$exp4 </code>
+<b>NUEVA EXPIRACION  :</b> <code>$exp4 </code>
 <code>◇━━━━━━━━━━━━━━◇</code>
 "
 curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
@@ -940,6 +940,7 @@ echo -e "$COLOR1│ ${WH}Expira el          : $exp4"
 echo -e "$COLOR1│"
 echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
 fi
+echo ""
 read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
 m-sshovpn
 }
@@ -953,7 +954,6 @@ msg -bar
 msg -tit
 msg -bar
 amacen " ELIMINACION DE USUARIOS SSH"
-echo ""
 msg -bar
 red " Aun no cuentas con ningun usuario"
 msg -bar
@@ -967,8 +967,11 @@ msg -bar
 echo -e ""
 amacen " ELIMINACION DE USUARIOS SSH"
 echo ""
+msg -bar
 blan "Por favor selecciona un usuario a eliminar"
 blan "Presiona 0 para volver "
+msg -bar
+echo ""
 grep -E "^### " "/etc/xray/ssh" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
