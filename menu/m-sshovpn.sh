@@ -18,11 +18,15 @@ export txt_num='^[A-Za-z0-9]+$'
 #Letras con contorno 
 dnxroj() { echo -e "\e[1;37;41m${*}\e[0m";}
 dnxver() { echo -e "\e[1;37;42m${*}\e[0m";}
+dnxaz () { echo -e "   \e[97m\033[1;44m${*}\033[0m";}
+dnxama() { echo -e "\e[1;37;43m${*}\e[0m";}
+
 
 #Letras de colores sin contorno 
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
+blan() { echo -e "\\033[0;37m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
-amacen() { echo -e "\e[1;93m              ${*}"; } 
+amacen() { echo -e "\e[1;93m            ${*}"; } 
 
 
 #Funciones menu abajo 
@@ -843,11 +847,9 @@ msg -tit
 msg -bar
 amacen " RENOVAR USUARIOS SSH PREMIUM"
 echo ""
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│                                                 │"
-echo -e "$COLOR1│${WH} User Tidak Ada!                              $COLOR1   │"
-echo -e "$COLOR1│                                                 │"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+msg -bar
+red " No existe Ningun Usuario"
+msg -bar
 echo ""
 read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
 m-sshovpn
@@ -857,10 +859,10 @@ msg -tit
 msg -bar
 amacen " RENOVAR USUARIOS SSH PREMIUM"
 echo ""
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│ ${WH}Escoge el usuario a renovar  $COLOR1           │"
-echo -e "$COLOR1│ ${WH}Presiona [0] para volver$COLOR1                        │"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+msg -bar
+blan " Escoge un usuario para renovar "
+blan " Presiona 0 para volver"
+msg -bar
 grep -E "^### " "/etc/xray/ssh" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
@@ -952,11 +954,9 @@ msg -tit
 msg -bar
 amacen " ELIMINACION DE USUARIOS SSH"
 echo ""
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│                                                 │"
-echo -e "$COLOR1│${WH} No tienes Usuarios Registrados!                              $COLOR1   │"
-echo -e "$COLOR1│                                                 │"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+msg -bar
+red " Aun no cuentas con ningun usuario"
+msg -bar
 echo ""
 read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
 m-sshovpn
@@ -967,10 +967,8 @@ msg -bar
 echo -e ""
 amacen " ELIMINACION DE USUARIOS SSH"
 echo ""
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│ ${WH}Por favor seleccione el usuario a eliminar     $COLOR1      │"
-echo -e "$COLOR1│ ${WH}Presiona [0] para volver al menu                     $COLOR1   │"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+blan "Por favor selecciona un usuario a eliminar"
+blan "Presiona 0 para volver "
 grep -E "^### " "/etc/xray/ssh" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
@@ -1035,22 +1033,22 @@ msg -tit
 msg -bar
 amacen " CONFIGURACION DE USUARIOS SSH"
 echo ""
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│                                                 │"
-echo -e "$COLOR1│${WH} User Tidak Ada!                              $COLOR1   │"
-echo -e "$COLOR1│                                                 │"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+msg -bar
+red " No cuentas con ningun usuario para ver su configuración"
+msg -bar
 echo ""
 read -n 1 -s -r -p "Press any key to back on menu"
 m-sshovpn
 fi
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}${COLBG1}              ${WH}• USER CONFIG •                    │${NC}$COLOR1$NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│ ${WH}Silahkan Pilih User Yang Mau Dicek     $COLOR1         │"
-echo -e "$COLOR1│ ${WH}ketik [0] kembali kemenu                     $COLOR1   │"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+msg -bar
+msg -tit
+msg -bar
+amacen " CONFIGURACION DE USUARIOS SSH"
+echo ""
+msg -bar
+blan " Selecciona el usuario para verificar su configuracion"
+blan " Presiona 0 para volver "
+msg -bar
 grep -E "^### " "/etc/xray/ssh" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
@@ -1077,7 +1075,7 @@ else
 echo "$TEXT" > /etc/notiftele
 bash /etc/tele
 fi
-read -n 1 -s -r -p "   Press any key to back on menu"
+read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
 menu
 }
 function hapuslama(){
@@ -1223,15 +1221,15 @@ clear
 msg -bar
 msg -tit
 msg -bar
-amacen " • CAMBIAR LIMITE IP CUENTAS SSH •"
+amacen "• CAMBIAR LIMITE IP CUENTAS SSH •"
 echo "" 
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+msg -bar
 echo ""
-echo "No tienes clientes existentes!"
+red "Actualmente no tienes ningun usuario"
 echo ""
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+msg -bar
 echo ""
-read -n 1 -s -r -p "Press any key to back on menu"
+read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
 m-sshovpn
 fi
 msg -bar
@@ -1310,11 +1308,11 @@ clear
 msg -bar
 msg -tit
 msg -bar
-
-echo -e "$siani╒════════════════════════════════════════════╕\033[0m"
-echo -e " \033[0;41;36m\033[1mUSERNAME          EXP DATE        STATUS   \033[0m"
-echo -e "$siani╘════════════════════════════════════════════╛\033[0m"
-
+amacen " • LISTA DE CLIENTES EN EL SERVIDOR •"
+echo ""
+msg -bar
+echo -e " \033[1;37m\033[41mUSUARIO          EXP FECHA        ESTADO   \033[0m"
+msg -bar
 unlocked_count=0
 
 while IFS=':' read -r user _ uid _; do
@@ -1332,8 +1330,10 @@ while IFS=':' read -r user _ uid _; do
     fi
 done < /etc/passwd
 
-echo -e "$siani╒═════════════════════════════════════════════╕\033[0m"
-echo "           TOTAL: $unlocked_count  User(s)"
+msg -bar
+echo -e " \033[1;37m  TOTAL \033[1;33m [ \033[1;36m$unlocked_count\033[1;33m ]\033[1;37m CLIENTES EN TU VPS "
+msg -bar
+echo -e ""
 read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
 m-sshovpn
 }
@@ -1348,8 +1348,6 @@ echo -e "$COLOR1┌────────────────────�
 echo -e "$COLOR1│  [ 1 ]  \033[1;37mAUTO BLOQUEO USER SSH      ${NC}"
 echo -e "$COLOR1│  "
 echo -e "$COLOR1│  [ 2 ]  \033[1;37mAUTO ELIMINAR USER SSH    ${NC}"
-echo -e "$COLOR1│  "
-echo -e "$COLOR1│  "
 echo -e "$COLOR1│  [ 0 ]  \033[1;37mPresiona 0 para volver    ${NC}"
 echo -e "$COLOR1└──────────────────────────────────────────┘${NC}"
 until [[ $lock =~ ^[0-2]+$ ]]; do
@@ -1475,10 +1473,10 @@ msg -tit
 msg -bar
 amacen " • DESBLOQUEAR CUENTA SSH •"
 echo ""
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo "No tienes ningún usuario existente Bloqueado!"
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-read -n 1 -s -r -p "Press any key to back on menu"
+msg -bar
+red " Actualmente no tienes ningun usuario bloqueado"
+msg -bar
+read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
 m-sshovpn
 fi
 clear
@@ -1487,18 +1485,17 @@ msg -tit
 msg -bar
 amacen " • DESBLOQUEAR CUENTA SSH •"
 echo ""
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo " Seleccione el cliente que desea desbloquear"
-echo " Presiona [0] para ir al menu"
-#echo " escribe claro para eliminar todas las cuentas"
-echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo "     No  User      Expired"
+msg -bar
+blan " Selecciona el usuario que deseas desbloquear"
+red " Presiona 0 para volver al menu"
+msg -bar
+echo -e "\033[1;37m\033[41mNo     Usuario       Expira  \033[0m"
 grep -E "^### " "/etc/xray/sshx/listlock" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
-read -rp "Select one client [1]: " CLIENT_NUMBER
+read -rp "Selecciona el usuario [1]: " CLIENT_NUMBER
 else
-read -rp "Select one client [1-${NUMBER_OF_CLIENTS}] to Unlock: " CLIENT_NUMBER
+read -rp "Selecciona el usuario [1-${NUMBER_OF_CLIENTS}] to Unlock: " CLIENT_NUMBER
 if [[ ${CLIENT_NUMBER} == '0' ]]; then
 m-sshovpn
 fi
@@ -1542,10 +1539,10 @@ amacen " • CUENTA SSH DESBLOQUEADO •"
 echo ""
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo " Nombre del cliente : $user"
-echo " Estado  : Desbloqueado"
+dnxaz " Estado Desbloqueado"
 echo -e "$COLOR1━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo ""
-read -n 1 -s -r -p "Press any key to back on menu"
+read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
 m-sshovpn
 }
 clear
@@ -1565,8 +1562,8 @@ menu_func "NUEVO CLIENTE SSH 👤 " \
 " $(msg -ama "CAMBIAR LIMITE DE IP USER")\n$(msg -bar2)" \
 "AUTO ELIMINAR O BLOQUEAR" \
 " $(msg -verm2 "DESBLOQUEAR LOGIN SSH") \n$(msg -bar2)" \
-"LISTA DE USUARIOS SSH" \
-"LISTA DE USUARIOS CREADOS" \
+"LISTA DE USUARIOS SSH CREADOS" \
+#"LISTA DE USUARIOS CREADOS" \
 #"CAMBIAR A MODO SSH/TOKEN"
 back
 echo -e ""
@@ -1585,8 +1582,8 @@ echo -e ""
 		7)limitssh;;
 		8)listssh;;
 		9)lockssh;;
-		10)hapuslama;;
-		11)liser;;
+		10)liser;;
+		#11)liser;;
                 #12)liser;;
     15)USER_MODE && break;;
     *) menu ;;
