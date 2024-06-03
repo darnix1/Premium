@@ -964,7 +964,6 @@ fi
 msg -bar
 msg -tit
 msg -bar
-echo -e ""
 amacen " ELIMINACION DE USUARIOS SSH"
 echo ""
 msg -bar
@@ -972,6 +971,7 @@ blan "Por favor selecciona un usuario a eliminar"
 blan "Presiona 0 para volver "
 msg -bar
 echo ""
+echo -e "\033[0;37m" # Esto establece el color blanco para la salida
 grep -E "^### " "/etc/xray/ssh" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
@@ -996,6 +996,7 @@ echo -e "Usuario $Pengguna fue removido."
 else
 echo -e "Fallo: Usuario $Pengguna No existe."
 fi
+echo -e "\033[0m" # Restablece el color al valor predeterminado antes de la notificación
 TEXT="
 <code>◇━━━━━━━━━━━━━━◇</code>
 <b>  ELIMINACION SSH OVPN</b>
@@ -1324,9 +1325,9 @@ while IFS=':' read -r user _ uid _; do
         status=$(passwd -S "$user" | awk '{print $2}')
         if [[ "$exp" != "never" ]]; then
             if [[ "$status" = "L" ]]; then
-                printf "%-17s %2s %-17s %2s \n" "  $user" "$exp     " "LOCKED"
+		printf "\033[0;37m%-17s %2s %-17s %2s \033[0m\n" "  $user" "$exp     " "LOCKED"
             else
-                printf "%-17s %2s %-17s %2s \n" "  $user" "$exp     " "UNLOCKED"
+		printf "\033[0;37m%-17s %2s %-17s %2s \033[0m\n" "  $user" "$exp     " "UNLOCKED"
                 ((unlocked_count++))
             fi
         fi
