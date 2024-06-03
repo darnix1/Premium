@@ -1544,6 +1544,40 @@ echo ""
 read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
 m-sshovpn
 }
+
+function banner(){
+clear
+msg -bar
+msg -tit
+msg -bar
+amacen " CAMBIAR BANNER SSH "
+msg -bar
+
+echo -e "\033[1mPegue el contenido del banner personalizado a continuación (presione Ctrl+D para finalizar):\033[0m"
+echo -e "\033[1m ⚠️ Pueda que sea necesario oprimir 2 veces Ctrl+D ⚠️):\033[0m"
+custom_banner=$(</dev/stdin)
+
+# Backup the original /etc/issue.net file
+sudo cp /etc/issue.net /etc/issue.net.bak
+
+# Write the custom banner to /etc/issue.net
+echo "$custom_banner" | sudo tee /etc/issue.net > /dev/null
+
+# Inform the user that the banner has been changed
+echo ""
+echo ""
+echo "🚀 BANNER AGREGADO CON EXITO:🚀"
+red " Por favor espera un segundo"
+echo ""
+service ssh restart 2>/dev/null
+      service dropbear restart 2>/dev/null
+echo "Presiona Enter para regresar al menú..."
+read -r  # Espera a que el usuario presione Enter
+
+read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
+m-sshovpn
+}
+
 clear
 author=$(cat /etc/profil)
 msg -bar
@@ -1561,7 +1595,7 @@ menu_func "NUEVO CLIENTE SSH 👤 " \
 "AUTO ELIMINAR O BLOQUEAR" \
 " $(msg -verm2 "DESBLOQUEAR LOGIN SSH") \n$(msg -bar2)" \
 "LISTA DE USUARIOS SSH CREADOS" \
-#"LISTA DE USUARIOS CREADOS" \
+"MODIFICAR BANNER SSH" \
 #"CAMBIAR A MODO SSH/TOKEN"
 back
 echo -e ""
@@ -1581,7 +1615,7 @@ echo -e ""
 		8)listssh;;
 		9)lockssh;;
 		10)liser;;
-		#11)liser;;
+		11)banner;;
                 #12)liser;;
     15)USER_MODE && break;;
     *) menu ;;
