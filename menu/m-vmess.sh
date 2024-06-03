@@ -19,11 +19,15 @@ export txt_num='^[A-Za-z0-9]+$'
 #Letras con contorno 
 dnxroj() { echo -e "\e[1;37;41m${*}\e[0m";}
 dnxver() { echo -e "\e[1;37;42m${*}\e[0m";}
+dnxaz () { echo -e "   \e[97m\033[1;44m${*}\033[0m";}
+dnxama() { echo -e "\e[1;37;43m${*}\e[0m";}
+
 
 #Letras de colores sin contorno 
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
+blan() { echo -e "\\033[0;37m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
-amacen() { echo -e "\e[1;93m              ${*}"; } 
+amacen() { echo -e "\e[1;93m            ${*}"; } 
 
 
 #Funciones menu abajo 
