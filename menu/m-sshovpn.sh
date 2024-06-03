@@ -26,7 +26,7 @@ dnxama() { echo -e "\e[1;37;43m${*}\e[0m";}
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 blan() { echo -e "\\033[0;37m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
-amacen() { echo -e "\e[1;93m            ${*}"; } 
+amacen() { echo -e "\e[1;93m           ${*}"; } 
 
 
 #Funciones menu abajo 
@@ -73,7 +73,7 @@ msg() { ##-->> COLORES, TITULO, BARRAS
   -bar2)cor="\e[38;5;239m════════════════════════════════════════════════════" && echo -e "${cor}${SEMCOR}";;
   -bar)cor="\e[38;5;239m════════════════════════════════════════════════════" && echo -e "${cor}${SINCOLOR}";;
   -tit) 
-echo -e "\e[1;33m ❰❰❰ ░Ｄ░ ░Ａ░ ░Ｒ░ ░Ｎ░ ░Ｉ░ ░Ｘ░ ❱❱❱ 𝗩𝗲𝗿𝘀𝗶𝗼𝗻: $(cat /opt/.ver) \e[0m"
+echo -e "\e[1;33m ❰❰❰ ░Ｄ░ ░Ａ░ ░Ｒ░ ░Ｎ░ ░Ｉ░ ░Ｘ░ ❱❱❱ 𝗩𝗲𝗿𝘀𝗶𝗼𝗻: $(cat /opt/.ver)\e[0m"
 #test -f /opt/.ver && echo -e "\e[1;33m ❰❰❰ ░Ｄ░ ░Ａ░ ░Ｒ░ ░Ｎ░ ░Ｉ░ ░Ｘ░ ❱❱❱ 𝗩𝗲𝗿𝘀𝗶𝗼𝗻: $(cat /opt/.ver) \e[0m"
   esac
 }
@@ -1549,9 +1549,8 @@ author=$(cat /etc/profil)
 msg -bar
 msg -tit
 msg -bar
-echo -e ""
 amacen " CONFIGURACION SSH CLIENTES "
-echo ""
+msg -bar
 menu_func "NUEVO CLIENTE SSH 👤 " \
 "USUARIO TEMPORAL SSH " \
 "$(msg -verd "EDITAR RENOVAR CLIENTE") " \
