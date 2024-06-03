@@ -580,7 +580,7 @@ echo -e "$COLOR1 ${NC}    ${WH}• $author •${NC}                 $COLOR1 $NC"
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo "" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
-menu
+m-sshovpn
 }
 function trial(){
 clear
@@ -827,7 +827,7 @@ echo -e "$COLOR1 ${NC}    ${WH}• $author •${NC}                 $COLOR1 $NC"
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo "" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
-menu
+m-sshovpn
 }
 function renew(){
 clear
@@ -1079,7 +1079,7 @@ echo "$TEXT" > /etc/notiftele
 bash /etc/tele
 fi
 read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
-menu
+m-sshovpn
 }
 function hapuslama(){
 clear
