@@ -71,7 +71,7 @@ msg() { ##-->> COLORES, TITULO, BARRAS
   -verd) cor="${COLOR[2]}${NEGRITO}" && echo -e "${cor}${2}${SINCOLOR}" ;;
   -bra) cor="${COLOR[0]}${SINCOLOR}" && echo -e "${cor}${2}${SINCOLOR}" ;;
   -bar2)cor="\e[38;5;239m════════════════════════════════════════════════════" && echo -e "${cor}${SEMCOR}";;
-  -bar)cor="\e[38;5;239m════════════════════════════════════════════════════" && echo -e "${cor}${SEMCOR}";;
+  -bar)cor="\e[38;5;239m════════════════════════════════════════════════════" && echo -e "${cor}${SINCOLOR}";;
   -tit) 
 echo -e "\e[1;33m ❰❰❰ ░Ｄ░ ░Ａ░ ░Ｒ░ ░Ｎ░ ░Ｉ░ ░Ｘ░ ❱❱❱ 𝗩𝗲𝗿𝘀𝗶𝗼𝗻: $(cat /opt/.ver) \e[0m"
 #test -f /opt/.ver && echo -e "\e[1;33m ❰❰❰ ░Ｄ░ ░Ａ░ ░Ｒ░ ░Ｎ░ ░Ｉ░ ░Ｘ░ ❱❱❱ 𝗩𝗲𝗿𝘀𝗶𝗼𝗻: $(cat /opt/.ver) \e[0m"
@@ -862,7 +862,7 @@ msg -bar
 blan " Escoge un usuario para renovar "
 blan " Presiona 0 para volver"
 msg -bar
-echo ""
+echo -e "\033[0;37m" 
 grep -E "^### " "/etc/xray/ssh" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
 if [[ ${CLIENT_NUMBER} == '1' ]]; then
@@ -891,6 +891,7 @@ usermod -e  $exp4 $User
 egrep "^$User" /etc/passwd >/dev/null
 echo -e "$Pass\n$Pass\n"|passwd $User &> /dev/null
 sed -i "s/### $User $exp/### $User $exp4/g" /etc/xray/ssh >/dev/null
+echo -e "\033[0m"
 clear
 TEXT="
 <code>◇━━━━━━━━━━━━━━◇</code>
@@ -970,7 +971,6 @@ msg -bar
 blan "Por favor selecciona un usuario a eliminar"
 blan "Presiona 0 para volver "
 msg -bar
-echo ""
 echo -e "\033[0;37m" # Esto establece el color blanco para la salida
 grep -E "^### " "/etc/xray/ssh" | cut -d ' ' -f 2-3 | nl -s ') '
 until [[ ${CLIENT_NUMBER} -ge 1 && ${CLIENT_NUMBER} -le ${NUMBER_OF_CLIENTS} ]]; do
