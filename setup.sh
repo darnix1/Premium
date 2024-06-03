@@ -167,7 +167,8 @@ sleep 2s
 [[ $(dpkg --get-selections|grep -w "pv"|head -1) ]] || apt install pv -y &> /dev/null 
 [[ $(dpkg --get-selections|grep -w "lolcat"|head -1) ]] || apt-get install lolcat -y &>/dev/null 
 [[ $(dpkg --get-selections|grep -w "figlet"|head -1) ]] || apt-get install figlet -y &>/dev/null
-[[ $(dpkg --get-selections|grep -w "figlet"|head -1) ]] || apt-get install  -y &>/dev/null
+#[[ $(dpkg --get-selections|grep -w "figlet"|head -1) ]] || apt-get install  -y &>/dev/null
+[[ $(dpkg --get-selections|grep -w "mlocate"|head -1) ]] || apt-get install  -y &>/dev/null
 echo ""
 msg -bar2
 [[ $(echo -e "${vercion}" | grep -w "22.10") ]] && {
