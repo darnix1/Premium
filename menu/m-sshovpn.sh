@@ -292,9 +292,7 @@ clear
 msg -bar
 msg -tit
 msg -bar
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}${COLBG1}               ${WH}• SSH PANEL MENU •                ${NC}$COLOR1│ $NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+dnxaz " MENU DE CREACION DE USUARIOS SSH "
 until [[ $Login =~ ^[a-zA-Z0-9_.-]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 echo -ne "\033[1;37m INGRESE EL USUARIO \033[1;33m" && read Login
 CLIENT_EXISTS=$(grep -w $Login /etc/xray/ssh | wc -l)
@@ -305,9 +303,9 @@ clear
 msg -bar
 msg -tit
 msg -bar
-echo -e "$COLOR1│${WH} Nombre duplicado Por favor cree otro nombre.          $COLOR1│"
 err_fun 14
-read -n 1 -s -r -p "Press any key to back"
+echo -e "$COLOR1│${WH} Nombre duplicado Por favor cree otro nombre.          $COLOR1│"
+echo ""
 read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
   usernew
   continue
@@ -424,11 +422,11 @@ END
 if [[ -e /etc/cloudfront ]]; then
 TEXT="
 ◇━━━━━━━━━━━━━━━━━◇
-SSH Premium Account
+Cuenta Premium SSH
 ◇━━━━━━━━━━━━━━━━━◇
-Username        :  <code>$Login</code>
-Password        :  <code>$Pass</code>
-Expired On       :  $exp
+Usuario       :  <code>$Login</code>
+Password      :  <code>$Pass</code>
+Expira el     :  $exp
 ◇━━━━━━━━━━━━━━━━━◇
 ISP              :  $ISP
 CITY             :  $CITY
@@ -448,7 +446,10 @@ BadVPN UDP       :  7100, 7300, 7300
 ◇━━━━━━━━━━━━━━━━━◇
 SSH UDP VIRAL : <code>$domen:1-65535@$Login:$Pass</code>
 ◇━━━━━━━━━━━━━━━━━◇
-HTTP COSTUM WS : <code>$domen:80@$Login:$Pass</code>
+APP HTTP COSTUM WS  
+<code>$domen:80@$Login:$Pass</code>
+<code>$domen:443@$Login:$Pass</code>
+<code>$domen:8443@$Login:$Pass</code>
 ◇━━━━━━━━━━━━━━━━━◇
 Host Slowdns    :  <code>$sldomain</code>
 Port Slowdns     :  80, 443, 53
@@ -469,11 +470,11 @@ $author
 else
 TEXT="
 ◇━━━━━━━━━━━━━━━━━◇
-SSH Premium Account
+Cuenta Premium SSH
 ◇━━━━━━━━━━━━━━━━━◇
-Username        :  <code>$Login</code>
-Password        :  <code>$Pass</code>
-Expired On       :  $exp
+Usuario        :  <code>$Login</code>
+Password       :  <code>$Pass</code>
+Expira el      :  $exp
 ◇━━━━━━━━━━━━━━━━━◇
 ISP              :  $ISP
 CITY             :  $CITY
@@ -493,11 +494,10 @@ BadVPN UDP       :  7100, 7300, 7300
 ◇━━━━━━━━━━━━━━━━━◇
 SSH UDP VIRAL : <code>$domen:1-65535@$Login:$Pass</code>
 ◇━━━━━━━━━━━━━━━━━◇
-HTTP COSTUM WS : <code>$domen:80@$Login:$Pass</code>
-◇━━━━━━━━━━━━━━━━━◇
-Host Slowdns    :  <code>$sldomain</code>
-Port Slowdns     :  80, 443, 53
-Pub Key          :  <code> $slkey</code>
+APP HTTP COSTUM WS 
+<code>$domen:80@$Login:$Pass</code>
+<code>$domen:443@$Login:$Pass</code>
+<code>$domen:8443@$Login:$Pass</code>
 ◇━━━━━━━━━━━━━━━━━◇
 Payload WS/WSS   :
 <code>GET / HTTP/1.1[crlf]Host: [host][crlf]Connection: Upgrade[crlf]User-Agent: [ua][crlf]Upgrade: ws[crlf][crlf]</code>
@@ -562,13 +562,11 @@ echo -e "$COLOR1 $NC  ${WH}OVPN UDP   ${COLOR1}: ${WH}http://$domen:89/udp.ovpn"
 echo -e "$COLOR1 $NC  ${WH}OVPN SSL   ${COLOR1}: ${WH}http://$domen:89/ssl.ovpn" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 $NC  ${WH}UDPGW      ${COLOR1}: ${WH}7100-7300" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
-echo -e "$COLOR1 $NC  ${WH}PORT SLWDNS${COLOR1}: ${WH}80,443,53" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
-echo -e "$COLOR1 $NC  ${WH}NAMESERVER ${COLOR1}: ${WH}$sldomain" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
-echo -e "$COLOR1 $NC  ${WH}PUB KEY    ${COLOR1}: ${WH}$slkey" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
-echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 $NC  ${WH}UDP VIRAL${COLOR1}: ${WH}$domen:1-65535@$Login:$Pass" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 $NC  ${WH}HTTP COSTUM${COLOR1}: ${WH}$domen:80@$Login:$Pass" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
+echo -e "$COLOR1 $NC  ${WH}HTTP COSTUM${COLOR1}: ${WH}$domen:443@$Login:$Pass" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
+echo -e "$COLOR1 $NC  ${WH}HTTP COSTUM${COLOR1}: ${WH}$domen:8443@$Login:$Pass" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 ${NC}  ${WH}Payload WS/WSS${COLOR1}: ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1${NC}${WH}GET / HTTP/1.1[crlf]Host: [host][crlf]Connection: Upgrade[crlf]User-Agent: [ua][crlf]Upgrade: ws[crlf][crlf]${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
@@ -681,11 +679,11 @@ echo "tunnel ssh ${Login}" | at now +$timer minutes &> /dev/null
 if [[ -e /etc/cloudfront ]]; then
 TEXT="
 ◇━━━━━━━━━━━━━━━━━◇
-Trial SSH Premium Account
+USUARIO TEMPORAL SSH
 ◇━━━━━━━━━━━━━━━━━◇
-Username        :  <code>$Login</code>
-Password        :  <code>$Pass</code>
-Expired On       :  $timer Minutes
+Usuario        :  <code>$Login</code>
+Password       :  <code>$Pass</code>
+Expira en      :  $timer Minutos
 ◇━━━━━━━━━━━━━━━━━◇
 ISP              :  $ISP
 CITY             :  $CITY
@@ -705,11 +703,10 @@ BadVPN UDP       :  7100, 7300, 7300
 ◇━━━━━━━━━━━━━━━━━◇
 SSH UDP VIRAL : <code>$domen:1-65535@$Login:$Pass</code>
 ◇━━━━━━━━━━━━━━━━━◇
-HTTP COSTUM WS : <code>$domen:80@$Login:$Pass</code>
-◇━━━━━━━━━━━━━━━━━◇
-Host Slowdns    :  <code>$sldomain</code>
-Port Slowdns     :  80, 443, 53
-Pub Key          :  <code> $slkey</code>
+APP HTTP COSTUM WS 
+<code>$domen:80@$Login:$Pass</code>
+<code>$domen:443@$Login:$Pass</code>
+<code>$domen:8443@$Login:$Pass</code>
 ◇━━━━━━━━━━━━━━━━━◇
 Payload WS/WSS   :
 <code>GET / HTTP/1.1[crlf]Host: [host][crlf]Connection: Upgrade[crlf]User-Agent: [ua][crlf]Upgrade: ws[crlf][crlf]</code>
@@ -726,11 +723,11 @@ $author
 else
 TEXT="
 ◇━━━━━━━━━━━━━━━━━◇
-Trial SSH Premium Account
+USUARIO TEMPORAL SSH
 ◇━━━━━━━━━━━━━━━━━◇
-Username        :  <code>$Login</code>
-Password        :  <code>$Pass</code>
-Expired On       :  $timer Minutes
+Usuario        :  <code>$Login</code>
+Password       :  <code>$Pass</code>
+Expira en      :  $timer Minutes
 ◇━━━━━━━━━━━━━━━━━◇
 ISP              :  $ISP
 CITY             :  $CITY
@@ -750,11 +747,10 @@ BadVPN UDP       :  7100, 7300, 7300
 ◇━━━━━━━━━━━━━━━━━◇
 SSH UDP VIRAL : <code>$domen:1-65535@$Login:$Pass</code>
 ◇━━━━━━━━━━━━━━━━━◇
-HTTP COSTUM WS : <code>$domen:80@$Login:$Pass</code>
-◇━━━━━━━━━━━━━━━━━◇
-Host Slowdns    :  <code>$sldomain</code>
-Port Slowdns     :  80, 443, 53
-Pub Key          :  <code> $slkey</code>
+APP HTTP COSTUM WS  
+<code>$domen:80@$Login:$Pass</code>
+<code>$domen:443@$Login:$Pass</code>
+<code>$domen:8443@$Login:$Pass</code>
 ◇━━━━━━━━━━━━━━━━━◇
 Payload WS/WSS   :
 <code>GET / HTTP/1.1[crlf]Host: [host][crlf]Connection: Upgrade[crlf]User-Agent: [ua][crlf]Upgrade: ws[crlf][crlf]</code>
@@ -787,9 +783,9 @@ clear
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 ${NC} ${WH}• Demo SSH Premium  • " | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
-echo -e "$COLOR1 $NC  ${WH}Username   ${COLOR1}: ${WH}$Login"  | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
+echo -e "$COLOR1 $NC  ${WH}Usuario   ${COLOR1}: ${WH}$Login"  | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 $NC  ${WH}Password   ${COLOR1}: ${WH}$Pass" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
-echo -e "$COLOR1 $NC  ${WH}Expired On ${COLOR1}: ${WH}$timer Minutes"  | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
+echo -e "$COLOR1 $NC  ${WH}Expira en ${COLOR1}: ${WH}$timer Minutos"  | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 $NC  ${WH}ISP        ${COLOR1}: ${WH}$ISP" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 $NC  ${WH}City       ${COLOR1}: ${WH}$CITY" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
@@ -809,13 +805,11 @@ echo -e "$COLOR1 $NC  ${WH}OVPN UDP   ${COLOR1}: ${WH}http://$domen:89/udp.ovpn"
 echo -e "$COLOR1 $NC  ${WH}OVPN SSL   ${COLOR1}: ${WH}http://$domen:89/ssl.ovpn" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 $NC  ${WH}UDPGW      ${COLOR1}: ${WH}7100-7300" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
-echo -e "$COLOR1 $NC  ${WH}PORT SLWDNS${COLOR1}: ${WH}80,443,53" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
-echo -e "$COLOR1 $NC  ${WH}NAMESERVER ${COLOR1}: ${WH}$sldomain" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
-echo -e "$COLOR1 $NC  ${WH}PUB KEY    ${COLOR1}: ${WH}$slkey" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
-echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 $NC  ${WH}UDP VIRAL${COLOR1}: ${WH}$domen:1-65535@$Login:$Pass" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 $NC  ${WH}HTTP COSTUM${COLOR1}: ${WH}$domen:80@$Login:$Pass" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
+echo -e "$COLOR1 $NC  ${WH}HTTP COSTUM${COLOR1}: ${WH}$domen:443@$Login:$Pass" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
+echo -e "$COLOR1 $NC  ${WH}HTTP COSTUM${COLOR1}: ${WH}$domen:8443@$Login:$Pass" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1 ${NC}  ${WH}Payload WS/WSS${COLOR1}: ${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
 echo -e "$COLOR1${NC}${WH}GET / HTTP/1.1[crlf]Host: [host][crlf]Connection: Upgrade[crlf]User-Agent: [ua][crlf]Upgrade: ws[crlf][crlf]${NC}" | tee -a /etc/xray/sshx/akun/log-create-${Login}.log
