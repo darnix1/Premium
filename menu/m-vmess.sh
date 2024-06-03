@@ -1766,39 +1766,43 @@ read -n 1 -s -r -p "Press any key to back on menu"
 m-vmess
 }
 clear
-echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
-echo -e " $COLOR1║${NC}${COLBG1}             ${WH}• VMESS PANEL MENU •                   ${NC}$COLOR1║ $NC"
-echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
-echo -e " $COLOR1╔════════════════════════════════════════════════════╗${NC}"
-echo -e " $COLOR1║ $NC ${WH}[${COLOR1}01${WH}]${NC} ${COLOR1}• ${WH}ADD AKUN${NC}         ${WH}[${COLOR1}06${WH}]${NC} ${COLOR1}• ${WH}CEK USER CONFIG${NC}    $COLOR1║ $NC"
-echo -e " $COLOR1║ $NC                                                  ${NC} $COLOR1║ $NC"
-echo -e " $COLOR1║ $NC ${WH}[${COLOR1}02${WH}]${NC} ${COLOR1}• ${WH}TRIAL AKUN${NC}       ${WH}[${COLOR1}07${WH}]${NC} ${COLOR1}• ${WH}CHANGE USER LIMIT${NC}  $COLOR1║ $NC"
-echo -e " $COLOR1║ $NC                                                  ${NC} $COLOR1║ $NC"
-echo -e " $COLOR1║ $NC ${WH}[${COLOR1}03${WH}]${NC} ${COLOR1}• ${WH}RENEW AKUN${NC}       ${WH}[${COLOR1}08${WH}]${NC} ${COLOR1}• ${WH}SETTING LOCK LOGIN${NC} $COLOR1║ $NC"
-echo -e " $COLOR1║ $NC                                                  ${NC} $COLOR1║ $NC"
-echo -e " $COLOR1║ $NC ${WH}[${COLOR1}04${WH}]${NC} ${COLOR1}• ${WH}DELETE AKUN${NC}      ${WH}[${COLOR1}09${WH}]${NC} ${COLOR1}• ${WH}UNLOCK USER LOGIN${NC}  $COLOR1║ $NC"
-echo -e " $COLOR1║ $NC                                                  ${NC} $COLOR1║ $NC"
-echo -e " $COLOR1║ $NC ${WH}[${COLOR1}05${WH}]${NC} ${COLOR1}• ${WH}CEK USER LOGIN${NC}   ${WH}[${COLOR1}10${WH}]${NC} ${COLOR1}• ${WH}UNLOCK USER QUOTA ${NC} $COLOR1║ $NC"
-echo -e " $COLOR1║ $NC                                                  ${NC} $COLOR1║ $NC"
-echo -e " $COLOR1║ $NC ${WH}[${COLOR1}00${WH}]${NC} ${COLOR1}• ${WH}GO BACK${NC}          ${WH}[${COLOR1}11${WH}]${NC} ${COLOR1}• ${WH}RESTORE AKUN   ${NC}    $COLOR1║ $NC"
-echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
-echo -e " $COLOR1╔═════════════════════════ ${WH}BY${NC} ${COLOR1}═══════════════════════╗ ${NC}"
-echo -e "  $COLOR1${NC}              ${WH}   • $author •                 $COLOR1 $NC"
-echo -e " $COLOR1╚════════════════════════════════════════════════════╝${NC}"
+msg -bar
+msg -tit
+msg -bar
+amacen " CONFIGURACION VMESS CLIENTES "
+echo ""
+msg -bar
+menu_func "NUEVO CLIENTE VMESS 👤 " \
+"USUARIO TEMPORAL VMESS " \
+"$(msg -verd "RENOVAR USUARIOS XRAY") " \
+"⚠️ ELIMINAR CLIENTE ⚠️\n$(msg -bar2)" \
+"$(dnxver "VER CLIENTES EN LINEA ") " \
+"CONFIGURACION DE USUARIOS" \
+" $(msg -ama "EDITAR LIMITE DE IP A USUARIOS")\n$(msg -bar2)" \
+"AUTO ELIMINAR O BLOQUEAR VMESS" \
+" $(msg -verm2 "DESBLOQUEAR LOGIN VMESS") \n$(msg -bar2)" \
+"DESBLOQUEAR CUOTA A USUARIOS VMESS " \
+"RESTAURAR USUARIOS VMESS" \
+#"CAMBIAR A MODO SSH/TOKEN"
+back
 echo -e ""
-echo -ne " ${WH}Select menu ${COLOR1}: ${WH}"; read opt
-case $opt in
-01 | 1) clear ; add-vmess ;;
-02 | 2) clear ; trial-vmess ;;
-03 | 3) clear ; renew-vmess ;;
-04 | 4) clear ; del-vmess ;;
-05 | 5) clear ; cek-vmess ;;
-06 | 6) clear ; list-vmess ;;
-07 | 7) clear ; limit-vmess ;;
-08 | 8) clear ; login-vmess ;;
-09 | 9) clear ; lock-vmess ;;
-10 | 10) clear ; quota-user ;;
-11 | 11) clear ; res-user ;;
-00 | 0) clear ; menu ;;
-*) clear ; m-vmess ;;
-esac
+sres
+echo -e ""
+selection=$(selection_fun 15)
+	case ${selection} in
+		0)menu;;
+		1)add-vmess;;
+		2)trial-vmess;;
+		3)renew-vmess;;
+		4)del-vmess;;
+		5)cek-vmess;;
+		6)list-vmess;;
+		7)limit-vmess;;
+		8)login-vmess;;
+		9)lock-vmess;;
+		10)quota-user;;
+		11)res-user;;
+                #12)liser;;
+    15)USER_MODE && break;;
+    *) menu ;;
+	esac
