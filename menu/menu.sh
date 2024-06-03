@@ -617,15 +617,16 @@ garis="${grs}║"
 echo -e "\033[38;5;239m══════════════\e[100m\e[97m  CONTROL DE REGISTRO  \e[0m\e[38;5;239m═══════════════"
 echo -e "\033[1;97m  $akun1:\033[93m[\033[1;92m$akun01\033[93m]\033[1;97m  $akun2:\033[93m[\033[1;92m$akun02\033[93m]\033[1;97m  $akun3:\033[93m[\033[1;92m$akun03\033[93m]\033[1;97m  $akun4:\033[93m[\033[1;92m$akun04\033[93m]\033[1;97m"
 echo -e "\e[38;5;239m════════════════════════════════════════════════════"
-echo -e "$COLOR1╔════════════════════ • MENU • ════════════════════╗${NC}"
+#echo -e "$COLOR1╔════════════════════ • MENU • ════════════════════╗${NC}"
+msg -bar
 echo -ne "\e[1;93m  [\e[1;32m1\e[1;93m]\033[1;31m • \e[1;97mSSH OPENVPN" && echo -e "   \e[1;93m  [\e[1;32m7\e[1;93m]\033[1;31m • \e[1;97mNOTIBOT"
 echo -ne "\e[1;93m  [\e[1;32m2\e[1;93m]\033[1;31m • \e[1;97mXRAY/VMESS"  && echo -e "    \e[1;93m  [\e[1;32m8\e[1;93m]\033[1;31m • \e[1;97mTEMAS"
 echo -ne "\e[1;93m  [\e[1;32m3\e[1;93m]\033[1;31m • \e[1;97mXRAY/VLESS"  && echo -e "    \e[1;93m  [\e[1;32m9\e[1;93m]\033[1;31m • \e[1;97mUPDATE"
 echo -ne "\e[1;93m  [\e[1;32m4\e[1;93m]\033[1;31m • \e[1;97mTROJAN"      && echo -e "        \e[1;93m  [\e[1;32m10\e[1;93m]\033[1;31m • \e[1;97mSISTEMA"
 echo -ne "\e[1;93m  [\e[1;32m5\e[1;93m]\033[1;31m • \e[1;97mSERVICIOS" && echo -e "     \e[1;93m  [\e[1;32m11\e[1;93m]\033[1;31m • \e[1;97mBACKUP"
 echo -ne "\e[1;93m  [\e[1;32m6\e[1;93m]\033[1;31m • \e[1;97mTELEGRAM BOT"&& echo -e "  \e[1;93m  [\e[1;32m12\e[1;93m]\033[1;31m • \e[1;97mREINICIAR"
-echo -e "$COLOR1╚═══════════════════════════════════════════════════╝${NC}"
-
+#echo -e "$COLOR1╚═══════════════════════════════════════════════════╝${NC}"
+msg -bar
 #read -p " Selecciona Una Opcion : " opt
 
 
