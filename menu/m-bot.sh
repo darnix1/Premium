@@ -240,7 +240,7 @@ apt install python3 python3-pip git speedtest-cli -y
 sudo apt-get install -y p7zip-full
 cd /usr/bin
 clear
-wget https://gitea.com/xdarnix/bot/src/branch/main/bot.zip
+wget https://raw.githubusercontent.com/darnix1/vip/main/menu/bot.zip
 unzip bot.zip
 mv bot/* /usr/bin
 chmod +x /usr/bin/*
@@ -424,7 +424,7 @@ rm -rf /usr/bin/kyt.zip
 rm -rf /usr/bin/kyt
 sleep 2
 cd /usr/bin
-wget https://gitea.com/xdarnix/bot/src/branch/main/bot.zip
+wget https://raw.githubusercontent.com/darnix1/vip/main/menu/bot.zip
 unzip bot.zip
 mv bot/* /usr/bin
 chmod +x /usr/bin/*
