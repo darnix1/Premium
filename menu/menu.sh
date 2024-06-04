@@ -249,15 +249,15 @@ DAY=$(date +%A)
 DATE=$(date +%m/%d/%Y)
 DATE2=$(date -R | cut -d " " -f -5)
 MYIP=$(wget -qO- ifconfig.me)
-Isadmin=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $5}')
-Exp2=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $3}')
+#Isadmin=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $5}')
+#Exp2=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $3}')
 export RED='\033[0;31m'
 export GREEN='\033[0;32m'
 Name=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $2}')
 ipsaya=$(wget -qO- ifconfig.me)
-data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
-date_list=$(date +"%Y-%m-%d" -d "$data_server")
-data_ip="https://raw.githubusercontent.com/darnix1/vip/main/izin"
+#data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
+#date_list=$(date +"%Y-%m-%d" -d "$data_server")
+#data_ip="https://raw.githubusercontent.com/darnix1/vip/main/izin"
 
 function key(){
 rm -rf /root/rmbl
@@ -376,8 +376,8 @@ reboot
 exit
 clear
 }
-madmin=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $5}')
-checking_sc
+#madmin=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $5}')
+#checking_sc
 cd
 if [ ! -e /etc/per/id ]; then
 mkdir -p /etc/per
@@ -590,6 +590,7 @@ menu
 clear
 clear && clear && clear
 clear;clear;clear
+resd=$(cat /etc/newadm/message.txt)
 msg -bar
 msg -tit
 msg -bar
@@ -599,6 +600,7 @@ echo -e "\033[1;37m  •  DOMINIO     \033[1;32m$(cat /etc/xray/domain) \033[1;3
 echo -e "\033[1;37m  •  SERVIDOR    \033[1;32m$MYIP \033[1;31m. \033[1;33m"
 echo -e "\033[1;37m  •  RAM USADO   \033[1;32m$tram / $uram MB \033[1;31m. \033[1;33m"
 echo -e "\033[1;37m  •  AUTOR       \033[1;32m$author"
+echo -e "\033[1;37m  •  $resd"
 echo -e "\033[38;5;239m═════════════════\e[48;5;2m\e[38;5;22m   SERVICIOS   \e[0m\e[38;5;239m════════════════════"
 
 #echo -e "  \033[1;97m[ SSHWS : ${status_ws} ] \033[1;97m [ XRAY : ${status_xray} ]\033[1;97m [ NGINX : ${status_nginx} ]" 
