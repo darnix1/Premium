@@ -1,5 +1,14 @@
 #!/bin/bash
+
+
 clear
+module="$(pwd)/module"
+[ -e "${module}" ] && rm -f "${module}"
+wget -q -O "${module}" "https://raw.githubusercontent.com/darnix1/Premium/main/menu/darnix"
+[ ! -e "${module}" ] && exit
+chmod +x "${module}" 2>/dev/null
+source "${module}"
+
 red='\e[1;31m'
 green2='\e[1;32m'
 yell='\e[1;33m'
