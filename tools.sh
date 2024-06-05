@@ -16,8 +16,10 @@ NC='\e[0m'
 green() { echo -e "\\033[32;1m${*}\\033[0m"; }
 red() { echo -e "\\033[31;1m${*}\\033[0m"; }
 
-
-echo "           Tools install...!"
+msg -bar
+msg -tit
+mag -bar
+red "           Tools install...!"
 echo "                  Progress..."
 sleep 0.5
 apt update -y
