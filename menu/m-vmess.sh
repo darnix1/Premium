@@ -300,7 +300,7 @@ done
 
 while true; do
         uuid=$(cat /proc/sys/kernel/random/uuid)
-        echo -ne "\033[1;37m INGRESE LA CONTRASENA \033[1;33m" && read masaaktif
+        echo -ne "\033[1;37m INGRESE LA DURACION (DIAS)\033[1;33m" && read masaaktif
         if [[ -z $masaaktif ]]; then
            err_fun 4 && continue
            elif [[ "${#masaaktif}" -lt "4" ]]; then
@@ -311,9 +311,9 @@ while true; do
 	darnixprom
         break
       done
+      exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
 while true; do
-exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-    red " Recuerda 0 es Para Login Ilimitados"
+    #red " Recuerda 0 es Para Login Ilimitados"
     echo -ne "\033[1;37m LIMITE DE CONEXION POR IP\033[1;33m" && read iplim
     #read -p ": " iplim
     if [[ -z "$iplim" ]]; then
@@ -328,7 +328,7 @@ exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
   done
   
 while true; do
-    red " Recuerda 0 es Para Cuota Ilimitados"
+    #red " Recuerda 0 es Para Cuota Ilimitados"
     echo -ne "\033[1;37m LIMITE DE CUOTA DEL USUARIO (GB)\033[1;33m" && read Quota
     #read -p ": " iplim
     if [[ -z "$Quota" ]]; then
