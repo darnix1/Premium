@@ -317,7 +317,7 @@ elif [[ "${Login}" = "1" ]]; then
     elif [[ "${#Login}" -gt "10" ]]; then
       err_fun 3 && continue
 fi
-darnixprom
+#darnixprom
 break
 done
 #read -p "Password : " Pass
