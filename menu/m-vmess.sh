@@ -115,14 +115,8 @@ print_center(){
 }
 
 enter(){
-  msg -bar
-  text="►► ${a_enter:-Presione enter para continuar} ◄◄"
-  if [[ -z $1 ]]; then
-    print_center -ama "$text"
-  else
-    print_center "$1" "$text"
-  fi
-  read
+  echo ""
+  read -n 1 -s -r -p "$(echo -e "\e[1;37;42mPRESIONE CUALQUIER TECLA PARA REGRESAR\e[0m")"
  }
 
 # opcion, regresar volver/atras
@@ -215,21 +209,31 @@ del(){
 }
 
 
-export -f msg
-export -f selection_fun
-export -f menu_func
-export -f print_center
-export -f title
-export -f back
-export -f enter
-export -f in_opcion
-export -f in_opcion_down
-export -f del
 
 
 #Termina Metodo
 ###############################################$$$
-
+err_fun(){
+  case $1 in
+    1)tput cuu1; tput dl1 && msg -verm "Usuario Nulo"; sleep 2s; tput cuu1; tput dl1;;
+    2)tput cuu1; tput dl1 && msg -verm "Usuario con nombre muy corto"; sleep 2s; tput cuu1; tput dl1;;
+    3)tput cuu1; tput dl1 && msg -verm "Usuario con nombre muy grande"; sleep 2s; tput cuu1; tput dl1;;
+    4)tput cuu1; tput dl1 && msg -verm "Contraseña Nula"; sleep 2s; tput cuu1; tput dl1;;
+    5)tput cuu1; tput dl1 && msg -verm "Contraseña muy corta"; sleep 2s; tput cuu1; tput dl1;;
+    6)tput cuu1; tput dl1 && msg -verm "Contraseña muy grande"; sleep 2s; tput cuu1; tput dl1;;
+    7)tput cuu1; tput dl1 && msg -verm "Duracion Nula"; sleep 2s; tput cuu1; tput dl1;;
+    8)tput cuu1; tput dl1 && msg -verm "Duracion invalida utilize numeros"; sleep 2s; tput cuu1; tput dl1;;
+    9)tput cuu1; tput dl1 && msg -verm "Duracion maxima y de un año"; sleep 2s; tput cuu1; tput dl1;;
+    11)tput cuu1; tput dl1 && msg -verm "Limite Nulo"; sleep 2s; tput cuu1; tput dl1;;
+    12)tput cuu1; tput dl1 && msg -verm "Limite invalido utilize numeros"; sleep 2s; tput cuu1; tput dl1;;
+    13)tput cuu1; tput dl1 && msg -verm "Limite maximo de 999"; sleep 2s; tput cuu1; tput dl1;;
+    14)tput cuu1; tput dl1 && msg -verm "Usuario Ya Existe"; sleep 2s; tput cuu1; tput dl1;;
+  esac
+}
+darnixprom() {
+  tput cuu1
+  tput dl1
+}
 
 
 
@@ -262,24 +266,25 @@ mkdir -p /etc/vmess/akun
 fi
 function add-vmess(){
 clear
+msg -bar
+msg -tit
+msg -bar
+dnxaz " MENU DE CREACION DE USUARIOS VMESS "
+msg -bar
 until [[ $user =~ ^[a-zA-Z0-9_.-]+$ && ${CLIENT_EXISTS} == '0' ]]; do
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│${NC}${COLBG1}             ${WH}• Add Vmess Account •               ${NC}$COLOR1│ $NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
 echo -e ""
-read -rp "User: " -e user
+echo -ne "\033[1;37m INGRESE EL USUARIO \033[1;33m" && read user
 CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
-if [[ ${CLIENT_EXISTS} == '1' ]]; then
+if [[ -z "$Login" ]]; then
+err_fun 1 && continue
+elif [[ ${CLIENT_EXISTS} == '1' ]]; then
 clear
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│ ${NC} ${COLBG1}            ${WH}• Add Vmess Account •              ${NC}$COLOR1│ $NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│                                                 │"
-echo -e "$COLOR1│${WH} Nama Duplikat Silahkan Buat Nama Lain.          $COLOR1│"
-echo -e "$COLOR1│                                                 │"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
-read -n 1 -s -r -p "Press any key to back"
+msg -bar
+msg -tit
+msg -bar
+err_fun 14
+echo -e "$COLOR1│${WH} Nombre duplicado Por favor cree otro nombre.          $COLOR1│"
+enter
 add-vmess
 fi
 done
