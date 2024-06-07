@@ -274,7 +274,8 @@ amacen " ESCRIBE UN NOMBRE DE USUARIO CORTO "
 msg -bar
 echo -e ""
 until [[ $name =~ ^[a-zA-Z0-9_.-]+$ ]]; do
-read -rp "User 👤 : " -e name
+#read -rp "User 👤 : " -e name
+read -rp $'\033[1;37mUsuario : \033[0m' -e name
 done
 rm -rf /etc/profil
 echo "$name" > /etc/profil
