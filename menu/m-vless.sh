@@ -375,13 +375,14 @@ END
 if [ ${Quota} = '9999' ]; then
 TEXT="
 ◇━━━━━━━━━━━━━━━━━◇
-Premium Vless Account
+Cuenta Vless Premium
 ◇━━━━━━━━━━━━━━━━━◇
-User         : ${user}
-Domain       : <code>${domain}</code>
-Login Limit  : ${iplim} IP
-ISP          : ${ISP}
-CITY         : ${CITY}
+Usuario      : ${user}
+Dominio      : <code>${domain}</code>
+Login Limite : ${iplim} IP
+Cuota Limite : GB Ilimitado 
+IP           : ${ISP}
+Ciudad       : ${CITY}
 Port TLS     : 443
 Port NTLS    : 80, 8080
 Port GRPC    : 443
@@ -392,19 +393,19 @@ Network      : WS or gRPC
 Path vless   : <code>/vless</code>
 ServiceName  : <code>/vless-grpc</code>
 ◇━━━━━━━━━━━━━━━━━◇
-Link TLS     :
+Link Vless TLS Puerto 443
 <code>${vless1}</code>
 ◇━━━━━━━━━━━━━━━━━◇
-Link NTLS    :
+Link Vless NTLS Puerto 80
 <code>${vless2}</code>
 ◇━━━━━━━━━━━━━━━━━◇
-Link gRPC    :
+Link gRPC    
 <code>${vless3}</code>
 ◇━━━━━━━━━━━━━━━━━◇
-Format OpenClash :
+Formato HTML 
 http://$domain:89/vless-$user.txt
 ◇━━━━━━━━━━━━━━━━━◇
-Expired Until    : $exp
+Expira en    : $exp Dias
 ◇━━━━━━━━━━━━━━━━━◇
 $author
 ◇━━━━━━━━━━━━━━━━━◇
@@ -412,14 +413,14 @@ $author
 else
 TEXT="
 ◇━━━━━━━━━━━━━━━━━◇
-Premium Vless Account
+Cuenta Vless Premium
 ◇━━━━━━━━━━━━━━━━━◇
-User         : ${user}
-Domain       : <code>${domain}</code>
-Login Limit  : ${iplim} IP
-Quota Limit  : ${Quota} GB
-ISP          : ${ISP}
-CITY         : ${CITY}
+Usuario      : ${user}
+Dominio      : <code>${domain}</code>
+Login Limite : ${iplim} IP
+Cuota Limite : ${Quota} GB
+IP           : ${ISP}
+Ciudad       : ${CITY}
 Port TLS     : 443
 Port NTLS    : 80, 8080
 Port GRPC    : 443
@@ -430,19 +431,19 @@ Network      : WS or gRPC
 Path vless   : <code>/vless</code>
 ServiceName  : <code>/vless-grpc</code>
 ◇━━━━━━━━━━━━━━━━━◇
-Link TLS     :
+Link Vless TLS Puerto 443
 <code>${vless1}</code>
 ◇━━━━━━━━━━━━━━━━━◇
-Link NTLS    :
+Link Vless NTLS Puerto 80
 <code>${vless2}</code>
 ◇━━━━━━━━━━━━━━━━━◇
-Link GRPC    :
+Link GRPC    
 <code>${vless3}</code>
 ◇━━━━━━━━━━━━━━━━━◇
-Format OpenClash :
+Formato HTML 
 http://$domain:89/vless-$user.txt
 ◇━━━━━━━━━━━━━━━━━◇
-Expired Until    : $exp
+Expira en    : $exp Dias
 ◇━━━━━━━━━━━━━━━━━◇
 $author
 ◇━━━━━━━━━━━━━━━━━◇
@@ -460,17 +461,17 @@ user2=$(echo "$user" | cut -c 1-3)
 TIME2=$(date +'%Y-%m-%d %H:%M:%S')
 TEXT2="
 <code>◇━━━━━━━━━━━━━━━━━━━◇</code>
-<b>   PEMBELIAN VLESS SUCCES </b>
+<b>   ALTA DE USUARIO VLESS EXITOSO </b>
 <code>◇━━━━━━━━━━━━━━━━━━━◇</code>
-<b>DOMAIN  :</b> <code>${domain} </code>
-<b>CITY    :</b> <code>$CITY </code>
-<b>DATE    :</b> <code>${TIME2} WIB </code>
-<b>DETAIL  :</b> <code>Trx VLESS </code>
-<b>USER    :</b> <code>${user2}xxx </code>
+<b>DOMINIO :</b> <code>${domain} </code>
+<b>CIUDAD  :</b> <code>$CITY </code>
+<b>FECHA   :</b> <code>${TIME2} WIB </code>
+<b>TIPO    :</b> <code>ALTA VLESS </code>
+<b>USUARIO :</b> <code>${user2}xxx </code>
 <b>IP      :</b> <code>${iplim} IP </code>
-<b>DURASI  :</b> <code>$masaaktif Hari </code>
+<b>DURACION :</b> <code>$masaaktif DIAS</code>
 <code>◇━━━━━━━━━━━━━━━━━━━◇</code>
-<i>Notif Pembelian Akun Vless..</i>"
+<i>Notificacion Automatica Vless..</i>"
 curl -s --max-time $TIMES -d "chat_id=$CHATID2&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL2 >/dev/null
 clear
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/vless/akun/log-create-${user}.log
