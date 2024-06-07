@@ -275,7 +275,7 @@ until [[ $user =~ ^[a-zA-Z0-9_.-]+$ && ${CLIENT_EXISTS} == '0' ]]; do
 echo -e ""
 echo -ne "\033[1;37m INGRESE EL USUARIO \033[1;33m" && read user
 CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
-if [[ -z "$Login" ]]; then
+if [[ -z "$user" ]]; then
 err_fun 1 && continue
 elif [[ ${CLIENT_EXISTS} == '1' ]]; then
 clear
@@ -287,11 +287,11 @@ echo -e "$COLOR1│${WH} Nombre duplicado Por favor cree otro nombre.          $
 enter
 add-vmess
   continue
-elif [[ "${Login}" = "1" ]]; then
+elif [[ "${user}" = "1" ]]; then
       return
-    elif [[ "${#Login}" -lt "3" ]]; then
+    elif [[ "${#user}" -lt "3" ]]; then
       err_fun 2 && continue
-    elif [[ "${#Login}" -gt "10" ]]; then
+    elif [[ "${#user}" -gt "10" ]]; then
       err_fun 3 && continue
 fi
 darnixprom
@@ -528,12 +528,12 @@ END
 if [ ${Quota} = '9999' ]; then
 TEXT="
 ◇━━━━━━━━━━━━━━━━━◇
-Premium Vmess Account
+Cuenta VMESS Premium
 ◇━━━━━━━━━━━━━━━━━◇
-User         : ${user}
-Domain       : <code>${domain}</code>
-Login Limit  : ${iplim} IP
-ISP          : ${ISP}
+Usuario      : ${user}
+Dominio      : <code>${domain}</code>
+Login Limite : ${iplim} IP
+IP           : ${ISP}
 CITY         : ${CITY}
 Port TLS     : 443
 Port NTLS    : 80, 8080
@@ -555,10 +555,10 @@ Link NTLS    :
 Link GRPC    :
 <code>${vmesslink3}</code>
 ◇━━━━━━━━━━━━━━━━━◇
-Format OpenClash :
+Formato HTML :
 http://$domain:89/vmess-$user.txt
 ◇━━━━━━━━━━━━━━━━━◇
-Expired Until    : $exp
+Expira en    : $exp Dias
 ◇━━━━━━━━━━━━━━━━━◇
 $author
 ◇━━━━━━━━━━━━━━━━━◇
@@ -566,13 +566,13 @@ $author
 else
 TEXT="
 ◇━━━━━━━━━━━━━━━━━◇
-Premium Vmess Account
+Cuenta VMESS Premium
 ◇━━━━━━━━━━━━━━━━━◇
-User         : ${user}
-Domain       : <code>${domain}</code>
-Login Limit  : ${iplim} IP
-Quota Limit  : ${Quota} GB
-ISP          : ${ISP}
+Usuario      : ${user}
+Dominio      : <code>${domain}</code>
+Login Limite : ${iplim} IP
+Cuota Limite : ${Quota} GB
+IP           : ${ISP}
 CITY         : ${CITY}
 Port TLS     : 443
 Port NTLS    : 80, 8080
@@ -594,10 +594,10 @@ Link NTLS    :
 Link GRPC    :
 <code>${vmesslink3}</code>
 ◇━━━━━━━━━━━━━━━━━◇
-Format OpenClash :
+Formato HTML :
 http://$domain:89/vmess-$user.txt
 ◇━━━━━━━━━━━━━━━━━◇
-Expired Until    : $exp
+Expira en  : $exp Dias
 ◇━━━━━━━━━━━━━━━━━◇
 $author
 ◇━━━━━━━━━━━━━━━━━◇
@@ -615,17 +615,17 @@ user2=$(echo "$user" | cut -c 1-3)
 TIME2=$(date +'%Y-%m-%d %H:%M:%S')
 TEXT2="
 <code>◇━━━━━━━━━━━━━━━━━━━◇</code>
-<b>   PEMBELIAN VMESS SUCCES </b>
+<b>   ALTA DE USUARIO EXITOSO </b>
 <code>◇━━━━━━━━━━━━━━━━━━━◇</code>
-<b>DOMAIN  :</b> <code>${domain} </code>
-<b>CITY    :</b> <code>$CITY </code>
-<b>DATE    :</b> <code>${TIME2} WIB </code>
-<b>DETAIL  :</b> <code>Trx VMESS </code>
-<b>USER    :</b> <code>${user2}xxx </code>
-<b>IP      :</b> <code>${iplim} IP </code>
-<b>DURASI  :</b> <code>$masaaktif Hari </code>
+<b>DOMINIO  :</b> <code>${domain} </code>
+<b>CIUDAD   :</b> <code>$CITY </code>
+<b>FECHA    :</b> <code>${TIME2} WIB </code>
+<b>TIPO     :</b> <code> ALTA VMESS </code>
+<b>USUARIO  :</b> <code>${user2}xxx </code>
+<b>IP       :</b> <code>${iplim} IP </code>
+<b>DURACION :</b> <code>$masaaktif Días </code>
 <code>◇━━━━━━━━━━━━━━━━━━━◇</code>
-<i>Notif Pembelian Akun Vmess..</i>"
+<i>Notificacion automatica vmess..</i>"
 curl -s --max-time $TIMES -d "chat_id=$CHATID2&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL2 >/dev/null
 clear
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/vmess/akun/log-create-${user}.log
