@@ -129,9 +129,11 @@ install-bot
 fi
 
 #isi data
-echo -e "$COLOR1┌──────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1│ \033[1;37mPlease select a your Choice              $COLOR1│${NC}"
-echo -e "$COLOR1└──────────────────────────────────────────┘${NC}"
+clear
+msg -bar
+msg -tit
+msg -bar
+echo ""
 echo -e "$COLOR1┌──────────────────────────────────────────┐${NC}"
 echo -e "$COLOR1│  [ 1 ]  \033[1;37mCAMBIAR LA BOT       ${NC}"
 echo -e "$COLOR1│  "                                        
