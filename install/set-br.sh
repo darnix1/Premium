@@ -9,12 +9,14 @@ make install
 cd
 rm -rf wondershaper
 cd /usr/bin
-wget -O backup "https://sfvt.serv00.net/mysc/menu/backup.sh"
-wget -O restore "https://sfvt.serv00.net/mysc/menu/restore.sh"
-wget -O cleaner "https://sfvt.serv00.net/mysc/install/cleaner.sh"
+wget -O backup "https://raw.githubusercontent.com/oktaviaps/autoscript-vvip/main/menu/backup.sh"
+wget -O restore "https://raw.githubusercontent.com/oktaviaps/autoscript-vvip/main/menu/restore.sh"
+wget -O cleaner "https://raw.githubusercontent.com/oktaviaps/autoscript-vvip/main/install/cleaner.sh"
+wget -O xp "https://raw.githubusercontent.com/oktaviaps/autoscript-vvip/main/install/xp.sh"
 chmod +x /usr/bin/backup
 chmod +x /usr/bin/restore
 chmod +x /usr/bin/cleaner
+chmod +x /usr/bin/xp
 cd
 if [ ! -f "/etc/cron.d/cleaner" ]; then
 cat> /etc/cron.d/cleaner << END
