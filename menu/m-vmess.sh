@@ -297,17 +297,51 @@ fi
 darnixprom
 break
 done
-uuid=$(cat /proc/sys/kernel/random/uuid)
-until [[ $masaaktif =~ ^[0-9]+$ ]]; do
-read -p "Expired (hari): " masaaktif
-done
+
+while true; do
+        uuid=$(cat /proc/sys/kernel/random/uuid)
+        echo -ne "\033[1;37m INGRESE LA CONTRASENA \033[1;33m" && read masaaktif
+        if [[ -z $masaaktif ]]; then
+           err_fun 4 && continue
+           elif [[ "${#masaaktif}" -lt "4" ]]; then
+           err_fun 5 && continue
+           elif [[ "${#masaaktif}" -gt "12" ]]; then
+           err_fun 6 && continue
+        fi
+	darnixprom
+        break
+      done
+while true; do
 exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-until [[ $iplim =~ ^[0-9]+$ ]]; do
-read -p "Limit User (IP) or 0 Unlimited: " iplim
-done
-until [[ $Quota =~ ^[0-9]+$ ]]; do
-read -p "Limit User (GB) or 0 Unlimited: " Quota
-done
+    red " Recuerda 0 es Para Login Ilimitados"
+    echo -ne "\033[1;37m LIMITE DE CONEXION POR IP\033[1;33m" && read iplim
+    #read -p ": " iplim
+    if [[ -z "$iplim" ]]; then
+      err_fun 11 && continue
+    elif [[ "$iplim" != +([0-9]) ]]; then
+      err_fun 12 && continue
+    elif [[ "$iplim" -gt "999" ]]; then
+      err_fun 13 && continue
+    fi
+    darnixprom
+    break
+  done
+  
+while true; do
+    red " Recuerda 0 es Para Cuota Ilimitados"
+    echo -ne "\033[1;37m LIMITE DE CUOTA DEL USUARIO (GB)\033[1;33m" && read Quota
+    #read -p ": " iplim
+    if [[ -z "$Quota" ]]; then
+      err_fun 11 && continue
+    elif [[ "$Quota" != +([0-9]) ]]; then
+      err_fun 12 && continue
+    elif [[ "$Quota" -gt "9999" ]]; then
+      err_fun 13 && continue
+    fi
+    darnixprom
+    break
+  done
+
 if [ ! -e /etc/vmess ]; then
 mkdir -p /etc/vmess
 fi
@@ -533,6 +567,7 @@ Cuenta VMESS Premium
 Usuario      : ${user}
 Dominio      : <code>${domain}</code>
 Login Limite : ${iplim} IP
+Cuota Limite : GB Ilimitado
 IP           : ${ISP}
 CITY         : ${CITY}
 Port TLS     : 443
@@ -546,16 +581,16 @@ Path         : <code>/vmess</code>
 Path Support : <code>https://bug.com/vmess</code>
 ServiceName  : <code>vmess-grpc</code>
 ◇━━━━━━━━━━━━━━━━━◇
-Link TLS     :
+Link Vmess TLS Puerto 443
 <code>${vmesslink1}</code>
 ◇━━━━━━━━━━━━━━━━━◇
-Link NTLS    :
+Link Vmess NTLS Puerto 80
 <code>${vmesslink2}</code>
 ◇━━━━━━━━━━━━━━━━━◇
-Link GRPC    :
+Link GRPC    
 <code>${vmesslink3}</code>
 ◇━━━━━━━━━━━━━━━━━◇
-Formato HTML :
+Formato HTML 
 http://$domain:89/vmess-$user.txt
 ◇━━━━━━━━━━━━━━━━━◇
 Expira en    : $exp Dias
@@ -585,16 +620,16 @@ Path         : <code>/vmess</code>
 Path Support : <code>https://bug.com/vmess</code>
 ServiceName  : <code>vmess-grpc</code>
 ◇━━━━━━━━━━━━━━━━━◇
-Link TLS     :
+Link Vmess TLS Puerto 443
 <code>${vmesslink1}</code>
 ◇━━━━━━━━━━━━━━━━━◇
-Link NTLS    :
+Link Vmess NTLS Puerto 80
 <code>${vmesslink2}</code>
 ◇━━━━━━━━━━━━━━━━━◇
-Link GRPC    :
+Link GRPC    
 <code>${vmesslink3}</code>
 ◇━━━━━━━━━━━━━━━━━◇
-Formato HTML :
+Formato HTML 
 http://$domain:89/vmess-$user.txt
 ◇━━━━━━━━━━━━━━━━━◇
 Expira en  : $exp Dias
@@ -615,7 +650,7 @@ user2=$(echo "$user" | cut -c 1-3)
 TIME2=$(date +'%Y-%m-%d %H:%M:%S')
 TEXT2="
 <code>◇━━━━━━━━━━━━━━━━━━━◇</code>
-<b>   ALTA DE USUARIO EXITOSO </b>
+<b>   ALTA DE USUARIO VMESS EXITOSO </b>
 <code>◇━━━━━━━━━━━━━━━━━━━◇</code>
 <b>DOMINIO  :</b> <code>${domain} </code>
 <b>CIUDAD   :</b> <code>$CITY </code>
@@ -625,7 +660,7 @@ TEXT2="
 <b>IP       :</b> <code>${iplim} IP </code>
 <b>DURACION :</b> <code>$masaaktif Días </code>
 <code>◇━━━━━━━━━━━━━━━━━━━◇</code>
-<i>Notificacion automatica vmess..</i>"
+<i>Notificacion Automatica Vmess..</i>"
 curl -s --max-time $TIMES -d "chat_id=$CHATID2&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL2 >/dev/null
 clear
 echo -e "$COLOR1 ◇━━━━━━━━━━━━━━━━━◇ ${NC}" | tee -a /etc/vmess/akun/log-create-${user}.log
