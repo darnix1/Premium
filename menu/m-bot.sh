@@ -17,6 +17,51 @@ grenbo="\e[92;1m"
 NC='\e[0m'
 WH='\033[1;37m'
 #install
+restart-bot(){
+clear
+fun_bar() {
+    CMD[0]="$1"
+    CMD[1]="$2"
+    (
+        [[ -e $HOME/fim ]] && rm $HOME/fim
+        ${CMD[0]} -y >/dev/null 2>&1
+        ${CMD[1]} -y >/dev/null 2>&1
+        touch $HOME/fim
+    ) >/dev/null 2>&1 &
+    tput civis
+    echo -ne "  \033[0;33mEspere... \033[1;37m- \033[0;33m["
+    while true; do
+        for ((i = 0; i < 18; i++)); do
+            echo -ne "\033[0;32m#"
+            sleep 0.1s
+        done
+        [[ -e $HOME/fim ]] && rm $HOME/fim && break
+        echo -e "\033[0;33m]"
+        sleep 1s
+        tput cuu1
+        tput dl1
+        echo -ne "  \033[0;33mEspere... \033[1;37m- \033[0;33m["
+    done
+    echo -e "\033[0;33m]\033[1;37m -\033[1;32m OK !\033[1;37m"
+    tput cnorm
+}
+res1() {
+    systemctl restart kyt
+}
+netfilter-persistent
+clear
+msg -bar
+echo -e " \e[1;97;101m        REINICIANDO BOT MANGER          \e[0m"
+msg -bar
+echo -e ""
+echo -e "  \033[1;91m Bot Reiniciado\033[1;37m"
+fun_bar 'res1'
+msg -bar
+echo -e ""
+read -n 1 -s -r -p "Presiona [ Enter ] para ir al menu"
+m-bot.sh
+}
+
 function install-bot(){
 apt update -y && apt upgrade -y
 apt install python3 python3-pip git speedtest-cli -y
@@ -42,9 +87,11 @@ cd
 rm -rf /etc/tele
 
 clear
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1 ${NC} ${COLBG1}                ${WH}• BOT PANEL •                  ${NC} $COLOR1 $NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+msg -bar
+msg -tit
+msg -bar
+print_center " PANEL DE CONTROL BOT TELEGRAM"
+msg -bar
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 echo -e "${grenbo}Tutorial Crear Bot and ID Telegram${NC}"
 echo -e "${grenbo}[*] Crear Bot y Token Bot : @BotFather${NC}"
@@ -133,7 +180,8 @@ clear
 msg -bar
 msg -tit
 msg -bar
-echo ""
+print_center " PANEL DE CONTROL BOT TELEGRAM"
+msg -bar
 echo -e "$COLOR1┌──────────────────────────────────────────┐${NC}"
 echo -e "$COLOR1│  [ 1 ]  \033[1;37mCAMBIAR LA BOT       ${NC}"
 echo -e "$COLOR1│  "                                        
@@ -152,9 +200,11 @@ done
 
 if [[ $domain2 == "1" ]]; then
 clear
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1 ${NC} ${COLBG1}                ${WH}• BOT PANEL •                  ${NC} $COLOR1 $NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+msg -bar
+msg -tit
+msg -bar
+print_center " PANEL DE CONTROL BOT TELEGRAM"
+msg -bar
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 echo -e "${grenbo}Tutorial Creat Bot and ID Telegram${NC}"
 echo -e "${grenbo}[*] Crear Bot and Token Bot : @BotFather${NC}"
@@ -249,9 +299,11 @@ fi
 
 if [[ $domain2 == "4" ]]; then
 clear
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1 ${NC} ${COLBG1}                ${WH}• BOT PANEL •                  ${NC} $COLOR1 $NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+msg -bar
+msg -tit
+msg -bar
+print_center " PANEL DE CONTROL BOT TELEGRAM"
+msg -bar
 echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
 echo -e "${grenbo}Esto se usa si quieres usar solo 1 bot sin necesitarlo. ${NC}"
 echo -e "${grenbo}Muchos de estos bots de creación se utilizan para crear cuentas. ${NC}"
@@ -301,9 +353,11 @@ fi
 
 if [[ $domain2 == "5" ]]; then
 clear
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1 ${NC} ${COLBG1}                ${WH}• BOT PANEL •                  ${NC} $COLOR1 $NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+msg -bar
+msg -tit
+msg -bar
+print_center " PANEL DE CONTROL BOT TELEGRAM"
+msg -bar
 echo -e ""
 read -e -p "[*] Ingrese el usuario ejemplo @darnix0 : " user
 userke=$(cat /usr/bin/kyt/var.txt | wc -l)
