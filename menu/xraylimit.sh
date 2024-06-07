@@ -8,7 +8,7 @@ COLBG1="$(cat /etc/rmbl/theme/$colornow | grep -w "BG" | cut -d: -f2|sed 's/ //g
 WH='\033[1;37m'
 ipsaya=$(wget -qO- ipinfo.io/ip)
 
-#cd
+cd
 bash2=$( pgrep bash | wc -l )
 if [[ $bash2 -gt "20" ]]; then
 killall bash
@@ -119,7 +119,7 @@ echo "$(((bytes + 1073741823) / 1073741824)) GB"
 fi
 }
 function vmess() {
-#cd
+cd
 if [[ ! -e /etc/limit/vmess ]]; then
 mkdir -p /etc/limit/vmess
 fi
@@ -303,7 +303,7 @@ done
 fi
 }
 function vless() {
-#cd
+cd
 if [[ ! -e /etc/limit/vless ]]; then
 mkdir -p /etc/limit/vless
 fi
@@ -490,7 +490,7 @@ done
 fi
 }
 function trojan() {
-#cd
+cd
 if [[ ! -e /etc/limit/trojan ]]; then
 mkdir -p /etc/limit/trojan
 fi
