@@ -286,7 +286,16 @@ err_fun 14
 echo -e "$COLOR1│${WH} Nombre duplicado Por favor cree otro nombre.          $COLOR1│"
 enter
 add-vmess
+  continue
+elif [[ "${Login}" = "1" ]]; then
+      return
+    elif [[ "${#Login}" -lt "3" ]]; then
+      err_fun 2 && continue
+    elif [[ "${#Login}" -gt "10" ]]; then
+      err_fun 3 && continue
 fi
+darnixprom
+break
 done
 uuid=$(cat /proc/sys/kernel/random/uuid)
 until [[ $masaaktif =~ ^[0-9]+$ ]]; do
