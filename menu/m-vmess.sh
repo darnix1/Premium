@@ -93,50 +93,17 @@ fi
 darnixprom
 break
 done
-
-while true; do
-        uuid=$(cat /proc/sys/kernel/random/uuid)
-        echo -ne "\033[1;37m INGRESE LA DURACION (DIAS)\033[1;33m" && read masaaktif
-        if [[ -z $masaaktif ]]; then
-           err_fun 4 && continue
-           elif [[ "${#masaaktif}" -lt "4" ]]; then
-           err_fun 5 && continue
-           elif [[ "${#masaaktif}" -gt "12" ]]; then
-           err_fun 6 && continue
-        fi
-	darnixprom
-        break
-      done
-      exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
-while true; do
-    #red " Recuerda 0 es Para Login Ilimitados"
-    echo -ne "\033[1;37m LIMITE DE CONEXION POR IP\033[1;33m" && read iplim
-    #read -p ": " iplim
-    if [[ -z "$iplim" ]]; then
-      err_fun 11 && continue
-    elif [[ "$iplim" != +([0-9]) ]]; then
-      err_fun 12 && continue
-    elif [[ "$iplim" -gt "999" ]]; then
-      err_fun 13 && continue
-    fi
-    darnixprom
-    break
-  done
-  
-while true; do
-    #red " Recuerda 0 es Para Cuota Ilimitados"
-    echo -ne "\033[1;37m LIMITE DE CUOTA DEL USUARIO (GB)\033[1;33m" && read Quota
-    #read -p ": " iplim
-    if [[ -z "$Quota" ]]; then
-      err_fun 11 && continue
-    elif [[ "$Quota" != +([0-9]) ]]; then
-      err_fun 12 && continue
-    elif [[ "$Quota" -gt "9999" ]]; then
-      err_fun 13 && continue
-    fi
-    darnixprom
-    break
-  done
+uuid=$(cat /proc/sys/kernel/random/uuid)
+until [[ $masaaktif =~ ^[0-9]+$ ]]; do
+read -p "Expired (hari): " masaaktif
+done
+exp=`date -d "$masaaktif days" +"%Y-%m-%d"`
+until [[ $iplim =~ ^[0-9]+$ ]]; do
+read -p "Limit User (IP) or 0 Unlimited: " iplim
+done
+until [[ $Quota =~ ^[0-9]+$ ]]; do
+read -p "Limit User (GB) or 0 Unlimited: " Quota
+done
 
 if [ ! -e /etc/vmess ]; then
 mkdir -p /etc/vmess
