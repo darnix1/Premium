@@ -54,58 +54,6 @@ done
 echo "$inu"
 }
 
-function send-log(){
-CHATID=$(cat /etc/perlogin/id)
-KEY=$(cat /etc/perlogin/token)
-TIME="10"
-URL="https://api.telegram.org/bot$KEY/sendMessage"
-TEXT="
-<code>────────────────────</code>
-<b>⚠️NOTIFICACION CUOTA VMESS⚠️</b>
-<code>────────────────────</code>
-<code>El Usuario </code><code>$vmuser</code>
-<code>Excedio el Límite de los GB </code>
-<code>Asignados y fue Removido</code>
-<code>────────────────────</code>
-"
-curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
-}
-
-function send-vl(){
-CHATID=$(cat /etc/perlogin/id)
-KEY=$(cat /etc/perlogin/token)
-TIME="10"
-URL="https://api.telegram.org/bot$KEY/sendMessage"
-TEXT="
-<code>────────────────────</code>
-<b>⚠️NOTIFICACION CUOTA VLESS⚠️</b>
-<code>────────────────────</code>
-<code>El Usuario </code><code>$vlus</code>
-<code>Excedio el Límite de los GB </code>
-<code>Asignados y fue Removido</code>
-<code>────────────────────</code>
-"
-curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
-}
-
-function send-tj(){
-CHATID=$(cat /etc/perlogin/id)
-KEY=$(cat /etc/perlogin/token)
-TIME="10"
-URL="https://api.telegram.org/bot$KEY/sendMessage"
-TEXT="
-<code>────────────────────</code>
-<b>⚠️NOTIFICACION CUOTA TROJAN⚠️</b>
-<code>────────────────────</code>
-<code>El Usuario </code><code>$usrtr</code>
-<code>Excedio el Límite de los GB </code>
-<code>Asignados y fue Removido</code>
-<code>────────────────────</code>
-"
-curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
-}
-
-
 function convert() {
 local -i bytes=$1
 if [[ $bytes -lt 1024 ]]; then
@@ -159,7 +107,7 @@ vmip=$(cat /etc/vmess/${vmuser}IP)
 fi
 if [[ ${vmhas} -gt "0" ]]; then
 downlink=$(xray api stats --server=127.0.0.1:10085 -name "user>>>${vmuser}>>>traffic>>>downlink" | grep -w "value" | awk '{print $2}' | cut -d '"' -f2)
-#cd
+cd
 if [ ! -e /etc/limit/vmess/${vmuser} ]; then
 echo "${downlink}" > /etc/limit/vmess/${vmuser}
 xray api stats --server=127.0.0.1:10085 -name "user>>>${vmuser}>>>traffic>>>downlink" -reset > /dev/null 2>&1
@@ -183,7 +131,6 @@ uuid=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort
 echo "### $vmuser $exp $uuid" >> /etc/vmess/userQuota
 sed -i "/^#vmg $vmuser $exp/,/^},{/d" /etc/xray/config.json
 sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
-send-log
 rm /etc/limit/vmess/${vmuser} >/dev/null 2>&1
 systemctl restart xray
 fi
@@ -369,7 +316,6 @@ uuidvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort 
 echo "### $vlus $expvl $uuidvl" >> /etc/vless/userQuota
 sed -i "/^#vl $vlus $expvl/,/^},{/d" /etc/xray/config.json
 sed -i "/^#vlg $vlus $expvl/,/^},{/d" /etc/xray/config.json
-send-vl
 rm /etc/limit/vless/${vlus} >/dev/null 2>&1
 systemctl restart xray >/dev/null 2>&1
 fi
@@ -555,7 +501,6 @@ echo "### $usrtr $exptr $uuidtr" >> /etc/trojan/userQuota
 sed -i "/^#tr $usrtr $exptr/,/^},{/d" /etc/xray/config.json
 sed -i "/^#trg $usrtr $exptr/,/^},{/d" /etc/xray/config.json
 rm /etc/limit/trojan/${usrtr} >/dev/null 2>&1
-send-tj
 systemctl restart xray >/dev/null 2>&1
 fi
 fi
