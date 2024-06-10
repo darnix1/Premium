@@ -2,7 +2,7 @@
 # Proxy For Edukasi & Imclass
 
 # Link Hosting Kalian
-SFVPN="https://sfvt.serv00.net/mysc/install"
+SFVPN="raw.githubusercontent.com/darnix1/Premium/main/install"
 
 wget -O /usr/local/bin/ws-dropbear https://raw.githubusercontent.com/darnix1/Premium/main/sshws/ws-dropbear
 chmod +x /usr/local/bin/ws-dropbear
