@@ -15,7 +15,7 @@ nmap -p 22 $ipsaya > cekip
 cpu=$(grep -c -E "open" "cekip")
 if [[ ${cpu} == '0' ]]; then
 apt install nmap -y
-#shutdown -r now
+shutdown -r now
 fi
 cd
 today=$(date -d "0 days" +"%Y-%m-%d")
