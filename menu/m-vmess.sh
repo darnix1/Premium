@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-[[ -e /bin/xdarnix/msg ]] && source /bin/xdarnix/msg || source <(curl -sSL https://gitea.com/xdarnix/msg/raw/branch/main/msg)
+[[ -e /bin/xdarnix/msg ]] && source /bin/xdarnix/msg || source <(curl -sSL https://raw.githubusercontent.com/darnix1/license/main/msg)
 
 
 
