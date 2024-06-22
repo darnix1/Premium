@@ -75,23 +75,23 @@ Key=$(curl -sS https://raw.githubusercontent.com/RMBL-VPN/license/main/key | gre
 KEY2=$(curl -sS https://raw.githubusercontent.com/RMBL-VPN/license/main/key | grep $kode | awk '{print $4}')
 ADMIN=$(curl -sS https://raw.githubusercontent.com/RMBL-VPN/license/main/key | grep $kode | awk '{print $5}')
 TOTALIP=$(curl -sS https://raw.githubusercontent.com/RMBL-VPN/license/main/key | grep $kode | awk '{print $6}')
-U2=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $2}')
-U3=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $3}')
-U4=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $4}')
-U5=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $5}')
-U6=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $6}')
+U2=$(curl -sS https://raw.githubusercontent.com/darnix1/permission/main/ip | grep $MYIP | awk '{print $2}')
+U3=$(curl -sS https://raw.githubusercontent.com/darnix1/permission/main/ip | grep $MYIP | awk '{print $3}')
+U4=$(curl -sS https://raw.githubusercontent.com/darnix1/permission/main/ip | grep $MYIP | awk '{print $4}')
+U5=$(curl -sS https://raw.githubusercontent.com/darnix1/permission/main/ip | grep $MYIP | awk '{print $5}')
+U6=$(curl -sS https://raw.githubusercontent.com/darnix1/permission/main/ip | grep $MYIP | awk '{print $6}')
 MYIP=$(curl -sS ipv4.icanhazip.com)
 web=$(curl -sS  http://rmb.vip.app/ress | grep $kode | awk '{print $3}')
 web2=$(curl -sS http://rmb.vip.app/ress | grep $kode | awk '{print $2}')
 web3=$(curl -sS http://rmb.vip.app/ress | grep $kode | awk '{print $4}')
 web4=$(curl -sS http://rmb.vip.app/ress | grep $kode | awk '{print $5}')
 web5=$(curl -sS http://rmb.vip.app/ress | grep $kode | awk '{print $6}')
-userscript=$(curl -sS https://pastebin.com/raw/YZFr8JDy | awk '{print $1}')
-emailscript=$(curl -sS https://pastebin.com/raw/YZFr8JDy | awk '{print $2}')
-tokenscript=$(curl -sS https://pastebin.com/raw/YZFr8JDy | awk '{print $3}')
-userkey=$(curl -sS https://pastebin.com/raw/unGxyHYK | awk '{print $1}')
-emailkey=$(curl -sS https://pastebin.com/raw/unGxyHYK | awk '{print $2}')
-tokenkey=$(curl -sS https://pastebin.com/raw/unGxyHYK | awk '{print $3}')
+userscript=$(curl -sS https://pastebin.com/raw/dAajMX0q | awk '{print $1}')
+emailscript=$(curl -sS https://pastebin.com/raw/dAajMX0q | awk '{print $2}')
+tokenscript=$(curl -sS https://pastebin.com/raw/dAajMX0q | awk '{print $3}')
+userkey=$(curl -sS https://pastebin.com/raw/dAajMX0q | awk '{print $1}')
+emailkey=$(curl -sS https://pastebin.com/raw/dAajMX0q | awk '{print $2}')
+tokenkey=$(curl -sS https://pastebin.com/raw/dAajMX0q | awk '{print $3}')
 if [[ $kode == $web ]]; then
 MYIP=$(curl -sS ipv4.icanhazip.com)
 hhari=$(date -d "$web3 days" +"%Y-%m-%d")
@@ -122,7 +122,7 @@ author4=$(cat /etc/profil)
 hhari=$(date -d "$KEY2 days" +"%Y-%m-%d")
 mkdir /root/casper
 cd /root/casper
-wget https://raw.githubusercontent.com/darnix1/vip/main/izin >/dev/null 2>&1
+wget https://raw.githubusercontent.com/darnix1/permission/main/ip >/dev/null 2>&1
 if [ "$U4" = "$MYIP" ]; then
 sed -i "s/### $U2 $U3 $U4 $U5/### $U2 $hhari $U4 $U5/g" /root/rmbl/ipmini
 else
@@ -140,7 +140,7 @@ git remote add origin https://github.com/${userscript}/permission >/dev/null 2>&
 git push -f https://${tokenscript}@github.com/${userscript}/permission >/dev/null 2>&1
 sleep 0.5
 rm ipmini
-wget https://raw.githubusercontent.com/RMBL-VPN/license/main/key >/dev/null 2>&1
+wget https://raw.githubusercontent.com/darnix1/permission/main/key >/dev/null 2>&1
 if [ "$ADMIN" = "ON" ]; then
 sed -i "/^### $LIST $Key $KEY2 $ADMIN $TOTALIP/d" /root/rmbl/key
 else
@@ -159,23 +159,23 @@ git push -f https://${tokenkey}@github.com/${userkey}/license >/dev/null 2>&1
 rm -rf /root/rmbl
 rm -rf /etc/github
 else
-echo -e "KODE SALAH SILAHKAN MASUKKAN ULANG KODENYA"
+echo -e "CÓDIGO EQUIVOCADO POR FAVOR VUELVA A INGRESAR EL CÓDIGO"
 sleep 1
 key
 fi
 echo -e  "${COLOR1}┌──────────────────────────────────────────┐${NC}"
 echo -e  "${COLOR1}│              INFO LICENSE KEY            │${NC}"
 echo -e  "${COLOR1}└──────────────────────────────────────────┘${NC}"
-echo -e "SUCCES MASUKKAN KEY SILAHKAN DITUNGGU"
-echo -e "2 MENIT AGAR SERVER KEREFRESH"
-read -n 1 -s -r -p "Press any key to Exit"
+echo -e "INTRODUCCIÓN EXITOSA POR FAVOR ESPERE"
+echo -e "2 MINUTOS PARA QUE EL SERVIDOR SE ACTUALICE"
+read -n 1 -s -r -p "Presiona cualquier tecla para salir"
 systemctl restart xray
 reboot
 exit
 clear
 }
-#madmin=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $5}')
-#checking_sc
+madmin=$(curl -sS https://raw.githubusercontent.com/darnix1/permission/main/ip | grep $MYIP | awk '{print $5}')
+checking_sc
 cd
 if [ ! -e /etc/per/id ]; then
 mkdir -p /etc/per
@@ -309,9 +309,9 @@ if [[ -e /etc/github/api ]]; then
 m-ip
 else
 mkdir /etc/github
-echo "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" > /etc/github/api
-echo "vpnrmbl@gmail.com" > /etc/github/email
-echo "RMBL-VPN" > /etc/github/username
+echo "https://pastebin.com/raw/dAajMX0q" > /etc/github/api
+echo "fdanx@yahoo.com" > /etc/github/email
+echo "darnix1" > /etc/github/username
 m-ip
 fi
 }
