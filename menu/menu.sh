@@ -520,8 +520,12 @@ wget https://raw.githubusercontent.com/darnix1/Premium/main/menu/m-update.sh &> 
 chmod +x m-update.sh
 ./m-update.sh
 }
-#echo -e "         $COLOR1╔═════════════════════════════════════════╗${NC}"
-#echo -e "         $COLOR1╚═════════════════════════════════════════╝${NC}"
+echo -e "         $COLOR1╔═════════════════════════════════════════╗${NC}"
+echo -e "         $COLOR1║$NC      ${WH}Versi  ${NC}: ${WH}$(cat /opt/.ver) Version${NC}$COLOR1"
+echo -e "         $COLOR1║$NC      ${WH}Client${NC} : ${WH}$author${NC}"
+echo -e "         $COLOR1║$NC      ${WH}Durasi${NC} : ${WH}$certificate hari${NC}$COLOR1"
+echo -e "         $COLOR1║$NC      ${WH}Expiry${NC} : ${WH}$Exp2 $sts ${NC}$COLOR1"
+echo -e "         $COLOR1╚═════════════════════════════════════════╝${NC}"
 echo -e ""
 selection=$(selection_fun2 100)
 case ${selection} in
