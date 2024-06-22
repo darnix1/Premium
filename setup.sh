@@ -87,21 +87,21 @@ echo -e "${tyblue}┌───────────────────�
 echo -e "${tyblue}│ \033[1;37mPlease select a your Choice              ${tyblue}│${NC}"
 echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
 echo -e "${tyblue}┌──────────────────────────────────────────┐${NC}"
-echo -e "${tyblue}│  [ 1 ]  \033[1;37mTRIAL 1 HARI      ${NC}"
+echo -e "${tyblue}│  [ 1 ]  \033[1;37mPRUEBA DE 1 DÍA      ${NC}"
 echo -e "${tyblue}│  "                                        
-echo -e "${tyblue}│  [ 2 ]  \033[1;37mMEMBER SUDAH BELI     ${NC}"
+echo -e "${tyblue}│  [ 2 ]  \033[1;37mINGRESA CON LA KEY     ${NC}"
 echo -e "${tyblue}│     "                                     
 echo -e "${tyblue}└──────────────────────────────────────────┘${NC}"
 until [[ $key =~ ^[12]+$ ]]; do 
-read -p "   Please select numbers 1 atau 2 : " key
+read -p "   Por favor seleccione los números 1 o 2 : " key
 done
 if [[ $key == "1" ]]; then
 MYIP=$(curl -sS ipv4.icanhazip.com)
 rm -rf /etc/github
 mkdir /etc/github
-curl -s https://pastebin.com/raw/t3aaqcej > /etc/github/api
-curl -s https://pastebin.com/raw/cfivDKk2 > /etc/github/email
-curl -s https://pastebin.com/raw/bSskAgjw > /etc/github/username
+curl -s https://pastebin.com/raw/eRSwARUX > /etc/github/api
+curl -s https://pastebin.com/raw/BE5ACJZh > /etc/github/email
+curl -s https://pastebin.com/raw/ZX5eeavc > /etc/github/username
 clear
 APIGIT=$(cat /etc/github/api)
 EMAILGIT=$(cat /etc/github/email)
@@ -109,7 +109,7 @@ USERGIT=$(cat /etc/github/username)
 hhari=$(date -d "1 days" +"%Y-%m-%d")
 mkdir /root/casper
 cd /root/casper
-wget https://raw.githubusercontent.com/darnix1/vip/main/izin >/dev/null 2>&1
+wget https://raw.githubusercontent.com/darnix1/permission/main/ip >/dev/null 2>&1
 echo "### $author $hhari $MYIP @trial" >> ipmini
 sleep 1
 rm -rf .git
@@ -129,13 +129,13 @@ fi
 if [[ $key == "2" ]]; then
 clear
 echo -e  "${tyblue}┌──────────────────────────────────────────┐${NC}"
-echo -e  "${tyblue}│              MASUKKAN LICENSE KEY        │${NC}"
+echo -e  "${tyblue}│              INGRESA LICENCIA KEY        │${NC}"
 echo -e  "${tyblue}└──────────────────────────────────────────┘${NC}"
 echo " "
-read -rp "Masukan Key Kamu Disini (Ctrl + C Exit) : " -e kode
+read -rp "Ingrese su clave aquí (Ctrl + C Salir) : " -e kode
 
 if [ -z $kode ]; then
-echo -e "KODE SALAH SILAHKAN MASUKKAN ULANG KODENYA"
+echo -e "CÓDIGO EQUIVOCADO POR FAVOR VUELVA A INGRESAR EL CÓDIGO"
 key2
 fi
 LIST=$(curl -sS https://raw.githubusercontent.com/RMBL-VPN/license/main/key | grep $kode | awk '{print $2}')
@@ -148,9 +148,9 @@ if [[ $kode == "RMBLVIP" ]]; then
 MYIP=$(curl -sS ipv4.icanhazip.com)
 rm -rf /etc/github
 mkdir /etc/github
-curl -s https://pastebin.com/raw/t3aaqcej > /etc/github/api
-curl -s https://pastebin.com/raw/cfivDKk2 > /etc/github/email
-curl -s https://pastebin.com/raw/bSskAgjw > /etc/github/username
+curl -s https://pastebin.com/raw/eRSwARUX > /etc/github/api
+curl -s https://pastebin.com/raw/BE5ACJZh > /etc/github/email
+curl -s https://pastebin.com/raw/ZX5eeavc > /etc/github/username
 clear
 APIGIT=$(cat /etc/github/api)
 EMAILGIT=$(cat /etc/github/email)
@@ -158,7 +158,7 @@ USERGIT=$(cat /etc/github/username)
 hhari=$(date -d "30 days" +"%Y-%m-%d")
 mkdir /root/rmbl
 cd /root/rmbl
-wget https://raw.githubusercontent.com/darnix1/vip/main/izin >/dev/null 2>&1
+wget https://raw.githubusercontent.com/darnix1/permission/main/ip >/dev/null 2>&1
 
 echo "### $author $hhari $MYIP @RMBL" >> ipmini
 
@@ -179,9 +179,9 @@ MYIP2=$(curl -sS ipv4.icanhazip.com)
 author2=$(cat /etc/profil)
 rm -rf /etc/github
 mkdir /etc/github
-curl -s https://pastebin.com/raw/t3aaqcej > /etc/github/api
-curl -s https://pastebin.com/raw/cfivDKk2 > /etc/github/email
-curl -s https://pastebin.com/raw/bSskAgjw > /etc/github/username
+curl -s https://pastebin.com/raw/eRSwARUX > /etc/github/api
+curl -s https://pastebin.com/raw/BE5ACJZh > /etc/github/email
+curl -s https://pastebin.com/raw/ZX5eeavc > /etc/github/username
 clear
 APIGIT=$(cat /etc/github/api)
 EMAILGIT=$(cat /etc/github/email)
@@ -189,7 +189,7 @@ USERGIT=$(cat /etc/github/username)
 hhari2=$(date -d "999 days" +"%Y-%m-%d")
 mkdir /root/rmbl
 cd /root/rmbl
-wget https://raw.githubusercontent.com/darnix1/vip/main/izin >/dev/null 2>&1
+wget https://raw.githubusercontent.com/darnix1/permission/main/ip >/dev/null 2>&1
 
 sed -i "/# VIP/a ### ${author2} ${hhari2} ${MYIP2} ON 999 VIP" /root/rmbl/ipmini
 
@@ -210,9 +210,9 @@ MYIP3=$(curl -sS ipv4.icanhazip.com)
 author3=$(cat /etc/profil)
 rm -rf /etc/github
 mkdir /etc/github
-curl -s https://pastebin.com/raw/t3aaqcej > /etc/github/api
-curl -s https://pastebin.com/raw/cfivDKk2 > /etc/github/email
-curl -s https://pastebin.com/raw/bSskAgjw > /etc/github/username
+curl -s https://pastebin.com/raw/eRSwARUX > /etc/github/api
+curl -s https://pastebin.com/raw/BE5ACJZh > /etc/github/email
+curl -s https://pastebin.com/raw/ZX5eeavc > /etc/github/username
 clear
 APIGIT=$(cat /etc/github/api)
 EMAILGIT=$(cat /etc/github/email)
@@ -220,7 +220,7 @@ USERGIT=$(cat /etc/github/username)
 hhari3=$(date -d "999 days" +"%Y-%m-%d")
 mkdir /root/rmbl
 cd /root/rmbl
-wget https://raw.githubusercontent.com/darnix1/vip/main/izin >/dev/null 2>&1
+wget https://raw.githubusercontent.com/darnix1/permission/main/ip >/dev/null 2>&1
 
 sed -i "/# RESELLER/a ### ${author3} ${hhari3} ${MYIP3} ON 999" /root/rmbl/ipmini
 
@@ -240,9 +240,9 @@ elif [[ $kode == $Key ]]; then
 MYIP=$(curl -sS ipv4.icanhazip.com)
 rm -rf /etc/github
 mkdir /etc/github
-curl -s https://pastebin.com/raw/t3aaqcej > /etc/github/api
-curl -s https://pastebin.com/raw/cfivDKk2 > /etc/github/email
-curl -s https://pastebin.com/raw/bSskAgjw > /etc/github/username
+curl -s https://pastebin.com/raw/eRSwARUX > /etc/github/api
+curl -s https://pastebin.com/raw/BE5ACJZh > /etc/github/email
+curl -s https://pastebin.com/raw/ZX5eeavc > /etc/github/username
 clear
 APIGIT=$(cat /etc/github/api)
 EMAILGIT=$(cat /etc/github/email)
@@ -250,7 +250,7 @@ USERGIT=$(cat /etc/github/username)
 hhari=$(date -d "$KEY2 days" +"%Y-%m-%d")
 mkdir /root/rmbl
 cd /root/rmbl
-wget https://raw.githubusercontent.com/darnix1/vip/main/izin >/dev/null 2>&1
+wget https://raw.githubusercontent.com/darnix1/permission/main/ip >/dev/null 2>&1
 if [ "$ADMIN" = "ON" ]; then
 sed -i "/# RESELLER/a ### ${author} ${hhari} ${MYIP} ${ADMIN} ${TOTALIP}" /root/rmbl/ipmini
 else
@@ -289,7 +289,7 @@ rm -rf /root/rmbl
 rm -rf /etc/github
 clear
 else
-echo -e "KODE SALAH SILAHKAN MASUKKAN ULANG KODENYA"
+echo -e "CÓDIGO EQUIVOCADO POR FAVOR VUELVA A INGRESAR EL CÓDIGO"
 sleep 1
 key2
 fi
