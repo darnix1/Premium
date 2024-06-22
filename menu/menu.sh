@@ -63,10 +63,10 @@ echo -e  "${COLOR1}┌───────────────────�
 echo -e  "${COLOR1}│              PASWORDD SCRIPT RMBL VPN     │${NC}"
 echo -e  "${COLOR1}└──────────────────────────────────────────┘${NC}"
 echo " "
-read -rp "Masukan Key Kamu Disini ctrl + c Exit : " -e kode
+read -rp "Ingrese su clave aquí Ctrl + C Salir : " -e kode
 cd
 if [ -z $kode ]; then
-echo -e "KODE SALAH SILAHKAN MASUKKAN ULANG KODENYA"
+echo -e "CÓDIGO EQUIVOCADO POR FAVOR VUELVA A INGRESAR EL CÓDIGO"
 key
 fi
 clear
