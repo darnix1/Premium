@@ -30,15 +30,32 @@ DAY=$(date +%A)
 DATE=$(date +%m/%d/%Y)
 DATE2=$(date -R | cut -d " " -f -5)
 MYIP=$(wget -qO- ifconfig.me)
-#Isadmin=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $5}')
-#Exp2=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $3}')
+Isadmin=$(curl -sS https://raw.githubusercontent.com/darnix1/permission/main/ip | grep $MYIP | awk '{print $5}')
+Exp2=$(curl -sS https://raw.githubusercontent.com/darnix1/permission/main/ip | grep $MYIP | awk '{print $3}')
 export RED='\033[0;31m'
 export GREEN='\033[0;32m'
-Name=$(curl -sS https://raw.githubusercontent.com/darnix1/vip/main/izin | grep $MYIP | awk '{print $2}')
-ipsaya=$(wget -qO- ifconfig.me)
-#data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
-#date_list=$(date +"%Y-%m-%d" -d "$data_server")
-#data_ip="https://raw.githubusercontent.com/darnix1/vip/main/izin"
+Name=$(curl -sS https://raw.githubusercontent.com/darnix1/permission/main/ip | grep $MYIP | awk '{print $2}')
+ipsaya=$(wget -qO- ipinfo.io/ip)
+data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
+date_list=$(date +"%Y-%m-%d" -d "$data_server")
+data_ip="https://raw.githubusercontent.com/darnix1/permission/main/ip"
+checking_sc() {
+useexp=$(curl -sS $data_ip | grep $ipsaya | awk '{print $3}')
+if [[ $date_list < $useexp ]]; then
+echo -ne
+else
+echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
+echo -e "$COLOR1 ${NC} ${COLBG1}          ${WH}• AUTOSCRIPT PREMIUM •               ${NC} $COLOR1 $NC"
+echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
+echo -e "            ${RED}PERMISO DENEGADO !${NC}"
+echo -e "   \033[0;33mSu VPS${NC} $ipsaya \033[0;33mHa sido prohibido${NC}"
+echo -e "     \033[0;33mComprar permisos de acceso para scripts${NC}"
+echo -e "             \033[0;33mContacte con su administrador ${NC}"
+echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
+key
+fi
+}
 
 function key(){
 rm -rf /root/rmbl
