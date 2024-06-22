@@ -138,11 +138,11 @@ if [ -z $kode ]; then
 echo -e "CÓDIGO EQUIVOCADO POR FAVOR VUELVA A INGRESAR EL CÓDIGO"
 key2
 fi
-LIST=$(curl -sS https://raw.githubusercontent.com/RMBL-VPN/license/main/key | grep $kode | awk '{print $2}')
-Key=$(curl -sS https://raw.githubusercontent.com/RMBL-VPN/license/main/key | grep $kode | awk '{print $3}')
-KEY2=$(curl -sS https://raw.githubusercontent.com/RMBL-VPN/license/main/key | grep $kode | awk '{print $4}')
-ADMIN=$(curl -sS https://raw.githubusercontent.com/RMBL-VPN/license/main/key | grep $kode | awk '{print $5}')
-TOTALIP=$(curl -sS https://raw.githubusercontent.com/RMBL-VPN/license/main/key | grep $kode | awk '{print $6}')
+LIST=$(curl -sS https://raw.githubusercontent.com/darnix1/license/main/key | grep $kode | awk '{print $2}')
+Key=$(curl -sS https://raw.githubusercontent.com/darnix1/license/main/key | grep $kode | awk '{print $3}')
+KEY2=$(curl -sS https://raw.githubusercontent.com/darnix1/license/main/key | grep $kode | awk '{print $4}')
+ADMIN=$(curl -sS https://raw.githubusercontent.com/darnix1/license/main/key | grep $kode | awk '{print $5}')
+TOTALIP=$(curl -sS https://raw.githubusercontent.com/darnix1/license/main/key | grep $kode | awk '{print $6}')
 cd
 if [[ $kode == "RMBLVIP" ]]; then
 MYIP=$(curl -sS ipv4.icanhazip.com)
@@ -269,7 +269,7 @@ git remote add origin https://github.com/${USERGIT}/permission >/dev/null 2>&1
 git push -f https://${APIGIT}@github.com/${USERGIT}/permission >/dev/null 2>&1
 sleep 0.5
 rm ipmini
-wget https://raw.githubusercontent.com/RMBL-VPN/license/main/key >/dev/null 2>&1
+wget https://raw.githubusercontent.com/darnix1/license/main/key >/dev/null 2>&1
 if [ "$ADMIN" = "ON" ]; then
 sed -i "/^### $LIST $Key $KEY2 $ADMIN $TOTALIP/d" /root/rmbl/key
 else
