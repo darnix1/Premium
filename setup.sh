@@ -14,7 +14,7 @@ function CEKIP () {
 MYIP=$(curl -sS ipv4.icanhazip.com)
 IPVPS=$(curl -sS https://raw.githubusercontent.com/darnix1/permission/main/ip | grep $MYIP | awk '{print $4}')
   if [[ $MYIP == $IPVPS ]]; then
-key2
+
 domain
 Casper2
 else
