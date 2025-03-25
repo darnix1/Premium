@@ -31,7 +31,7 @@ systemctl stop ws-stunnel
 exit
 fi
 }
-checking_sc
+#checking_sc
 cd
 ipsaya=$(wget -qO- ifconfig.me)
 cd /etc
