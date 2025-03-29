@@ -307,20 +307,28 @@ fun_bar() {
         touch $HOME/fim
     ) >/dev/null 2>&1 &
     tput civis
-    echo -ne "  \033[0;33mUpdate Domain.. \033[1;37m- \033[0;33m["
+    echo -ne "  \033[0;33mProcesando \033[1;37m- \033[0;33m["
+    
+    # Colores dinámicos para la barra de progreso
+    COLORS=("\033[0;31m" "\033[0;32m" "\033[0;33m" "\033[0;34m" "\033[0;35m" "\033[0;36m")
+    COLOR_INDEX=0
+
     while true; do
         for ((i = 0; i < 18; i++)); do
-            echo -ne "\033[0;32m#"
+            # Cambia el color de cada carácter en la barra
+            echo -ne "${COLORS[$((COLOR_INDEX % ${#COLORS[@]}))]}#"
             sleep 0.1s
+            COLOR_INDEX=$((COLOR_INDEX + 1))
         done
         [[ -e $HOME/fim ]] && rm $HOME/fim && break
         echo -e "\033[0;33m]"
         sleep 1s
         tput cuu1
         tput dl1
-        echo -ne "  \033[0;33mUpdate Domain... \033[1;37m- \033[0;33m["
+        echo -ne "  \033[0;33mProcesando \033[1;37m- \033[0;33m["
     done
-    echo -e "\033[0;33m]\033[1;37m -\033[1;32m Succes !\033[1;37m"
+    
+    echo -e "\033[0;33m]\033[1;37m -\033[1;32m OK !\033[1;37m"
     tput cnorm
 }
 res1() {
