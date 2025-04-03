@@ -18,7 +18,6 @@ IPVPS=$(curl -sS https://raw.githubusercontent.com/darnix1/permission/main/ip | 
 domain
 Casper2
 else
-  key2
   domain
   Casper2
 fi
