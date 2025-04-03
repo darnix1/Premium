@@ -488,25 +488,22 @@ echo -e "         $COLOR1║$NC      ${WH}Durasi${NC} : ${WH}$certificate hari${
 echo -e "         $COLOR1║$NC      ${WH}Expiry${NC} : ${WH}$Exp2 $sts ${NC}$COLOR1"
 echo -e "         $COLOR1╚═════════════════════════════════════════╝${NC}"
 echo -e ""
-selection=$(selection_fun2 100)
-case ${selection} in
-1) m-sshovpn ;;
-2) m-vmess ;;
-3) m-vless ;;
-4) m-trojan ;;
-5) running ;;
-6) m-bot ;;
-7) m-bot2 ;;
-8) m-theme ;;
-9) m-update ;;
-10) m-system ;;
-11) m-backup ;;
-12) reboot ;;
-100) clear ; $up2u ;;
-#14) remove_script ;;
-0)
-  cd $HOME && clear
-  clear
-  exit 0
-  ;;
+echo -e ""
+echo -ne " ${WH}Select menu ${COLOR1}: ${WH}"; read opt
+case $opt in
+01 | 1) clear ; m-sshovpn ;;
+02 | 2) clear ; m-vmess ;;
+03 | 3) clear ; m-vless ;;
+04 | 4) clear ; m-trojan ;;
+05 | 5) clear ; running ;;
+06 | 6) clear ; m-bot ;;
+07 | 7) clear ; m-bot2  ;;
+08 | 8) clear ; m-theme ;;
+09 | 9) clear ; m-update ;;
+10 | 10) clear ; m-system ;;
+11 | 11) clear ; m-backup;;
+12 | 12) clear ; reboot ;;
+100 | 100) clear ; clear ; $up2u  ;;
+00 | 0) clear ; menu ;;
+*) clear ; menu ;;
 esac
