@@ -22,20 +22,50 @@ fun_bar() {
         touch $HOME/fim
     ) >/dev/null 2>&1 &
     tput civis
-    echo -ne "  \033[0;33mPlease Wait Loading \033[1;37m- \033[0;33m["
+    echo -ne "  \033[0;33mProcesando \033[1;37m- \033[0;33m["
+    
+    # Longitud de la barra de progreso
+    BAR_LENGTH=18
+    POSITION=0
+    DIRECTION=1  # 1 para derecha, -1 para izquierda
+    
+    # Colores dinámicos para la barra de progreso
+    COLORS=("\033[0;31m" "\033[0;32m" "\033[0;33m" "\033[0;34m" "\033[0;35m" "\033[0;36m")
+    COLOR_INDEX=0
+
     while true; do
-        for ((i = 0; i < 18; i++)); do
-            echo -ne "\033[0;32m#"
-            sleep 0.1s
+        # Mover el cursor al inicio de la barra (evita corchetes duplicados)
+        echo -ne "\r"
+        echo -ne "  \033[0;33mProcesando \033[1;37m- \033[0;33m["
+        
+        # Dibujar espacios y el punto animado
+        for ((i = 0; i < BAR_LENGTH; i++)); do
+            if [ $i -eq $POSITION ]; then
+                echo -ne "${COLORS[$((COLOR_INDEX % ${#COLORS[@]}))]}."
+            else
+                echo -ne " "
+            fi
         done
+        
+        # Cerrar con UN solo corchete
+        echo -ne "\033[0;33m]"
+        
+        # Actualizar posición y dirección
+        ((POSITION += DIRECTION))
+        if [ $POSITION -eq $((BAR_LENGTH - 1)) ] || [ $POSITION -eq 0 ]; then
+            ((DIRECTION *= -1))
+            ((COLOR_INDEX++))
+        fi
+        
+        # Comprobar si el proceso terminó
         [[ -e $HOME/fim ]] && rm $HOME/fim && break
-        echo -e "\033[0;33m]"
-        sleep 1s
-        tput cuu1
-        tput dl1
-        echo -ne "  \033[0;33mPlease Wait Loading \033[1;37m- \033[0;33m["
+        
+        # Pausa para la animación
+        sleep 0.1s
     done
-    echo -e "\033[0;33m]\033[1;37m -\033[1;32m OK !\033[1;37m"
+    
+    # Mensaje final (OK)
+    echo -e "\033[1;37m -\033[1;32m OK !\033[1;37m"
     tput cnorm
 }
 
