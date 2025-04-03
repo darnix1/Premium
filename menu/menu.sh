@@ -39,23 +39,7 @@ ipsaya=$(wget -qO- ipinfo.io/ip)
 data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 date_list=$(date +"%Y-%m-%d" -d "$data_server")
 data_ip="https://raw.githubusercontent.com/darnix1/permission/main/ip"
-checking_sc() {
-useexp=$(curl -sS $data_ip | grep $ipsaya | awk '{print $3}')
-if [[ $date_list < $useexp ]]; then
-echo -ne
-else
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "$COLOR1 ${NC} ${COLBG1}          ${WH}• AUTOSCRIPT PREMIUM •               ${NC} $COLOR1 $NC"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
-echo -e "$COLOR1┌─────────────────────────────────────────────────┐${NC}"
-echo -e "            ${RED}PERMISO DENEGADO !${NC}"
-echo -e "   \033[0;33mSu VPS${NC} $ipsaya \033[0;33mHa sido prohibido${NC}"
-echo -e "     \033[0;33mComprar permisos de acceso para scripts${NC}"
-echo -e "             \033[0;33mContacte con su administrador ${NC}"
-echo -e "$COLOR1└─────────────────────────────────────────────────┘${NC}"
-key
-fi
-}
+
 
 function key(){
 rm -rf /root/rmbl
@@ -395,7 +379,7 @@ msg -bar
 echo -e "\033[38;5;239m═════════════════\e[48;5;1m\e[38;5;230m  MENU AUTO  \e[0m\e[38;5;239m════════════════════"
 echo -e "\033[1;37m  •  S.O         \033[1;32m$MODEL2 \033[1;31m. \033[1;33m"
 echo -e "\033[1;37m  •  DOMINIO     \033[1;32m$(cat /etc/xray/domain) \033[1;31m. \033[1;33m"
-echo -e "\033[1;37m  •  SERVIDOR    \033[1;32m$MYIP \033[1;31m. \033[1;33m"
+#echo -e "\033[1;37m  •  SERVIDOR    \033[1;32m$MYIP \033[1;31m. \033[1;33m"
 echo -e "\033[1;37m  •  RAM USADO   \033[1;32m$tram / $uram MB \033[1;31m. \033[1;33m"
 echo -e "\033[1;37m  •  AUTOR       \033[1;32m$author"
 echo -e "\033[1;37m  •  $resd"
