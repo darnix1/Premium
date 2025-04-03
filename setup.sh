@@ -11,16 +11,9 @@ source "${module}"
 ###############################################$$$
 apt install git curl -y >/dev/null 2>&1
 function CEKIP () {
-MYIP=$(curl -sS ipv4.icanhazip.com)
-IPVPS=$(curl -sS https://raw.githubusercontent.com/darnix1/permission/main/ip | grep $MYIP | awk '{print $4}')
-  if [[ $MYIP == $IPVPS ]]; then
-
-domain
-Casper2
-else
   domain
   Casper2
-fi
+  #key2
 }
 clear
 red='\e[1;31m'
