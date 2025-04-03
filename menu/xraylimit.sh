@@ -1,411 +1,561 @@
-/{vm,vl,tr}
 #!/bin/bash
-
-# Configuración básica
-biji=$(date +"%Y-%m-%d" -d "$dateFromServer")
+biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
+colornow=$(cat /etc/rmbl/theme/color.conf)
 NC="\e[0m"
 RED="\033[0;31m"
 COLOR1="$(cat /etc/rmbl/theme/$colornow | grep -w "TEXT" | cut -d: -f2|sed 's/ //g')"
 COLBG1="$(cat /etc/rmbl/theme/$colornow | grep -w "BG" | cut -d: -f2|sed 's/ //g')"
 WH='\033[1;37m'
-
-# Información del servidor
 ipsaya=$(wget -qO- ipinfo.io/ip)
 data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
 date_list=$(date +"%Y-%m-%d" -d "$data_server")
-domen=$(cat /etc/xray/domain)
-ISP=$(cat /etc/xray/isp)
-CITY=$(cat /etc/xray/city)
-DATE=$(date +'%Y-%m-%d')
-TIME=$(date +'%H:%M:%S')
-timenow=$(date +%T" WIB")
+data_ip="https://raw.githubusercontent.com/darnix1/permission/main/ip"
 
-# Configuración de Telegram
+# Función para formatear notificaciones
+function format_notification() {
+    local protocol=$1
+    local user=$2
+    local logins=$3
+    local usage=$4
+    local login_details=$5
+    local status=$6
+    local action=$7
+    
+    # Iconos según el protocolo
+    case $protocol in
+        "VMESS") icon="🛡️" ;;
+        "VLESS") icon="🔒" ;;
+        "TROJAN") icon="🐴" ;;
+        *) icon="⚠️" ;;
+    esac
+    
+    # Color según la gravedad
+    if [[ $status == *"Advertencia"* ]]; then
+        color="🟠"
+    else
+        color="🔴"
+    fi
+    
+    TEXT="
+${color}━━━━━━━━━━━━━━━━━━━━━━━━${color}
+${icon} <b>DETECCIÓN DE MÚLTIPLES LOGINS</b> ${icon}
+<b>Protocolo:</b> $protocol
+<b>Usuario:</b> <code>$user</code>
+${color}━━━━━━━━━━━━━━━━━━━━━━━━${color}
+<b>🌐 Información del Servidor</b>
+├─ Dominio: <code>$domen</code>
+├─ IP: $ISP
+└─ Ubicación: $CITY
+
+<b>📅 Fecha:</b> $DATE $TIME
+<b>🔢 Logins detectados:</b> $logins
+<b>📊 Consumo:</b> $usage
+${color}━━━━━━━━━━━━━━━━━━━━━━━━${color}
+<b>🖥️ Detalle de Conexiones</b>
+$login_details
+${color}━━━━━━━━━━━━━━━━━━━━━━━━${color}
+<b>📢 Estado:</b> $status
+<b>⚡ Acción:</b> $action
+${color}━━━━━━━━━━━━━━━━━━━━━━━━${color}
+<i>Notificación generada automáticamente</i>
+"
+    echo "$TEXT"
+}
+
+#checking_sc
+cd
+bash2=$( pgrep bash | wc -l )
+if [[ $bash2 -gt "20" ]]; then
+killall bash
+fi
+inaIP=$(wget -qO- ipv4.icanhazip.com)
+timenow=$(date +%T" WIB")
 TIMES="10"
 CHATID=$(cat /etc/perlogin/id)
 KEY=$(cat /etc/perlogin/token)
 URL="https://api.telegram.org/bot$KEY/sendMessage"
-
-# Configuración de seguridad
-bash2=$(pgrep bash | wc -l)
-if [[ $bash2 -gt "20" ]]; then
-    killall bash
-fi
-
-# Configuración de tipo de acción
+domen=`cat /etc/xray/domain`
+ISP=$(cat /etc/xray/isp)
+CITY=$(cat /etc/xray/city)
+DATE=$(date +'%Y-%m-%d')
+TIME=$(date +'%H:%M:%S')
 author=$(cat /etc/profil)
 type=$(cat /etc/typexray)
 waktulock=$(cat /etc/waktulock)
 if [[ -z ${waktulock} ]]; then
-    echo "15" > /etc/waktulock
+echo "15" > /etc/waktulock
 fi
 if [[ -z ${type} ]]; then
-    echo "delete" > /etc/typexray
+echo "delete" > /etc/typexray
 fi
-
-# Función para convertir tiempo a segundos
 tim2sec() {
-    mult=1
-    arg="$1"
-    inu=0
-    while [ ${#arg} -gt 0 ]; do
-        prev="${arg%:*}"
-        if [ "$prev" = "$arg" ]; then
-            curr="${arg#0}"
-            prev=""
-        else
-            curr="${arg##*:}"
-            curr="${curr#0}"
-        fi
-        curr="${curr%.*}"
-        inu=$((inu + curr * mult))
-        mult=$((mult * 60))
-        arg="$prev"
-    done
-    echo "$inu"
+mult=1
+arg="$1"
+inu=0
+while [ ${#arg} -gt 0 ]; do
+prev="${arg%:*}"
+if [ "$prev" = "$arg" ]; then
+curr="${arg#0}"
+if [ ${#curr} -gt 0 ]; then
+inu=$((inu + curr * mult))
+fi
+prev=""
+else
+curr="${arg##*:}"
+curr="${curr#0}"
+if [ ${#curr} -gt 0 ]; then
+inu=$((inu + curr * mult))
+fi
+fi
+mult=$((mult * 60))
+arg="$prev"
+done
+echo "$inu"
 }
 
-# Función para convertir bytes a formato legible
-convert() {
-    local -i bytes=$1
-    if [[ $bytes -lt 1024 ]]; then
-        echo "${bytes} B"
-    elif [[ $bytes -lt 1048576 ]]; then
-        echo "$(((bytes + 1023) / 1024)) KB"
-    elif [[ $bytes -lt 1073741824 ]]; then
-        echo "$(((bytes + 1048575) / 1048576)) MB"
-    else
-        echo "$(((bytes + 1073741823) / 1073741824)) GB"
-    fi
+function convert() {
+local -i bytes=$1
+if [[ $bytes -lt 1024 ]]; then
+echo "${bytes} B"
+elif [[ $bytes -lt 1048576 ]]; then
+echo "$(((bytes + 1023) / 1024)) KB"
+elif [[ $bytes -lt 1073741824 ]]; then
+echo "$(((bytes + 1048575) / 1048576)) MB"
+else
+echo "$(((bytes + 1073741823) / 1073741824)) GB"
+fi
 }
 
-# Función para obtener país de una IP
-get_country() {
-    local ip="$1"
-    local country=$(curl -s "http://ip-api.com/json/${ip}?fields=country,isp" | jq -r '[.country, .isp] | join(" - ")')
-    if [[ -z "$country" || "$country" = "null - null" ]]; then
-        echo "Desconocido"
-    else
-        echo "$country"
-    fi
-}
+function vmess() {
+cd
+if [[ ! -e /etc/limit/vmess ]]; then
+mkdir -p /etc/limit/vmess
+fi
+vm=($(cat /etc/xray/config.json | grep "^#vmg" | awk '{print $2}' | sort -u))
+echo -n >/tmp/vm
+for db1 in ${vm[@]}; do
+logvm=$(cat /var/log/xray/access.log | grep -w "email: ${db1}" | tail -n 150)
+while read a; do
+if [[ -n ${a} ]]; then
+set -- ${a}
+ina="${7}"
+inu="${2}"
+anu="${3}"
+enu=$(echo "${anu}" | sed 's/tcp://g' | sed '/^$/d' | cut -d. -f1,2,3)
+now=$(tim2sec ${timenow})
+client=$(tim2sec ${inu})
+nowt=$(((${now} - ${client})))
+if [[ ${nowt} -lt 40 ]]; then
+cat /tmp/vm | grep -w "${ina}" | grep -w "${enu}" >/dev/null
+if [[ $? -eq 1 ]]; then
+echo "${ina} ${inu} WIB : ${enu}" >>/tmp/vm
+splvm=$(cat /tmp/vm)
+fi
+fi
+fi
+done <<<"${logvm}"
+done
+if [[ ${splvm} != "" ]]; then
+for vmuser in ${vm[@]}; do
+vmhas=$(cat /tmp/vm | grep -w "${vmuser}" | wc -l)
+vmhas2=$(cat /tmp/vm | grep -w "${vmuser}" | cut -d ' ' -f 2-8 | nl -s '. ' | sed 's/^/├─ /')
+vmsde=$(ls "/etc/vmess" | grep -w "${vmuser}IP")
+if [[ -z ${vmsde} ]]; then
+vmip="0"
+else
+vmip=$(cat /etc/vmess/${vmuser}IP)
+fi
+if [[ ${vmhas} -gt "0" ]]; then
+downlink=$(xray api stats --server=127.0.0.1:10085 -name "user>>>${vmuser}>>>traffic>>>downlink" | grep -w "value" | awk '{print $2}' | cut -d '"' -f2)
+cd
+if [ ! -e /etc/limit/vmess/${vmuser} ]; then
+echo "${downlink}" > /etc/limit/vmess/${vmuser}
+xray api stats --server=127.0.0.1:10085 -name "user>>>${vmuser}>>>traffic>>>downlink" -reset > /dev/null 2>&1
+else
+plus2=$(cat /etc/limit/vmess/${vmuser})
+if [[ -z ${plus2} ]]; then
+echo "1" > /etc/limit/vmess/${vmuser}
+fi
+plus3=$(( ${downlink} + ${plus2} ))
+echo "${plus3}" > /etc/limit/vmess/${vmuser}
+xray api stats --server=127.0.0.1:10085 -name "user>>>${vmuser}>>>traffic>>>downlink" -reset > /dev/null 2>&1
+fi
+if [ ! -e /etc/vmess/${vmuser} ]; then
+echo "999999999999" > /etc/vmess/${vmuser}
+fi
+limit=$(cat /etc/vmess/${vmuser})
+usage=$(cat /etc/limit/vmess/${vmuser})
+if [ $usage -gt $limit ]; then
+exp=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+uuid=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+echo "### $vmuser $exp $uuid" >> /etc/vmess/userQuota
+sed -i "/^#vmg $vmuser $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
+rm /etc/limit/vmess/${vmuser} >/dev/null 2>&1
+systemctl restart xray
+fi
+fi
+if [[ ${vmhas} -gt $vmip ]]; then
+byt=$(cat /etc/limit/vmess/$vmuser)
+gb=$(convert ${byt})
+echo "$vmuser ${vmhas}" >> /etc/vmess/${vmuser}login
+vmessip=$(cat /etc/vmess/${vmuser}login | wc -l)
+ssvmess1=$(ls "/etc/vmess" | grep -w "notif")
+if [[ -z ${ssvmess1} ]]; then
+ssvmess="3"
+else
+ssvmess=$(cat /etc/vmess/notif)
+fi
+if [ $vmessip = $ssvmess ]; then
+if [ $type = "lock" ]; then
+status="🛑 ${ssvmess}x Multi Login - Cuenta bloqueada temporalmente"
+action="⏳ Bloqueo por $waktulock minutos"
+TEXT2=$(format_notification "VMESS" "$vmuser" "$vmhas" "$gb" "$vmhas2" "$status" "$action")
 
-# Función centralizada para notificaciones
-send_notification() {
-    local protocol="$1"
-    local username="$2"
-    local logins="$3"
-    local usage="$4"
-    local logins_list="$5"
-    local action="$6"
-
-    # Definir emoji según la acción
-    case "$action" in
-        *LOCK*) emoji="🔒" ;;
-        *DELETE*) emoji="❌" ;;
-        *WARNING*) emoji="⚠️" ;;
-        *) emoji="ℹ️" ;;
-    esac
-
-    local message="
-${emoji} <b>${protocol^^} MULTI LOGIN - ${action^^}</b> ${emoji}
-━━━━━━━━━━━━━━━━
-<b>🖥 SERVIDOR:</b>
-├ Dominio: <code>${domen}</code>
-├ IP: <code>${ipsaya}</code>
-└ Ubicación: ${CITY} (${ISP})
-
-<b>👤 USUARIO:</b> <code>${username}</code>
-<b>📊 TRÁFICO USADO:</b> ${usage}
-<b>🔢 LOGINS SIMULTÁNEOS:</b> ${logins}
-
-<b>🌍 DETALLE DE CONEXIONES:</b>
-${logins_list}
-━━━━━━━━━━━━━━━━
-<b>⏰ FECHA:</b> ${DATE} ${TIME}
-<b>🚦 ACCIÓN:</b> ${action}
-"
-
-    # Enviar a Telegram
-    curl -s --max-time "$TIMES" \
-        -d "chat_id=$CHATID&text=$(echo "$message" | sed 's/\"/\\"/g')&parse_mode=html" \
-        "$URL" >/dev/null
-
-    # Registrar en log local
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] ${protocol} ${username} ${logins} ${action}" >> /var/log/xray/multi_login.log
-}
-
-# Función para procesar VMess
-vmess() {
-    mkdir -p /etc/limit/vmess
-    vm_users=($(cat /etc/xray/config.json | grep "^#vmg" | awk '{print $2}' | sort -u))
-    
-    echo -n > /tmp/vm
-    for user in "${vm_users[@]}"; do
-        while read -r line; do
-            if [[ -n "$line" ]]; then
-                set -- $line
-                ip="${7}"
-                time_login="${2}"
-                protocol="${3}"
-                ip_short=$(echo "$protocol" | sed 's/tcp://g' | cut -d. -f1-3)
-                
-                now=$(tim2sec "$timenow")
-                client_time=$(tim2sec "$time_login")
-                diff_time=$((now - client_time))
-                
-                if [[ $diff_time -lt 40 ]]; then
-                    if ! grep -q "$ip $ip_short" /tmp/vm; then
-                        country=$(get_country "$ip")
-                        echo "$user $ip ($country) $time_login WIB" >> /tmp/vm
-                    fi
-                fi
-            fi
-        done <<< "$(cat /var/log/xray/access.log | grep -w "email: $user" | tail -n 150)"
-    done
-
-    if [[ -s /tmp/vm ]]; then
-        for user in "${vm_users[@]}"; do
-            user_logins=$(grep -w "$user" /tmp/vm | wc -l)
-            login_details=$(grep -w "$user" /tmp/vm | cut -d' ' -f2- | nl -s'. ' | while read line; do printf "├ %-20s\n" "$line"; done)
-            
-            # Obtener uso de datos
-            downlink=$(xray api stats --server=127.0.0.1:10085 -name "user>>>${user}>>>traffic>>>downlink" | grep -w "value" | awk '{print $2}' | cut -d '"' -f2)
-            [[ -z "$downlink" ]] && downlink=0
-            
-            # Administrar límites
-            mkdir -p /etc/limit/vmess
-            if [[ ! -f /etc/limit/vmess/$user ]]; then
-                echo "$downlink" > /etc/limit/vmess/$user
-            else
-                prev_usage=$(cat /etc/limit/vmess/$user)
-                total_usage=$((prev_usage + downlink))
-                echo "$total_usage" > /etc/limit/vmess/$user
-            fi
-            xray api stats --server=127.0.0.1:10085 -name "user>>>${user}>>>traffic>>>downlink" -reset >/dev/null 2>&1
-            
-            # Verificar límites
-            user_limit=$(cat /etc/vmess/${user} 2>/dev/null || echo "999999999999")
-            if [[ $total_usage -gt $user_limit ]]; then
-                send_notification "VMESS" "$user" "$user_logins" "$(convert $total_usage)" "$login_details" "DELETE (Límite de datos)"
-                # Resto de la lógica de eliminación...
-            fi
-            
-            # Verificar múltiples logins
-            max_logins=$(cat /etc/vmess/notif 2>/dev/null || echo "3")
-            if [[ $user_logins -ge $max_logins ]]; then
-                if [[ "$type" = "lock" ]]; then
-                    send_notification "VMESS" "$user" "$user_logins" "$(convert $total_usage)" "$login_details" "LOCK ($waktulock mins)"
-                    # Resto de la lógica de bloqueo...
-                else
-                    send_notification "VMESS" "$user" "$user_logins" "$(convert $total_usage)" "$login_details" "DELETE (Multi-Login)"
-                    # Resto de la lógica de eliminación...
-                fi
-            elif [[ $user_logins -gt 1 ]]; then
-                send_notification "VMESS" "$user" "$user_logins" "$(convert $total_usage)" "$login_details" "WARNING"
-            fi
-        done
-    fi
-}
-
-# Funciones para VLESS y Trojan (estructura similar)
-vless() {
-    mkdir -p /etc/limit/vless
-    vl_users=($(cat /etc/xray/config.json | grep "^#vlg" | awk '{print $2}' | sort -u))
-    
-    echo -n > /tmp/vl
-    for user in "${vl_users[@]}"; do
-        while read -r line; do
-            if [[ -n "$line" ]]; then
-                set -- $line
-                ip="${7}"
-                time_login="${2}"
-                protocol="${3}"
-                ip_short=$(echo "$protocol" | sed 's/tcp://g' | cut -d. -f1-3)
-                
-                now=$(tim2sec "$timenow")
-                client_time=$(tim2sec "$time_login")
-                diff_time=$((now - client_time))
-                
-                if [[ $diff_time -lt 40 ]]; then
-                    if ! grep -q "$ip $ip_short" /tmp/vl; then
-                        country=$(get_country "$ip")
-                        echo "$user $ip ($country) $time_login WIB" >> /tmp/vl
-                    fi
-                fi
-            fi
-        done <<< "$(cat /var/log/xray/access.log | grep -w "email: $user" | tail -n 150)"
-    done
-
-    if [[ -s /tmp/vl ]]; then
-        for user in "${vl_users[@]}"; do
-            user_logins=$(grep -w "$user" /tmp/vl | wc -l)
-            login_details=$(grep -w "$user" /tmp/vl | cut -d' ' -f2- | nl -s'. ' | while read line; do printf "├ %-20s\n" "$line"; done)
-            
-            # Obtener uso de datos
-            downlink=$(xray api stats --server=127.0.0.1:10085 -name "user>>>${user}>>>traffic>>>downlink" | grep -w "value" | awk '{print $2}' | cut -d '"' -f2)
-            [[ -z "$downlink" ]] && downlink=0
-            
-            # Administrar límites
-            mkdir -p /etc/limit/vless
-            if [[ ! -f /etc/limit/vless/$user ]]; then
-                echo "$downlink" > /etc/limit/vless/$user
-            else
-                prev_usage=$(cat /etc/limit/vless/$user)
-                total_usage=$((prev_usage + downlink))
-                echo "$total_usage" > /etc/limit/vless/$user
-            fi
-            xray api stats --server=127.0.0.1:10085 -name "user>>>${user}>>>traffic>>>downlink" -reset >/dev/null 2>&1
-            
-            # Verificar límites
-            user_limit=$(cat /etc/vless/${user} 2>/dev/null || echo "999999999999")
-            if [[ $total_usage -gt $user_limit ]]; then
-                send_notification "VLESS" "$user" "$user_logins" "$(convert $total_usage)" "$login_details" "DELETE (Límite de datos)"
-                expvl=$(grep -wE "^#vlg $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort -u)
-                uuidvl=$(grep -wE "^#vlg $user" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort -u)
-                echo "### $user $expvl $uuidvl" >> /etc/vless/listlock
-                sed -i "/^#vlg $user $expvl/,/^},{/d" /etc/xray/config.json
-                sed -i "/^#vl $user $expvl/,/^},{/d" /etc/xray/config.json
-                rm /etc/limit/vless/${user} >/dev/null 2>&1
-                systemctl restart xray >/dev/null 2>&1
-            fi
-            
-            # Verificar múltiples logins
-            max_logins=$(cat /etc/vless/notif 2>/dev/null || echo "3")
-            if [[ $user_logins -ge $max_logins ]]; then
-                if [[ "$type" = "lock" ]]; then
-                    send_notification "VLESS" "$user" "$user_logins" "$(convert $total_usage)" "$login_details" "LOCK ($waktulock mins)"
-                    expvl=$(grep -wE "^#vlg $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort -u)
-                    uuidvl=$(grep -wE "^#vlg $user" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort -u)
-                    echo "### $user $expvl $uuidvl" >> /etc/vless/listlock
-                    sed -i "/^#vlg $user $expvl/,/^},{/d" /etc/xray/config.json
-                    sed -i "/^#vl $user $expvl/,/^},{/d" /etc/xray/config.json
-                    rm /etc/vless/${user}login >/dev/null 2>&1
-                    cat> /etc/cron.d/vless${user} << EOF
+echo "" > /tmp/vm
+sed -i "/${vmuser}/d" /var/log/xray/access.log
+curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
+exp=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+uuid=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+echo "### $vmuser $exp $uuid" >> /etc/vmess/listlock
+sed -i "/^#vmg $vmuser $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
+rm /etc/vmess/${vmuser}login >/dev/null 2>&1
+cat> /etc/cron.d/vmess${vmuser} << EOF
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-*/$waktulock * * * * root /usr/bin/xray vless $user $uuidvl $expvl
+*/$waktulock * * * * root /usr/bin/xray vmess $vmuser $uuid $exp
 EOF
-                    systemctl restart xray
-                    service cron restart
-                else
-                    send_notification "VLESS" "$user" "$user_logins" "$(convert $total_usage)" "$login_details" "DELETE (Multi-Login)"
-                    expvl=$(grep -wE "^#vlg $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort -u)
-                    uuidvl=$(grep -wE "^#vlg $user" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort -u)
-                    echo "### $user $expvl $uuidvl" >> /etc/vless/listlock
-                    sed -i "/^#vlg $user $expvl/,/^},{/d" /etc/xray/config.json
-                    sed -i "/^#vl $user $expvl/,/^},{/d" /etc/xray/config.json
-                    rm /etc/vless/${user}login >/dev/null 2>&1
-                    systemctl restart xray >/dev/null 2>&1
-                fi
-            elif [[ $user_logins -gt 1 ]]; then
-                send_notification "VLESS" "$user" "$user_logins" "$(convert $total_usage)" "$login_details" "WARNING"
-            fi
-        done
-    fi
+systemctl restart xray
+service cron restart
+fi
+if [ $type = "delete" ]; then
+status="🛑 ${ssvmess}x Multi Login - Cuenta eliminada"
+action="❌ Eliminación permanente"
+TEXT2=$(format_notification "VMESS" "$vmuser" "$vmhas" "$gb" "$vmhas2" "$status" "$action")
+
+echo "" > /tmp/vm
+sed -i "/${vmuser}/d" /var/log/xray/access.log
+curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
+exp=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+uuid=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+echo "### $vmuser $exp $uuid" >> /etc/vmess/listlock
+sed -i "/^#vmg $vmuser $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
+rm /etc/vmess/${vmuser}login >/dev/null 2>&1
+systemctl restart xray
+fi
+else
+status="⚠️ ${vmessip}x Multi Login Detectados"
+action="🔔 Notificación (Umbral: ${ssvmess}x)"
+TEXT=$(format_notification "VMESS" "$vmuser" "$vmhas" "$gb" "$vmhas2" "$status" "$action")
+
+echo "" > /tmp/vm
+sed -i "/${vmuser}/d" /var/log/xray/access.log
+curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
+fi
+if [ $vmessip -gt $ssvmess ]; then
+exp=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+uuid=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+echo "### $vmuser $exp $uuid" >> /etc/vmess/listlock
+sed -i "/^#vmg $vmuser $exp/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
+rm /etc/vmess/${vmuser}login >/dev/null 2>&1
+systemctl restart xray
+fi
+fi
+done
+fi
 }
 
-trojan() {
-    mkdir -p /etc/limit/trojan
-    tr_users=($(cat /etc/xray/config.json | grep "^#trg" | awk '{print $2}' | sort -u))
-    
-    echo -n > /tmp/tr
-    for user in "${tr_users[@]}"; do
-        while read -r line; do
-            if [[ -n "$line" ]]; then
-                set -- $line
-                ip="${7}"
-                time_login="${2}"
-                protocol="${3}"
-                ip_short=$(echo "$protocol" | sed 's/tcp://g' | cut -d. -f1-3)
-                
-                now=$(tim2sec "$timenow")
-                client_time=$(tim2sec "$time_login")
-                diff_time=$((now - client_time))
-                
-                if [[ $diff_time -lt 40 ]]; then
-                    if ! grep -q "$ip $ip_short" /tmp/tr; then
-                        country=$(get_country "$ip")
-                        echo "$user $ip ($country) $time_login WIB" >> /tmp/tr
-                    fi
-                fi
-            fi
-        done <<< "$(cat /var/log/xray/access.log | grep -w "email: $user" | tail -n 150)"
-    done
+function vless() {
+cd
+if [[ ! -e /etc/limit/vless ]]; then
+mkdir -p /etc/limit/vless
+fi
+vldat=($(cat /etc/xray/config.json | grep "^#vlg" | awk '{print $2}' | sort -u))
+echo -n >/tmp/vl
+for db2 in ${vldat[@]}; do
+logvl=$(cat /var/log/xray/access.log | grep -w "email: ${db2}" | tail -n 150)
+while read a; do
+if [[ -n ${a} ]]; then
+set -- ${a}
+ina="${7}"
+inu="${2}"
+anu="${3}"
+enu=$(echo "${anu}" | sed 's/tcp://g' | sed '/^$/d' | cut -d. -f1,2,3)
+now=$(tim2sec ${timenow})
+client=$(tim2sec ${inu})
+nowt=$(((${now} - ${client})))
+if [[ ${nowt} -lt 40 ]]; then
+cat /tmp/vl | grep -w "${ina}" | grep -w "${enu}" >/dev/null
+if [[ $? -eq 1 ]]; then
+echo "${ina} ${inu} WIB : ${enu}" >>/tmp/vl
+spll=$(cat /tmp/vl)
+fi
+fi
+fi
+done <<<"${logvl}"
+done
+if [[ ${spll} != "" ]]; then
+for vlus in ${vldat[@]}; do
+vlsss=$(cat /tmp/vl | grep -w "${vlus}" | wc -l)
+vlsss2=$(cat /tmp/vl | grep -w "${vlus}" | cut -d ' ' -f 2-8 | nl -s '. ' | sed 's/^/├─ /')
+sdf=$(ls "/etc/vless" | grep -w "${vlus}IP")
+if [[ -z ${sdf} ]]; then
+vmip="0"
+else
+vmip=$(cat /etc/vless/${vlus}IP)
+fi
+if [[ ${vlsss} -gt "0" ]]; then
+downlink=$(xray api stats --server=127.0.0.1:10085 -name "user>>>${vlus}>>>traffic>>>downlink" | grep -w "value" | awk '{print $2}' | cut -d '"' -f2)
+cd
+if [ ! -e /etc/limit/vless/${vlus} ]; then
+echo "${downlink}" > /etc/limit/vless/${vlus}
+xray api stats --server=127.0.0.1:10085 -name "user>>>${vlus}>>>traffic>>>downlink" -reset > /dev/null 2>&1
+else
+plus2=$(cat /etc/limit/vless/${vlus})
+cd
+if [[ -z ${plus2} ]]; then
+echo "1" > /etc/limit/vless/${vlus}
+fi
+plus3=$(( ${downlink} + ${plus2} ))
+echo "${plus3}" > /etc/limit/vless/${vlus}
+xray api stats --server=127.0.0.1:10085 -name "user>>>${vlus}>>>traffic>>>downlink" -reset > /dev/null 2>&1
+fi
+cd
+if [ ! -e /etc/vless/${vlus} ]; then
+echo "999999999999" > /etc/vless/${vlus}
+fi
+limit=$(cat /etc/vless/${vlus})
+usage=$(cat /etc/limit/vless/${vlus})
+if [ $usage -gt $limit ]; then
+expvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+uuidvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+echo "### $vlus $expvl $uuidvl" >> /etc/vless/userQuota
+sed -i "/^#vl $vlus $expvl/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vlg $vlus $expvl/,/^},{/d" /etc/xray/config.json
+rm /etc/limit/vless/${vlus} >/dev/null 2>&1
+systemctl restart xray >/dev/null 2>&1
+fi
+fi
+if [[ ${vlsss} -gt $vmip ]]; then
+byt=$(cat /etc/limit/vless/$vlus)
+gb=$(convert ${byt})
+echo "$vlus ${vlsss}" >> /etc/vless/${vlus}login
+vlessip=$(cat /etc/vless/${vlus}login | wc -l)
+ssvless1=$(ls "/etc/vless" | grep -w "notif")
+if [[ -z ${ssvless1} ]]; then
+ssvless="3"
+else
+ssvless=$(cat /etc/vless/notif)
+fi
+if [ $vlessip = $ssvless ]; then
+echo -ne
+if [ $type = "delete" ]; then
+status="🛑 ${ssvless}x Multi Login - Cuenta eliminada"
+action="❌ Eliminación permanente"
+TEXT2=$(format_notification "VLESS" "$vlus" "$vlsss" "$gb" "$vlsss2" "$status" "$action")
 
-    if [[ -s /tmp/tr ]]; then
-        for user in "${tr_users[@]}"; do
-            user_logins=$(grep -w "$user" /tmp/tr | wc -l)
-            login_details=$(grep -w "$user" /tmp/tr | cut -d' ' -f2- | nl -s'. ' | while read line; do printf "├ %-20s\n" "$line"; done)
-            
-            # Obtener uso de datos
-            downlink=$(xray api stats --server=127.0.0.1:10085 -name "user>>>${user}>>>traffic>>>downlink" | grep -w "value" | awk '{print $2}' | cut -d '"' -f2)
-            [[ -z "$downlink" ]] && downlink=0
-            
-            # Administrar límites
-            mkdir -p /etc/limit/trojan
-            if [[ ! -f /etc/limit/trojan/$user ]]; then
-                echo "$downlink" > /etc/limit/trojan/$user
-            else
-                prev_usage=$(cat /etc/limit/trojan/$user)
-                total_usage=$((prev_usage + downlink))
-                echo "$total_usage" > /etc/limit/trojan/$user
-            fi
-            xray api stats --server=127.0.0.1:10085 -name "user>>>${user}>>>traffic>>>downlink" -reset >/dev/null 2>&1
-            
-            # Verificar límites
-            user_limit=$(cat /etc/trojan/${user} 2>/dev/null || echo "999999999999")
-            if [[ $total_usage -gt $user_limit ]]; then
-                send_notification "TROJAN" "$user" "$user_logins" "$(convert $total_usage)" "$login_details" "DELETE (Límite de datos)"
-                exptr=$(grep -wE "^#trg $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort -u)
-                uuidtr=$(grep -wE "^#trg $user" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort -u)
-                echo "### $user $exptr $uuidtr" >> /etc/trojan/listlock
-                sed -i "/^#trg $user $exptr/,/^},{/d" /etc/xray/config.json
-                sed -i "/^#tr $user $exptr/,/^},{/d" /etc/xray/config.json
-                rm /etc/limit/trojan/${user} >/dev/null 2>&1
-                systemctl restart xray >/dev/null 2>&1
-            fi
-            
-            # Verificar múltiples logins
-            max_logins=$(cat /etc/trojan/notif 2>/dev/null || echo "3")
-            if [[ $user_logins -ge $max_logins ]]; then
-                if [[ "$type" = "lock" ]]; then
-                    send_notification "TROJAN" "$user" "$user_logins" "$(convert $total_usage)" "$login_details" "LOCK ($waktulock mins)"
-                    exptr=$(grep -wE "^#trg $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort -u)
-                    uuidtr=$(grep -wE "^#trg $user" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort -u)
-                    echo "### $user $exptr $uuidtr" >> /etc/trojan/listlock
-                    sed -i "/^#trg $user $exptr/,/^},{/d" /etc/xray/config.json
-                    sed -i "/^#tr $user $exptr/,/^},{/d" /etc/xray/config.json
-                    rm /etc/trojan/${user}login >/dev/null 2>&1
-                    cat> /etc/cron.d/trojan${user} << EOF
+echo "" > /tmp/vl
+sed -i "/${vlus}/d" /var/log/xray/access.log
+curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
+expvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+uuidvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+echo "### $vlus $expvl $uuidvl" >> /etc/vless/listlock
+sed -i "/^#vl $vlus $expvl/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vlg $vlus $expvl/,/^},{/d" /etc/xray/config.json
+rm /etc/vless/${vlus}login >/dev/null 2>&1
+systemctl restart xray >/dev/null 2>&1
+fi
+if [ $type = "lock" ]; then
+status="🛑 ${ssvless}x Multi Login - Cuenta bloqueada temporalmente"
+action="⏳ Bloqueo por $waktulock minutos"
+TEXT2=$(format_notification "VLESS" "$vlus" "$vlsss" "$gb" "$vlsss2" "$status" "$action")
+
+echo "" > /tmp/vl
+sed -i "/${vlus}/d" /var/log/xray/access.log
+curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
+expvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+uuidvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+echo "### $vlus $expvl $uuidvl" >> /etc/vless/listlock
+sed -i "/^#vl $vlus $expvl/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vlg $vlus $expvl/,/^},{/d" /etc/xray/config.json
+rm /etc/vless/${vlus}login >/dev/null 2>&1
+cat> /etc/cron.d/vless${vlus} << EOF
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-*/$waktulock * * * * root /usr/bin/xray trojan $user $uuidtr $exptr
+*/$waktulock * * * * root /usr/bin/xray vless $vlus $uuidvl $expvl
 EOF
-                    systemctl restart xray
-                    service cron restart
-                else
-                    send_notification "TROJAN" "$user" "$user_logins" "$(convert $total_usage)" "$login_details" "DELETE (Multi-Login)"
-                    exptr=$(grep -wE "^#trg $user" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort -u)
-                    uuidtr=$(grep -wE "^#trg $user" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort -u)
-                    echo "### $user $exptr $uuidtr" >> /etc/trojan/listlock
-                    sed -i "/^#trg $user $exptr/,/^},{/d" /etc/xray/config.json
-                    sed -i "/^#tr $user $exptr/,/^},{/d" /etc/xray/config.json
-                    rm /etc/trojan/${user}login >/dev/null 2>&1
-                    systemctl restart xray >/dev/null 2>&1
-                fi
-            elif [[ $user_logins -gt 1 ]]; then
-                send_notification "TROJAN" "$user" "$user_logins" "$(convert $total_usage)" "$login_details" "WARNING"
-            fi
-        done
-    fi
+systemctl restart xray
+service cron restart
+fi
+else
+status="⚠️ ${vlessip}x Multi Login Detectados"
+action="🔔 Notificación (Umbral: ${ssvless}x)"
+TEXT=$(format_notification "VLESS" "$vlus" "$vlsss" "$gb" "$vlsss2" "$status" "$action")
+
+echo "" > /tmp/vl
+sed -i "/${vlus}/d" /var/log/xray/access.log
+curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
+fi
+if [ $vlessip -gt $ssvless ]; then
+expvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+uuidvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+echo "### $vlus $expvl $uuidvl" >> /etc/vless/listlock
+sed -i "/^#vl $vlus $expvl/,/^},{/d" /etc/xray/config.json
+sed -i "/^#vlg $vlus $expvl/,/^},{/d" /etc/xray/config.json
+rm /etc/vless/${vlus}login >/dev/null 2>&1
+systemctl restart xray >/dev/null 2>&1
+fi
+fi
+done
+fi
 }
 
-# Ejecutar las funciones en paralelo
-vmess &
-vless &
-trojan &
-wait
+function trojan() {
+cd
+if [[ ! -e /etc/limit/trojan ]]; then
+mkdir -p /etc/limit/trojan
+fi
+trda=($(cat /etc/xray/config.json | grep "^#trg" | awk '{print $2}' | sort -u))
+echo -n >/tmp/tr
+for db3 in ${trda[@]}; do
+logtr=$(cat /var/log/xray/access.log | grep -w "email: ${db3}" | tail -n 150)
+while read a; do
+if [[ -n ${a} ]]; then
+set -- ${a}
+ina="${7}"
+inu="${2}"
+anu="${3}"
+enu=$(echo "${anu}" | sed 's/tcp://g' | sed '/^$/d' | cut -d. -f1,2,3)
+now=$(tim2sec ${timenow})
+client=$(tim2sec ${inu})
+nowt=$(((${now} - ${client})))
+if [[ ${nowt} -lt 40 ]]; then
+cat /tmp/tr | grep -w "${ina}" | grep -w "${enu}" >/dev/null
+if [[ $? -eq 1 ]]; then
+echo "${ina} ${inu} WIB : ${enu}" >>/tmp/tr
+restr=$(cat /tmp/tr)
+fi
+fi
+fi
+done <<<"${logtr}"
+done
+if [[ ${restr} != "" ]]; then
+for usrtr in ${trda[@]}; do
+trip=$(cat /tmp/tr | grep -w "${usrtr}" | wc -l)
+trip2=$(cat /tmp/tr | grep -w "${usrtr}" | cut -d ' ' -f 2-8 | nl -s '. ' | sed 's/^/├─ /')
+sdf=$(ls "/etc/trojan" | grep -w "${usrtr}IP")
+if [[ -z ${sdf} ]]; then
+sadsde="0"
+else
+sadsde=$(cat /etc/trojan/${usrtr}IP)
+fi
+if [[ ${trip} -gt "0" ]]; then
+downlink=$(xray api stats --server=127.0.0.1:10085 -name "user>>>${usrtr}>>>traffic>>>downlink" | grep -w "value" | awk '{print $2}' | cut -d '"' -f2)
+cd
+if [ ! -e /etc/limit/trojan/$usrtr ]; then
+echo "${downlink}" > /etc/limit/trojan/${usrtr}
+xray api stats --server=127.0.0.1:10085 -name "user>>>${usrtr}>>>traffic>>>downlink" -reset > /dev/null 2>&1
+else
+plus2=$(cat /etc/limit/trojan/$usrtr)
+if [[ -z ${plus2} ]]; then
+echo "1" > /etc/limit/trojan/$usrtr
+fi
+plus3=$(( ${downlink} + ${plus2} ))
+echo "${plus3}" > /etc/limit/trojan/${usrtr}
+xray api stats --server=127.0.0.1:10085 -name "user>>>${usrtr}>>>traffic>>>downlink" -reset > /dev/null 2>&1
+fi
+if [ ! -e /etc/trojan/${usrtr} ]; then
+echo "999999999999" > /etc/trojan/${usrtr}
+fi
+limit=$(cat /etc/trojan/${usrtr})
+usage=$(cat /etc/limit/trojan/${usrtr})
+if [ $usage -gt $limit ]; then
+exptr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+uuidtr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+echo "### $usrtr $exptr $uuidtr" >> /etc/trojan/userQuota
+sed -i "/^#tr $usrtr $exptr/,/^},{/d" /etc/xray/config.json
+sed -i "/^#trg $usrtr $exptr/,/^},{/d" /etc/xray/config.json
+rm /etc/limit/trojan/${usrtr} >/dev/null 2>&1
+systemctl restart xray >/dev/null 2>&1
+fi
+fi
+if [[ ${trip} -gt $sadsde ]]; then
+byt=$(cat /etc/limit/trojan/$usrtr)
+gb=$(convert ${byt})
+echo "$usrtr ${trip}" >> /etc/trojan/${usrtr}login
+trojanip=$(cat /etc/trojan/${usrtr}login | wc -l)
+sstrojan1=$(ls "/etc/trojan" | grep -w "notif")
+if [[ -z ${sstrojan1} ]]; then
+sstrojan="3"
+else
+sstrojan=$(cat /etc/trojan/notif)
+fi
+if [ $trojanip = $sstrojan ]; then
+echo -ne
+if [ $type = "delete" ]; then
+status="🛑 ${sstrojan}x Multi Login - Cuenta eliminada"
+action="❌ Eliminación permanente"
+TEXT2=$(format_notification "TROJAN" "$usrtr" "$trip" "$gb" "$trip2" "$status" "$action")
 
-# Limpieza final
-rm -f /tmp/vm /tmp/vl /tmp/tr
+echo "" > /tmp/tr
+sed -i "/${usrtr}/d" /var/log/xray/access.log
+curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
+exptr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+uuidtr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+echo "### $usrtr $exptr $uuidtr" >> /etc/trojan/listlock
+sed -i "/^#tr $usrtr $exptr/,/^},{/d" /etc/xray/config.json
+sed -i "/^#trg $usrtr $exptr/,/^},{/d" /etc/xray/config.json
+rm /etc/trojan/${usrtr}login >/dev/null 2>&1
+systemctl restart xray >/dev/null 2>&1
+fi
+if [ $type = "lock" ]; then
+status="🛑 ${sstrojan}x Multi Login - Cuenta bloqueada temporalmente"
+action="⏳ Bloqueo por $waktulock minutos"
+TEXT2=$(format_notification "TROJAN" "$usrtr" "$trip" "$gb" "$trip2" "$status" "$action")
+
+echo "" > /tmp/tr
+sed -i "/${usrtr}/d" /var/log/xray/access.log
+curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
+exptr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+uuidtr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+echo "### $usrtr $exptr $uuidtr" >> /etc/trojan/listlock
+sed -i "/^#tr $usrtr $exptr/,/^},{/d" /etc/xray/config.json
+sed -i "/^#trg $usrtr $exptr/,/^},{/d" /etc/xray/config.json
+rm /etc/trojan/${usrtr}login >/dev/null 2>&1
+cat> /etc/cron.d/trojan${usrtr} << EOF
+SHELL=/bin/sh
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+*/$waktulock * * * * root /usr/bin/xray trojan $usrtr $uuidtr $exptr
+EOF
+systemctl restart xray
+service cron restart
+fi
+else
+status="⚠️ ${trojanip}x Multi Login Detectados"
+action="🔔 Notificación (Umbral: ${sstrojan}x)"
+TEXT=$(format_notification "TROJAN" "$usrtr" "$trip" "$gb" "$trip2" "$status" "$action")
+
+echo "" > /tmp/tr
+sed -i "/${usrtr}/d" /var/log/xray/access.log
+curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
+fi
+if [ $trojanip -gt $sstrojan ]; then
+exptr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+uuidtr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+echo "### $usrtr $exptr $uuidtr" >> /etc/trojan/listlock
+sed -i "/^#tr $usrtr $exptr/,/^},{/d" /etc/xray/config.json
+sed -i "/^#trg $usrtr $exptr/,/^},{/d" /etc/xray/config.json
+rm /etc/trojan/${usrtr}login >/dev/null 2>&1
+systemctl restart xray >/dev/null 2>&1
+fi
+fi
+done
+fi
+}
+
+vmess
+vless
+trojan
