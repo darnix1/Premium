@@ -70,7 +70,7 @@ fun_bar() {
 }
 
 res1() {
-    base_url="https://raw.githubusercontent.com/darnix1/mx2/main/menu"
+    base_url="https://raw.githubusercontent.com/darnix1/Premium/main/menu"
     declare -A downloads=(
         ["backup"]="backup.sh" ["bckpbot"]="bckpbot.sh" ["bottelegram"]="bottelegram.sh"
         ["install-up"]="../install-up.sh" ["m-allxray"]="m-allxray.sh" ["m-backup"]="m-backup.sh"
