@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Asegurarse de que el archivo /usr/bin/limiter tenga permisos de ejecución
+chmod +x /usr/bin/limiter
+
+# Crear el servicio systemd
+cat << EOF > /etc/systemd/system/limiter.service
+[Unit]
+Description=Servicio para ejecutar limiter cada 2 minutos
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/limiter
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+# Recargar systemd, habilitar el servicio e iniciarlo
+systemctl daemon-reexec
+systemctl daemon-reload
+systemctl enable limiter.service
+systemctl start limiter.service
+
+echo "Listo, Darinel. El servicio 'limiter' ya está corriendo y se ejecuta cada 2 minutos."
