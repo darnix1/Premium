@@ -714,7 +714,7 @@ clear
 }
 
 res7() {
-wget https://raw.githubusercontent.com/darnix1/Premium/main/menu/update.sh && chmod +x update.sh && ./update.sh
+wget https://raw.githubusercontent.com/darnix1/mx2/refs/heads/main/menu/m-update.sh && chmod +x m-update.sh && ./m-update.sh
 clear
 }
 
