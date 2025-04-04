@@ -1,4 +1,3 @@
-
 #!/bin/bash
 biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
 colornow=$(cat /etc/rmbl/theme/color.conf)
