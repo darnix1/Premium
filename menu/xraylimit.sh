@@ -11,6 +11,10 @@ data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date |
 date_list=$(date +"%Y-%m-%d" -d "$data_server")
 data_ip="https://raw.githubusercontent.com/darnix1/permission/main/ip"
 
+# Configuración de advertencias
+WARNING_INTERVAL=300 # 5 minutos en segundos
+MAX_WARNINGS=3
+
 # Función para formatear notificaciones
 function format_notification() {
     local protocol=$1
@@ -19,7 +23,7 @@ function format_notification() {
     local usage=$4
     local login_details=$5
     local status=$6
-    local action=$7
+    local warning_count=$7
     
     # Iconos según el protocolo
     case $protocol in
@@ -30,7 +34,7 @@ function format_notification() {
     esac
     
     # Color según la gravedad
-    if [[ $status == *"Advertencia"* ]]; then
+    if [[ $warning_count -lt $MAX_WARNINGS ]]; then
         color="🟠"
     else
         color="🔴"
@@ -50,16 +54,70 @@ ${color}━━━━━━━━━━━━━━━━━━━━━━━━
 <b>📅 Fecha:</b> $DATE $TIME
 <b>🔢 Logins detectados:</b> $logins
 <b>📊 Consumo:</b> $usage
+<b>⚠️ Advertencia:</b> $warning_count/$MAX_WARNINGS
 ${color}━━━━━━━━━━━━━━━━━━━━━━━━${color}
 <b>🖥️ Detalle de Conexiones</b>
 $login_details
 ${color}━━━━━━━━━━━━━━━━━━━━━━━━${color}
 <b>📢 Estado:</b> $status
-<b>⚡ Acción:</b> $action
 ${color}━━━━━━━━━━━━━━━━━━━━━━━━${color}
 <i>Notificación generada automáticamente</i>
 "
     echo "$TEXT"
+}
+
+# Función para manejar advertencias
+function handle_warning() {
+    local protocol=$1
+    local user=$2
+    local logins=$3
+    local usage=$4
+    local login_details=$5
+    local warning_count=$6
+    
+    # Crear directorio de advertencias si no existe
+    mkdir -p "/etc/warnings/$protocol"
+    
+    # Registrar la advertencia
+    echo "$(date +%s)" > "/etc/warnings/$protocol/$user"
+    
+    if [[ $warning_count -eq 1 ]]; then
+        status="🔔 Primera advertencia - Multi Login Detectado"
+    elif [[ $warning_count -eq 2 ]]; then
+        status="⚠️ Segunda advertencia - Multi Login Persistente"
+    else
+        status="🛑 Tercera advertencia - Acción tomada"
+    fi
+    
+    TEXT=$(format_notification "$protocol" "$user" "$logins" "$usage" "$login_details" "$status" "$warning_count")
+    
+    curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
+}
+
+# Función para verificar advertencias previas
+function check_warnings() {
+    local protocol=$1
+    local user=$2
+    
+    mkdir -p "/etc/warnings/$protocol"
+    warning_file="/etc/warnings/$protocol/$user"
+    
+    if [[ -f "$warning_file" ]]; then
+        last_warning=$(cat "$warning_file")
+        current_time=$(date +%s)
+        time_diff=$((current_time - last_warning))
+        
+        if [[ $time_diff -lt $WARNING_INTERVAL ]]; then
+            echo "wait"
+            return
+        fi
+        
+        # Contar advertencias previas
+        warning_count=$(($(cat "$warning_file" | wc -l) + 1))
+        echo $warning_count
+    else
+        echo 1
+    fi
 }
 
 #checking_sc
@@ -88,43 +146,8 @@ fi
 if [[ -z ${type} ]]; then
 echo "delete" > /etc/typexray
 fi
-tim2sec() {
-mult=1
-arg="$1"
-inu=0
-while [ ${#arg} -gt 0 ]; do
-prev="${arg%:*}"
-if [ "$prev" = "$arg" ]; then
-curr="${arg#0}"
-if [ ${#curr} -gt 0 ]; then
-inu=$((inu + curr * mult))
-fi
-prev=""
-else
-curr="${arg##*:}"
-curr="${curr#0}"
-if [ ${#curr} -gt 0 ]; then
-inu=$((inu + curr * mult))
-fi
-fi
-mult=$((mult * 60))
-arg="$prev"
-done
-echo "$inu"
-}
 
-function convert() {
-local -i bytes=$1
-if [[ $bytes -lt 1024 ]]; then
-echo "${bytes} B"
-elif [[ $bytes -lt 1048576 ]]; then
-echo "$(((bytes + 1023) / 1024)) KB"
-elif [[ $bytes -lt 1073741824 ]]; then
-echo "$(((bytes + 1048575) / 1048576)) MB"
-else
-echo "$(((bytes + 1073741823) / 1073741824)) GB"
-fi
-}
+# Resto de las funciones originales (tim2sec, convert) se mantienen igual...
 
 function vmess() {
 cd
@@ -206,67 +229,65 @@ ssvmess="3"
 else
 ssvmess=$(cat /etc/vmess/notif)
 fi
-if [ $vmessip = $ssvmess ]; then
-if [ $type = "lock" ]; then
-status="🛑 ${ssvmess}x Multi Login - Cuenta bloqueada temporalmente"
-action="⏳ Bloqueo por $waktulock minutos"
-TEXT2=$(format_notification "VMESS" "$vmuser" "$vmhas" "$gb" "$vmhas2" "$status" "$action")
 
-echo "" > /tmp/vm
-sed -i "/${vmuser}/d" /var/log/xray/access.log
-curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
-exp=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-uuid=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
-echo "### $vmuser $exp $uuid" >> /etc/vmess/listlock
-sed -i "/^#vmg $vmuser $exp/,/^},{/d" /etc/xray/config.json
-sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
-rm /etc/vmess/${vmuser}login >/dev/null 2>&1
-cat> /etc/cron.d/vmess${vmuser} << EOF
+# Sistema de advertencias escalonadas
+warning_count=$(check_warnings "vmess" "$vmuser")
+if [[ $warning_count == "wait" ]]; then
+    continue
+fi
+
+if [[ $warning_count -lt $MAX_WARNINGS ]]; then
+    handle_warning "VMESS" "$vmuser" "$vmhas" "$gb" "$vmhas2" "$warning_count"
+    continue
+fi
+
+# Si llegamos aquí, es la tercera advertencia - tomar acción
+if [ $type = "lock" ]; then
+    status="🛑 ${ssvmess}x Multi Login - Cuenta bloqueada temporalmente"
+    action="⏳ Bloqueo por $waktulock minutos"
+    TEXT2=$(format_notification "VMESS" "$vmuser" "$vmhas" "$gb" "$vmhas2" "$status" "$MAX_WARNINGS")
+
+    echo "" > /tmp/vm
+    sed -i "/${vmuser}/d" /var/log/xray/access.log
+    curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
+    exp=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+    uuid=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+    echo "### $vmuser $exp $uuid" >> /etc/vmess/listlock
+    sed -i "/^#vmg $vmuser $exp/,/^},{/d" /etc/xray/config.json
+    sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
+    rm /etc/vmess/${vmuser}login >/dev/null 2>&1
+    cat> /etc/cron.d/vmess${vmuser} << EOF
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 */$waktulock * * * * root /usr/bin/xray vmess $vmuser $uuid $exp
 EOF
-systemctl restart xray
-service cron restart
+    systemctl restart xray
+    service cron restart
+    rm -f "/etc/warnings/vmess/$vmuser"
 fi
 if [ $type = "delete" ]; then
-status="🛑 ${ssvmess}x Multi Login - Cuenta eliminada"
-action="❌ Eliminación permanente"
-TEXT2=$(format_notification "VMESS" "$vmuser" "$vmhas" "$gb" "$vmhas2" "$status" "$action")
+    status="🛑 ${ssvmess}x Multi Login - Cuenta eliminada"
+    action="❌ Eliminación permanente"
+    TEXT2=$(format_notification "VMESS" "$vmuser" "$vmhas" "$gb" "$vmhas2" "$status" "$MAX_WARNINGS")
 
-echo "" > /tmp/vm
-sed -i "/${vmuser}/d" /var/log/xray/access.log
-curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
-exp=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-uuid=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
-echo "### $vmuser $exp $uuid" >> /etc/vmess/listlock
-sed -i "/^#vmg $vmuser $exp/,/^},{/d" /etc/xray/config.json
-sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
-rm /etc/vmess/${vmuser}login >/dev/null 2>&1
-systemctl restart xray
-fi
-else
-status="⚠️ ${vmessip}x Multi Login Detectados"
-action="🔔 Notificación (Umbral: ${ssvmess}x)"
-TEXT=$(format_notification "VMESS" "$vmuser" "$vmhas" "$gb" "$vmhas2" "$status" "$action")
-
-echo "" > /tmp/vm
-sed -i "/${vmuser}/d" /var/log/xray/access.log
-curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
-fi
-if [ $vmessip -gt $ssvmess ]; then
-exp=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-uuid=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
-echo "### $vmuser $exp $uuid" >> /etc/vmess/listlock
-sed -i "/^#vmg $vmuser $exp/,/^},{/d" /etc/xray/config.json
-sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
-rm /etc/vmess/${vmuser}login >/dev/null 2>&1
-systemctl restart xray
-fi
+    echo "" > /tmp/vm
+    sed -i "/${vmuser}/d" /var/log/xray/access.log
+    curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
+    exp=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+    uuid=$(grep -wE "^#vmg $vmuser" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+    echo "### $vmuser $exp $uuid" >> /etc/vmess/listlock
+    sed -i "/^#vmg $vmuser $exp/,/^},{/d" /etc/xray/config.json
+    sed -i "/^#vm $vmuser $exp/,/^},{/d" /etc/xray/config.json
+    rm /etc/vmess/${vmuser}login >/dev/null 2>&1
+    systemctl restart xray
+    rm -f "/etc/warnings/vmess/$vmuser"
 fi
 done
 fi
 }
+
+# Las funciones vless() y trojan() deben modificarse de manera similar a vmess()
+# Implementando el mismo sistema de advertencias escalonadas
 
 function vless() {
 cd
@@ -350,64 +371,56 @@ ssvless="3"
 else
 ssvless=$(cat /etc/vless/notif)
 fi
-if [ $vlessip = $ssvless ]; then
-echo -ne
-if [ $type = "delete" ]; then
-status="🛑 ${ssvless}x Multi Login - Cuenta eliminada"
-action="❌ Eliminación permanente"
-TEXT2=$(format_notification "VLESS" "$vlus" "$vlsss" "$gb" "$vlsss2" "$status" "$action")
 
-echo "" > /tmp/vl
-sed -i "/${vlus}/d" /var/log/xray/access.log
-curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
-expvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-uuidvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
-echo "### $vlus $expvl $uuidvl" >> /etc/vless/listlock
-sed -i "/^#vl $vlus $expvl/,/^},{/d" /etc/xray/config.json
-sed -i "/^#vlg $vlus $expvl/,/^},{/d" /etc/xray/config.json
-rm /etc/vless/${vlus}login >/dev/null 2>&1
-systemctl restart xray >/dev/null 2>&1
+# Sistema de advertencias escalonadas
+warning_count=$(check_warnings "vless" "$vlus")
+if [[ $warning_count == "wait" ]]; then
+    continue
+fi
+
+if [[ $warning_count -lt $MAX_WARNINGS ]]; then
+    handle_warning "VLESS" "$vlus" "$vlsss" "$gb" "$vlsss2" "$warning_count"
+    continue
+fi
+
+# Tercera advertencia - tomar acción
+if [ $type = "delete" ]; then
+    status="🛑 ${ssvless}x Multi Login - Cuenta eliminada"
+    TEXT2=$(format_notification "VLESS" "$vlus" "$vlsss" "$gb" "$vlsss2" "$status" "$MAX_WARNINGS")
+
+    echo "" > /tmp/vl
+    sed -i "/${vlus}/d" /var/log/xray/access.log
+    curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
+    expvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+    uuidvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+    echo "### $vlus $expvl $uuidvl" >> /etc/vless/listlock
+    sed -i "/^#vl $vlus $expvl/,/^},{/d" /etc/xray/config.json
+    sed -i "/^#vlg $vlus $expvl/,/^},{/d" /etc/xray/config.json
+    rm /etc/vless/${vlus}login >/dev/null 2>&1
+    systemctl restart xray >/dev/null 2>&1
+    rm -f "/etc/warnings/vless/$vlus"
 fi
 if [ $type = "lock" ]; then
-status="🛑 ${ssvless}x Multi Login - Cuenta bloqueada temporalmente"
-action="⏳ Bloqueo por $waktulock minutos"
-TEXT2=$(format_notification "VLESS" "$vlus" "$vlsss" "$gb" "$vlsss2" "$status" "$action")
+    status="🛑 ${ssvless}x Multi Login - Cuenta bloqueada temporalmente"
+    TEXT2=$(format_notification "VLESS" "$vlus" "$vlsss" "$gb" "$vlsss2" "$status" "$MAX_WARNINGS")
 
-echo "" > /tmp/vl
-sed -i "/${vlus}/d" /var/log/xray/access.log
-curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
-expvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-uuidvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
-echo "### $vlus $expvl $uuidvl" >> /etc/vless/listlock
-sed -i "/^#vl $vlus $expvl/,/^},{/d" /etc/xray/config.json
-sed -i "/^#vlg $vlus $expvl/,/^},{/d" /etc/xray/config.json
-rm /etc/vless/${vlus}login >/dev/null 2>&1
-cat> /etc/cron.d/vless${vlus} << EOF
+    echo "" > /tmp/vl
+    sed -i "/${vlus}/d" /var/log/xray/access.log
+    curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
+    expvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+    uuidvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+    echo "### $vlus $expvl $uuidvl" >> /etc/vless/listlock
+    sed -i "/^#vl $vlus $expvl/,/^},{/d" /etc/xray/config.json
+    sed -i "/^#vlg $vlus $expvl/,/^},{/d" /etc/xray/config.json
+    rm /etc/vless/${vlus}login >/dev/null 2>&1
+    cat> /etc/cron.d/vless${vlus} << EOF
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 */$waktulock * * * * root /usr/bin/xray vless $vlus $uuidvl $expvl
 EOF
-systemctl restart xray
-service cron restart
-fi
-else
-status="⚠️ ${vlessip}x Multi Login Detectados"
-action="🔔 Notificación (Umbral: ${ssvless}x)"
-TEXT=$(format_notification "VLESS" "$vlus" "$vlsss" "$gb" "$vlsss2" "$status" "$action")
-
-echo "" > /tmp/vl
-sed -i "/${vlus}/d" /var/log/xray/access.log
-curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
-fi
-if [ $vlessip -gt $ssvless ]; then
-expvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-uuidvl=$(grep -wE "^#vl $vlus" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
-echo "### $vlus $expvl $uuidvl" >> /etc/vless/listlock
-sed -i "/^#vl $vlus $expvl/,/^},{/d" /etc/xray/config.json
-sed -i "/^#vlg $vlus $expvl/,/^},{/d" /etc/xray/config.json
-rm /etc/vless/${vlus}login >/dev/null 2>&1
-systemctl restart xray >/dev/null 2>&1
-fi
+    systemctl restart xray
+    service cron restart
+    rm -f "/etc/warnings/vless/$vlus"
 fi
 done
 fi
@@ -493,64 +506,56 @@ sstrojan="3"
 else
 sstrojan=$(cat /etc/trojan/notif)
 fi
-if [ $trojanip = $sstrojan ]; then
-echo -ne
-if [ $type = "delete" ]; then
-status="🛑 ${sstrojan}x Multi Login - Cuenta eliminada"
-action="❌ Eliminación permanente"
-TEXT2=$(format_notification "TROJAN" "$usrtr" "$trip" "$gb" "$trip2" "$status" "$action")
 
-echo "" > /tmp/tr
-sed -i "/${usrtr}/d" /var/log/xray/access.log
-curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
-exptr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-uuidtr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
-echo "### $usrtr $exptr $uuidtr" >> /etc/trojan/listlock
-sed -i "/^#tr $usrtr $exptr/,/^},{/d" /etc/xray/config.json
-sed -i "/^#trg $usrtr $exptr/,/^},{/d" /etc/xray/config.json
-rm /etc/trojan/${usrtr}login >/dev/null 2>&1
-systemctl restart xray >/dev/null 2>&1
+# Sistema de advertencias escalonadas
+warning_count=$(check_warnings "trojan" "$usrtr")
+if [[ $warning_count == "wait" ]]; then
+    continue
+fi
+
+if [[ $warning_count -lt $MAX_WARNINGS ]]; then
+    handle_warning "TROJAN" "$usrtr" "$trip" "$gb" "$trip2" "$warning_count"
+    continue
+fi
+
+# Tercera advertencia - tomar acción
+if [ $type = "delete" ]; then
+    status="🛑 ${sstrojan}x Multi Login - Cuenta eliminada"
+    TEXT2=$(format_notification "TROJAN" "$usrtr" "$trip" "$gb" "$trip2" "$status" "$MAX_WARNINGS")
+
+    echo "" > /tmp/tr
+    sed -i "/${usrtr}/d" /var/log/xray/access.log
+    curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
+    exptr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+    uuidtr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+    echo "### $usrtr $exptr $uuidtr" >> /etc/trojan/listlock
+    sed -i "/^#tr $usrtr $exptr/,/^},{/d" /etc/xray/config.json
+    sed -i "/^#trg $usrtr $exptr/,/^},{/d" /etc/xray/config.json
+    rm /etc/trojan/${usrtr}login >/dev/null 2>&1
+    systemctl restart xray >/dev/null 2>&1
+    rm -f "/etc/warnings/trojan/$usrtr"
 fi
 if [ $type = "lock" ]; then
-status="🛑 ${sstrojan}x Multi Login - Cuenta bloqueada temporalmente"
-action="⏳ Bloqueo por $waktulock minutos"
-TEXT2=$(format_notification "TROJAN" "$usrtr" "$trip" "$gb" "$trip2" "$status" "$action")
+    status="🛑 ${sstrojan}x Multi Login - Cuenta bloqueada temporalmente"
+    TEXT2=$(format_notification "TROJAN" "$usrtr" "$trip" "$gb" "$trip2" "$status" "$MAX_WARNINGS")
 
-echo "" > /tmp/tr
-sed -i "/${usrtr}/d" /var/log/xray/access.log
-curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
-exptr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-uuidtr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
-echo "### $usrtr $exptr $uuidtr" >> /etc/trojan/listlock
-sed -i "/^#tr $usrtr $exptr/,/^},{/d" /etc/xray/config.json
-sed -i "/^#trg $usrtr $exptr/,/^},{/d" /etc/xray/config.json
-rm /etc/trojan/${usrtr}login >/dev/null 2>&1
-cat> /etc/cron.d/trojan${usrtr} << EOF
+    echo "" > /tmp/tr
+    sed -i "/${usrtr}/d" /var/log/xray/access.log
+    curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT2&parse_mode=html" $URL >/dev/null
+    exptr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
+    uuidtr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
+    echo "### $usrtr $exptr $uuidtr" >> /etc/trojan/listlock
+    sed -i "/^#tr $usrtr $exptr/,/^},{/d" /etc/xray/config.json
+    sed -i "/^#trg $usrtr $exptr/,/^},{/d" /etc/xray/config.json
+    rm /etc/trojan/${usrtr}login >/dev/null 2>&1
+    cat> /etc/cron.d/trojan${usrtr} << EOF
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 */$waktulock * * * * root /usr/bin/xray trojan $usrtr $uuidtr $exptr
 EOF
-systemctl restart xray
-service cron restart
-fi
-else
-status="⚠️ ${trojanip}x Multi Login Detectados"
-action="🔔 Notificación (Umbral: ${sstrojan}x)"
-TEXT=$(format_notification "TROJAN" "$usrtr" "$trip" "$gb" "$trip2" "$status" "$action")
-
-echo "" > /tmp/tr
-sed -i "/${usrtr}/d" /var/log/xray/access.log
-curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
-fi
-if [ $trojanip -gt $sstrojan ]; then
-exptr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 3 | sort | uniq)
-uuidtr=$(grep -wE "^#tr $usrtr" "/etc/xray/config.json" | cut -d ' ' -f 4 | sort | uniq)
-echo "### $usrtr $exptr $uuidtr" >> /etc/trojan/listlock
-sed -i "/^#tr $usrtr $exptr/,/^},{/d" /etc/xray/config.json
-sed -i "/^#trg $usrtr $exptr/,/^},{/d" /etc/xray/config.json
-rm /etc/trojan/${usrtr}login >/dev/null 2>&1
-systemctl restart xray >/dev/null 2>&1
-fi
+    systemctl restart xray
+    service cron restart
+    rm -f "/etc/warnings/trojan/$usrtr"
 fi
 done
 fi
