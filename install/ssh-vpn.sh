@@ -375,10 +375,9 @@ PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 */1 * * * * root /usr/bin/tendang
 END
 
-cat> /etc/cron.d/xraylimit << END
+cat > /etc/cron.d/xraylimit <<END
 SHELL=/bin/sh
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
-0
 */1 * * * * root /usr/bin/xraylimit
 END
 
