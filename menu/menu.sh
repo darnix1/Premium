@@ -468,23 +468,27 @@ echo -e "$COLOR1│$NC ${WH} ❈ Client ${NC} : ${WH}$author${NC}"
 echo -e "$COLOR1│$NC ${WH} ❈ Durasi ${NC} : ${WH}$certificate hari${NC}"
 echo -e "$COLOR1│$NC ${WH} ❈ Expiry ${NC} : ${WH}$Exp2 $sts ${NC}"
 echo -e "$COLOR1╰═════════════════════════════════════════════════════════╯${NC}"
-echo -ne " ${WH}Select menu ${COLOR1}: ${WH}"; read opt
+echo -e ""
+echo -ne " ${WH}Selecciona una opcion${COLOR1}: ${WH}"; read opt
 case $opt in
 01 | 1) clear ; m-sshovpn ;;
 02 | 2) clear ; m-vmess ;;
 03 | 3) clear ; m-vless ;;
 04 | 4) clear ; m-trojan ;;
-05 | 5) clear ; m-noobz ;;
-06 | 6) clear ; m-trgo ;;
-07 | 7) clear ; m-bot  ;;
-08 | 8) clear ; m-bot2 ;;
-09 | 9) clear ; updatews ;;
+05 | 5) clear ; running ;;
+06 | 6) clear ; m-bot ;;
+07 | 7) clear ; m-bot2  ;;
+08 | 8) clear ; m-theme ;;
+09 | 9) clear ; m-update ;;
 10 | 10) clear ; m-system ;;
 11 | 11) clear ; m-backup;;
 12 | 12) clear ; reboot ;;
-13 | 13) clear ; m-ip2 ;;
-22 | 22) clear ; running;;
-23 | 23) clear ; restartservice ;;
+13 | 13) clear ; $ressee ;;
+14 | 14) clear ; key ;;
+89 | 89) clear ; bannner ;;
+88 | 88) clear ; new ;;
+77 | 77) clear ; newx ;;
+100) clear ; $up2u ;;
 00 | 0) clear ; menu ;;
 *) clear ; menu ;;
 esac
